@@ -1,0 +1,2274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raio-X Automático do CNIS</title>
+<meta name="description" content="Envie o CNIS do seu cliente e receba um Raio-X organizado com vínculos, contribuições, remunerações, indicadores e pontos de atenção reunidos em um só lugar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#FFFFFF;
+    --gray-50:#F5F7FA;
+    --navy:#1A1A1E;
+    --navy-soft:#2B2B31;
+    --blue:#B8912F;
+    --blue-tint:#F7F1E1;
+    --green:#28A745;
+    --green-dark:#1F8838;
+    --green-tint:#EAF8ED;
+    --red:#DC2626;
+    --red-dark:#B91C1C;
+    --red-tint:#FDEDED;
+    --text-dark:#333333;
+    --text-gray:#666666;
+    --border:#E8E4D8;
+    --shadow-sm:0 2px 10px rgba(20,20,22,.08);
+    --shadow-md:0 12px 28px rgba(20,20,22,.12);
+    --shadow-lg:0 22px 48px rgba(20,20,22,.18);
+    --radius-lg:22px;
+    --radius-md:16px;
+    --radius-sm:10px;
+    --container:1160px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Montserrat',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    color:var(--text-dark);
+    background:var(--white);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block;}
+  ul{margin:0;padding:0;list-style:none;}
+  button{font-family:inherit;cursor:pointer;}
+  a{color:inherit;text-decoration:none;}
+  svg{display:block;flex-shrink:0;}
+  s{opacity:.65;}
+
+  .container{width:100%;max-width:var(--container);margin:0 auto;padding-inline:20px;}
+  @media (min-width:768px){ .container{padding-inline:32px;} }
+
+  section{padding:52px 0;}
+  @media (min-width:860px){ section{padding:96px 0;} }
+
+  .bg-white{background:var(--white);}
+  .bg-gray{background:var(--gray-50);}
+  .bg-navy{background:var(--navy);}
+
+  h1,h2,h3,h4{color:var(--navy);font-weight:800;line-height:1.22;margin:0;}
+  h1{font-size:clamp(28px,5.4vw,46px);letter-spacing:-.01em;}
+  h2{font-size:clamp(24px,4.2vw,36px);letter-spacing:-.01em;}
+  h3{font-size:clamp(19px,2.6vw,24px);}
+  h4{font-size:17px;}
+  p{margin:0;color:var(--text-gray);font-weight:500;}
+
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--blue-tint);color:var(--blue);
+    font-weight:700;font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;
+    padding:9px 18px;border-radius:100px;
+  }
+  .eyebrow.on-navy{background:rgba(255,255,255,.12);color:#fff;}
+  .eyebrow.red{background:var(--red-tint);color:var(--red-dark);}
+  .eyebrow.green{background:var(--green-tint);color:var(--green-dark);}
+
+  .section-head{max-width:760px;margin:0 auto 40px;text-align:center;}
+  .section-head h2{margin-bottom:14px;}
+  .section-head p{font-size:16px;max-width:680px;margin-inline:auto;}
+
+  /* Buttons */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    font-family:'Montserrat',sans-serif;font-weight:800;font-size:15.5px;
+    letter-spacing:.01em;text-transform:uppercase;
+    padding:19px 34px;border-radius:100px;border:none;
+    cursor:pointer;transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+    text-align:center;width:100%;max-width:520px;
+  }
+  .btn-green{background:var(--green);color:#fff;box-shadow:0 10px 24px rgba(40,167,69,.32);}
+  .btn-green:hover{background:var(--green-dark);transform:translateY(-2px);box-shadow:0 14px 30px rgba(40,167,69,.4);}
+  .btn-outline-navy{background:var(--navy-soft);color:#fff;box-shadow:0 10px 24px rgba(20,20,22,.28);}
+  .btn-outline-navy:hover{background:var(--navy);transform:translateY(-2px);}
+  .btn-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:8px;}
+  .btn-note{display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;color:var(--text-gray);}
+  .btn-note.on-navy{color:rgba(255,255,255,.72);}
+  .btn-note svg{color:var(--blue);}
+  .pen-mark{
+    color:inherit;font-weight:700;
+    text-decoration:underline;
+    text-decoration-color:var(--green);
+    text-decoration-style:wavy;
+    text-decoration-thickness:2.5px;
+    text-underline-offset:5px;
+  }
+  .payment-seals{width:100%;max-width:220px;margin:4px auto 0;display:block;opacity:.85;}
+
+  /* Checklist */
+  .checklist{display:flex;flex-direction:column;gap:14px;margin:0;}
+  .checklist li{display:flex;align-items:flex-start;gap:12px;font-weight:600;font-size:15.5px;color:var(--text-dark);text-align:left;}
+  .check-ico{
+    flex-shrink:0;width:22px;height:22px;border-radius:50%;
+    background:var(--green-tint);color:var(--green);
+    display:flex;align-items:center;justify-content:center;margin-top:1px;
+  }
+  .check-ico svg{width:12px;height:12px;}
+  .checklist.on-navy li{color:#fff;}
+  .checklist.on-navy .check-ico{background:var(--green);color:#fff;}
+  .plan-full .checklist .check-ico{background:var(--green);color:#fff;}
+
+  /* Mockup placeholder */
+  .mockup{
+    border:2px dashed rgba(184,145,47,.4);
+    border-radius:var(--radius-lg);
+    background:linear-gradient(155deg,var(--blue-tint) 0%, #fff 100%);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:8px;padding:48px 24px;text-align:center;
+  }
+  .mockup .m-ico{width:42px;height:42px;color:var(--blue);opacity:.55;}
+  .mockup span{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);opacity:.7;}
+  .mockup small{font-size:12.5px;color:var(--text-gray);font-weight:500;}
+  .mockup.on-navy{border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.05);}
+  .mockup.on-navy .m-ico{color:#fff;}
+  .mockup.on-navy span, .mockup.on-navy small{color:rgba(255,255,255,.75);}
+
+  /* Cards base */
+  .card{
+    background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);
+    box-shadow:var(--shadow-sm);padding:26px;
+  }
+
+  /* ============ Top urgency bar ============ */
+  .top-banner{
+    background:var(--red);color:#fff;text-align:center;
+    padding:11px 16px;font-weight:800;font-size:12px;letter-spacing:.04em;
+    text-transform:uppercase;line-height:1.5;
+  }
+  @media (min-width:640px){ .top-banner{font-size:14px;padding:13px 20px;} }
+
+  /* ============ Hero ============ */
+  .hero{background:radial-gradient(120% 140% at 50% -10%, var(--navy-soft) 0%, var(--navy) 55%);padding:56px 0 60px;}
+  .hero .container{display:flex;flex-direction:column;align-items:center;text-align:center;gap:22px;max-width:760px;}
+  .hero h1{color:#fff;}
+  .hero > .container > p{color:rgba(255,255,255,.78);font-size:16.5px;max-width:600px;}
+  .hero .mockup{width:100%;max-width:420px;margin:10px 0 6px;}
+  .section-mockup{width:100%;max-width:340px;margin:0 auto 18px;display:block;}
+  .hero-mockup{width:100%;max-width:480px;height:auto;margin:6px 0;display:block;}
+  .hero .checklist{align-items:flex-start;text-align:left;max-width:480px;width:100%;}
+
+  /* ============ Grids ============ */
+  .grid-2{display:grid;grid-template-columns:1fr;gap:20px;}
+  @media (min-width:760px){ .grid-2{grid-template-columns:1fr 1fr;gap:28px;} }
+  .grid-4{display:grid;grid-template-columns:1fr;gap:18px;}
+  @media (min-width:620px){ .grid-4{grid-template-columns:1fr 1fr;} }
+  @media (min-width:1020px){ .grid-4{grid-template-columns:repeat(4,1fr);} }
+  .grid-3{display:grid;grid-template-columns:1fr;gap:18px;}
+  @media (min-width:620px){ .grid-3{grid-template-columns:1fr 1fr;} }
+  @media (min-width:1020px){ .grid-3{grid-template-columns:repeat(3,1fr);} }
+
+  /* Benefit cards */
+  .benefit-card{display:flex;gap:16px;align-items:flex-start;}
+  .benefit-ico{
+    flex-shrink:0;width:48px;height:48px;border-radius:14px;
+    background:var(--blue-tint);color:var(--blue);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .benefit-ico svg{width:24px;height:24px;}
+  .benefit-card p{color:var(--text-dark);font-weight:700;font-size:15px;line-height:1.45;margin:0;}
+
+  /* Feature showcase (Bloco 2) */
+  .feature-row{display:grid;grid-template-columns:1fr;gap:26px;align-items:center;margin-bottom:52px;}
+  .feature-row:last-child{margin-bottom:0;}
+  @media (min-width:860px){
+    .feature-row{grid-template-columns:1fr 1fr;gap:52px;}
+    .feature-row.reverse .feature-text{order:2;}
+    .feature-row.reverse .feature-mockup{order:1;}
+  }
+  .feature-tag{display:inline-flex;background:var(--blue);color:#fff;font-weight:800;font-size:11.5px;letter-spacing:.05em;text-transform:uppercase;padding:6px 14px;border-radius:100px;margin-bottom:14px;}
+  .feature-text h3{margin-bottom:12px;}
+  .feature-text p{font-size:15px;}
+  .feature-img{display:block;width:100%;height:auto}
+
+  /* Antes / Depois */
+  .compare-card{border-radius:var(--radius-lg);padding:28px 26px;}
+  .compare-card.antes{background:var(--red-tint);border:1px solid #F6D3D3;}
+  .compare-card.depois{background:var(--green-tint);border:1px solid #C9EDD1;}
+  .compare-title{
+    display:inline-flex;align-items:center;gap:8px;font-weight:800;font-size:14px;
+    letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px;padding:6px 16px;border-radius:100px;
+  }
+  .compare-card.antes .compare-title{background:#fff;color:var(--red-dark);}
+  .compare-card.depois .compare-title{background:#fff;color:var(--green-dark);}
+  .compare-list{display:flex;flex-direction:column;gap:14px;}
+  .compare-list li{display:flex;gap:11px;align-items:flex-start;font-size:14.5px;font-weight:600;color:var(--text-dark);}
+  .compare-ico{flex-shrink:0;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-top:1px;}
+  .compare-ico svg{width:11px;height:11px;}
+  .antes .compare-ico{background:#fff;color:var(--red);}
+  .depois .compare-ico{background:#fff;color:var(--green);}
+
+  /* Red urgency section */
+  .urgency{background:linear-gradient(155deg,var(--red) 0%, var(--red-dark) 100%);text-align:center;padding:56px 0;}
+  .urgency .eyebrow{background:rgba(255,255,255,.16);color:#fff;margin-bottom:18px;}
+  .urgency h2{color:#fff;max-width:780px;margin:0 auto;}
+  .urgency .btn-wrap{margin-top:34px;}
+
+  /* Para você que */
+  .fit-card{display:flex;gap:13px;align-items:flex-start;position:relative;}
+  .fit-card.highlight{border-color:var(--blue);background:var(--blue-tint);box-shadow:0 0 0 1px var(--blue) inset, var(--shadow-md);}
+  .fit-ico{flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;}
+  .fit-ico svg{width:13px;height:13px;}
+  .fit-card p{font-weight:700;font-size:14.5px;letter-spacing:.01em;color:var(--navy);line-height:1.5;margin:0;}
+
+  /* Testimonials */
+  .testi-card{display:flex;flex-direction:column;gap:16px;}
+  .stars{display:flex;gap:3px;color:#F5A623;}
+  .stars svg{width:16px;height:16px;}
+  .testi-card blockquote{margin:0;font-size:15.5px;font-weight:600;color:var(--text-dark);font-style:italic;line-height:1.6;}
+  .testi-author{display:flex;align-items:center;gap:12px;margin-top:4px;}
+  .testi-avatar{width:52px;height:52px;border-radius:50%;background:var(--blue-tint);object-fit:cover;flex-shrink:0;}
+  .testi-author strong{display:block;font-size:14px;color:var(--navy);}
+  .testi-author span{font-size:12.5px;color:var(--text-gray);font-weight:500;}
+
+  /* Tudo você vai receber */
+  .receive-card{background:linear-gradient(160deg,var(--navy) 0%, var(--navy-soft) 100%);border-radius:var(--radius-lg);padding:40px 32px;box-shadow:var(--shadow-lg);text-align:center;}
+  .receive-card .badge-pill{display:inline-flex;background:var(--green);color:#fff;font-weight:800;font-size:12px;letter-spacing:.05em;text-transform:uppercase;padding:8px 16px;border-radius:100px;margin-bottom:18px;}
+  .receive-card h3{color:#fff;margin-bottom:10px;}
+  .receive-card > p{color:rgba(255,255,255,.75);font-size:15px;margin:0 auto 26px;max-width:560px;}
+  .receive-card .mockup{margin-bottom:28px;}
+  .receive-card .checklist{max-width:none;}
+
+  /* Bonus */
+  .bonus-card{display:flex;flex-direction:column;gap:14px;}
+  .bonus-img{display:block;width:100%;height:auto}
+  .bonus-tag{align-self:flex-start;background:var(--navy);color:#fff;font-weight:800;font-size:11px;letter-spacing:.06em;text-transform:uppercase;padding:6px 14px;border-radius:100px;}
+  .bonus-card h4{color:var(--navy);font-size:16px;}
+  .bonus-card p{font-size:13.5px;line-height:1.6;}
+  .bonus-price{display:flex;align-items:center;justify-content:center;margin-top:auto;padding-top:14px;border-top:1px dashed var(--border);}
+  .bonus-price .free{background:var(--green-tint);color:var(--green-dark);font-weight:800;font-size:12px;letter-spacing:.03em;padding:5px 12px;border-radius:100px;}
+
+  /* Pricing */
+  .pricing-wrap{display:grid;grid-template-columns:1fr;gap:24px;max-width:920px;margin:0 auto;}
+  @media (min-width:800px){ .pricing-wrap{grid-template-columns:1fr 1.08fr;align-items:stretch;} }
+  .plan-card{border-radius:var(--radius-lg);padding:32px 28px;display:flex;flex-direction:column;position:relative;}
+  .plan-basic{background:#fff;border:1px solid var(--border);box-shadow:var(--shadow-sm);}
+  .plan-full{background:linear-gradient(165deg,var(--navy) 0%, var(--navy-soft) 100%);color:#fff;box-shadow:var(--shadow-lg);}
+  .plan-badges{display:flex;flex-direction:column;gap:10px;align-items:center;margin-bottom:16px;text-align:center;}
+  .badge-last{background:rgba(255,255,255,.14);color:#fff;font-weight:700;font-size:11px;letter-spacing:.03em;text-transform:uppercase;padding:7px 14px;border-radius:100px;}
+  .plan-card h3{margin-bottom:16px;}
+  .plan-full h3{color:#fff;}
+  .plan-card .mockup{margin-bottom:18px;}
+  .plan-more{display:inline-flex;background:var(--navy);color:#fff;font-weight:700;font-size:12px;padding:7px 14px;border-radius:100px;margin-bottom:16px;align-self:flex-start;}
+  .plan-full .plan-more{background:rgba(255,255,255,.14);}
+  .plan-card .receives{font-weight:700;font-size:13.5px;color:var(--text-gray);text-transform:uppercase;letter-spacing:.03em;margin-bottom:12px;}
+  .plan-full .receives{color:rgba(255,255,255,.65);}
+  .plan-card .checklist{margin-bottom:22px;}
+  .plan-card .checklist li{font-size:14px;}
+  .plan-full .checklist li{color:#fff;}
+  .price-block{margin-top:auto;padding-top:6px;}
+  .price-before{font-size:13.5px;color:var(--text-gray);font-weight:600;margin-bottom:2px;}
+  .plan-full .price-before{color:rgba(255,255,255,.6);}
+  .price-now{font-size:clamp(32px,5vw,42px);font-weight:800;color:var(--green);line-height:1.1;margin-bottom:4px;}
+  .price-install{font-size:13px;color:var(--text-gray);font-weight:600;margin-bottom:10px;}
+  .plan-full .price-install{color:rgba(255,255,255,.65);}
+  .price-save{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--green-dark);margin-bottom:20px;}
+  .plan-full .price-save{color:#6FE28A;}
+  .price-save s{font-weight:600;opacity:.55;}
+  .plan-card .btn{max-width:none;}
+
+  /* Guarantee */
+  .guarantee-wrap{display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center;max-width:680px;margin:0 auto;}
+  @media (min-width:640px){ .guarantee-wrap{flex-direction:row;text-align:left;} }
+  .seal{
+    flex-shrink:0;width:104px;height:104px;border-radius:50%;
+    background:linear-gradient(155deg,var(--blue) 0%, var(--navy) 100%);
+    display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-md);
+  }
+  .seal svg{width:52px;height:52px;color:#fff;}
+  .guarantee-wrap h3{margin-bottom:10px;}
+  .guarantee-wrap p{font-size:15px;}
+
+  /* Como funciona */
+  .steps{display:grid;grid-template-columns:1fr;gap:26px;margin-bottom:40px;}
+  @media (min-width:640px){ .steps{grid-template-columns:1fr 1fr;} }
+  @media (min-width:1020px){ .steps{grid-template-columns:repeat(5,1fr);} }
+  .step{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;}
+  .step-ico{width:58px;height:58px;border-radius:16px;background:var(--blue-tint);color:var(--blue);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;position:relative;}
+  .step-ico svg{width:26px;height:26px;}
+  .step-num{position:absolute;top:-8px;right:-8px;width:22px;height:22px;border-radius:50%;background:var(--green);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;}
+  .step h4{margin-bottom:2px;}
+  .step p{font-size:13.5px;}
+  .steps-cta{display:flex;justify-content:center;}
+
+  /* FAQ */
+  .faq-item{background:#fff;border:1px solid var(--border);border-radius:var(--radius-md);margin-bottom:14px;box-shadow:var(--shadow-sm);overflow:hidden;}
+  .faq-item summary{
+    list-style:none;cursor:pointer;padding:20px 22px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+    font-weight:700;font-size:15px;color:var(--navy);
+  }
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-toggle{flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--blue-tint);color:var(--blue);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;transition:transform .2s ease;}
+  details[open] .faq-toggle{background:var(--navy);color:#fff;transform:rotate(45deg);}
+  .faq-body{padding:0 22px 22px;font-size:14.5px;color:var(--text-gray);font-weight:500;line-height:1.7;}
+
+  /* Autoridade */
+  .author-wrap{display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center;max-width:700px;margin:0 auto;}
+  @media (min-width:640px){ .author-wrap{flex-direction:row;text-align:left;} }
+  .author-avatar{
+    flex-shrink:0;width:104px;height:104px;border-radius:50%;
+    background:linear-gradient(155deg,var(--blue) 0%, var(--navy) 100%);
+    display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-md);
+    color:#fff;font-weight:800;font-size:32px;
+  }
+  .author-wrap h3{margin-bottom:10px;}
+  .author-wrap p{font-size:15px;}
+  .author-wrap p + p{margin-top:10px;}
+
+  /* Footer */
+  .site-footer{background:var(--navy);padding:34px 0;}
+  .site-footer p{color:rgba(255,255,255,.55);font-size:12px;text-align:center;max-width:820px;margin:0 auto;line-height:1.7;}
+
+  /* Attention note (under plano básico) */
+  .attention-note{
+    display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;
+    background:var(--red-tint);color:var(--red-dark);font-weight:700;font-size:13.5px;
+    padding:16px 20px;border-radius:var(--radius-md);margin-top:18px;border:1px solid #F6D3D3;
+  }
+  .attention-note strong{font-weight:800;}
+  .attention-note u{text-decoration-color:var(--red-dark);}
+  .attention-note svg{margin-top:2px;color:var(--red-dark);}
+
+  /* ============================================================
+     RX DEMO: demonstrativo interativo do Raio-X (início)
+     ============================================================ */
+  .rx,.rx-print-root{
+    --rx-graphite:#1A1A1E;--rx-gold:#B8912F;--rx-gold-h:#9F7925;
+    --rx-ok:#2F8F46;--rx-att:#C94444;--rx-pend:#E8590C;--rx-na:#7A7A80;
+    --rx-bg:#F6F6F4;--rx-line:#E7E5DF;--rx-soft:#EFEFEB;
+    --rx-text:#1A1A1E;--rx-muted:#5E5E64;
+    --rx-ok-t:#226B34;--rx-ok-bg:#E8F4EB;
+    --rx-att-t:#A63232;--rx-att-bg:#FBEAEA;
+    --rx-pend-t:#B84407;--rx-pend-bg:#FDEDE3;
+    --rx-na-t:#55555B;--rx-na-bg:#EFEFEB;
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  }
+  .rx{max-width:1040px;margin:0 auto 64px;color:var(--rx-text);font-size:14px;line-height:1.5;text-align:left;-webkit-text-size-adjust:100%}
+  .rx *{box-sizing:border-box}
+  :where(.rx) p{margin:0;color:inherit;font-weight:400}
+  :where(.rx) :is(h3,h4){margin:0;color:inherit;font-weight:600;letter-spacing:0;line-height:1.3}
+  :where(.rx) :is(button,select,textarea){font:inherit;color:inherit}
+  :where(.rx) button{cursor:pointer}
+  :where(.rx) :is(ul,ol){margin:0;padding:0;list-style:none}
+  .rx svg{display:block;flex-shrink:0}
+  .rx :focus-visible{outline:2px solid var(--rx-graphite);outline-offset:2px;border-radius:6px}
+  .rx-top :focus-visible{outline-color:#fff}
+  .rx-sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  html.rx-lock{overflow:hidden}
+
+  /* Frame */
+  .rx-frame{position:relative;background:var(--rx-bg);border:1px solid var(--rx-line);border-radius:12px;box-shadow:0 1px 2px rgba(26,26,30,.05),0 10px 28px rgba(26,26,30,.07);overflow:hidden}
+  .rx-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 12px;background:var(--rx-graphite);color:#fff;padding:6px 8px 6px 14px}
+  .rx-brand{display:flex;align-items:center;gap:10px;min-width:0}
+  .rx-logo{display:grid;place-items:center;width:28px;height:28px;border-radius:8px;background:rgba(184,145,47,.16);color:var(--rx-gold)}
+  .rx-brand-name{font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .rx-top-r{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  .rx-demo-badge{font-size:11.5px;font-weight:500;border:1px solid rgba(255,255,255,.28);border-radius:100px;padding:3px 10px;color:rgba(255,255,255,.88);white-space:nowrap}
+  .rx-ghost{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 10px;background:transparent;border:0;color:rgba(255,255,255,.9);font-size:12.5px;font-weight:500;border-radius:8px}
+  .rx-ghost:hover{background:rgba(255,255,255,.1);color:#fff}
+
+  /* Progresso */
+  .rx-prog{display:flex;align-items:center;justify-content:flex-start;background:#fff;border-bottom:1px solid var(--rx-line);padding:10px 14px;overflow-x:auto}
+  .rx-prog li{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:500;color:var(--rx-muted);flex:0 0 auto}
+  .rx-prog li:not(:last-child)::after{content:'';display:block;width:clamp(14px,5vw,56px);height:1px;background:var(--rx-line);margin:0 10px}
+  .rx-pn{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--rx-soft);font-size:11.5px;font-weight:600;color:var(--rx-na-t)}
+  .rx-prog li.is-done{color:var(--rx-text)}
+  .rx-prog li.is-done .rx-pn{background:var(--rx-graphite);color:#fff}
+  .rx-prog li.is-current{color:var(--rx-text);font-weight:600}
+  .rx-prog li.is-current .rx-pn{background:var(--rx-gold);color:var(--rx-graphite)}
+  @media (max-width:559px){
+    .rx-prog{justify-content:center}
+    .rx-prog li:not(.is-current) .rx-pl{display:none}
+  }
+
+  /* Corpo */
+  .rx-body{padding:20px;min-height:470px}
+  @media (max-width:559px){ .rx-body{padding:14px;min-height:420px} }
+  .rx-view:focus,#rx-tp:focus{outline:none}
+  .rx-h{font-size:19px;font-weight:600;color:var(--rx-text)}
+  .rx-h:focus{outline:none}
+  .rx-sub{color:var(--rx-muted);margin-top:4px}
+  .rx-foot{border-top:1px solid var(--rx-line);background:#fff;color:var(--rx-muted);font-size:12px;padding:10px 14px;text-align:center}
+
+  /* Botões */
+  .rx-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:8px;border:1px solid transparent;font-weight:600;font-size:14px;text-decoration:none;text-align:center;transition:background .15s,border-color .15s}
+  .rx-primary{background:var(--rx-gold);color:var(--rx-graphite)}
+  .rx-primary:hover{background:var(--rx-gold-h)}
+  .rx-secondary{background:#fff;border-color:#CFCCC3;color:var(--rx-text)}
+  .rx-secondary:hover{background:var(--rx-soft)}
+  .rx-sm{padding:0 12px;font-size:13px}
+  @media (min-width:768px){ .rx-sm{min-height:36px} }
+  .rx-link{background:none;border:0;padding:0 6px;min-height:44px;color:var(--rx-text);text-decoration:underline;text-underline-offset:3px;font-weight:500;font-size:13.5px}
+  .rx-link:hover{color:var(--rx-gold-h)}
+
+  /* Status */
+  .rx-chip{display:inline-flex;align-items:center;gap:5px;padding:3px 9px 3px 7px;border-radius:100px;font-size:12px;font-weight:600;white-space:nowrap;line-height:1.4;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .rx-s-na{background:var(--rx-na-bg);color:var(--rx-na-t)}   .rx-s-na svg{color:var(--rx-na)}
+  .rx-s-ok{background:var(--rx-ok-bg);color:var(--rx-ok-t)}   .rx-s-ok svg{color:var(--rx-ok)}
+  .rx-s-att{background:var(--rx-att-bg);color:var(--rx-att-t)} .rx-s-att svg{color:var(--rx-att)}
+  .rx-s-pend{background:var(--rx-pend-bg);color:var(--rx-pend-t)} .rx-s-pend svg{color:var(--rx-pend)}
+
+  /* Passo 1: arquivo */
+  .rx-file{max-width:560px;margin:8px auto 0}
+  .rx-filecard{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--rx-line);border-radius:10px;padding:14px;margin:18px 0}
+  .rx-pdf{display:grid;place-items:center;flex:0 0 44px;height:52px;border-radius:8px;background:var(--rx-soft);color:var(--rx-graphite)}
+  .rx-fi{min-width:0;flex:1}
+  .rx-fname{font-weight:600;overflow-wrap:anywhere}
+  .rx-fmeta{color:var(--rx-muted);font-size:12.5px}
+  .rx-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .rx-note{color:var(--rx-muted);font-size:12.5px;margin-top:14px}
+
+  /* Passo 2: processamento */
+  .rx-proc{max-width:520px;margin:8px auto 0}
+  .rx-bar{height:6px;background:var(--rx-soft);border-radius:100px;overflow:hidden;margin:16px 0}
+  .rx-bar>span{display:block;height:100%;background:var(--rx-gold);border-radius:100px;transition:width .45s ease}
+  .rx-stages{display:flex;flex-direction:column;gap:2px}
+  .rx-stages li{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;border:1px solid transparent;color:var(--rx-muted)}
+  .rx-stages li.is-active{background:#fff;border-color:var(--rx-line);color:var(--rx-text);font-weight:600}
+  .rx-stages li.is-done{color:var(--rx-text)}
+  .rx-si{width:20px;height:20px;display:grid;place-items:center;flex:0 0 20px}
+  .rx-ring{width:16px;height:16px;border:2px solid #D3D0C7;border-radius:50%}
+  .rx-spin{width:18px;height:18px;border:2px solid var(--rx-line);border-top-color:var(--rx-gold);border-radius:50%;animation:rxspin .8s linear infinite}
+  .rx-okc{color:var(--rx-ok)}
+  @keyframes rxspin{to{transform:rotate(360deg)}}
+
+  /* Passo 3: Raio-X */
+  .rx-rxhead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+  .rx-cname{font-size:18px;font-weight:600}
+  .rx-cmeta{color:var(--rx-muted);font-size:12.5px;overflow-wrap:anywhere}
+  .rx-rxactions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .rx-overall{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:100px;font-size:12.5px;font-weight:600;border:1px solid var(--rx-line);background:#fff}
+  .rx-o-pend{background:var(--rx-pend-bg);color:var(--rx-pend-t);border-color:#F6CDB6}  .rx-o-pend svg{color:var(--rx-pend)}
+  .rx-o-review{background:#fff;color:var(--rx-text)}  .rx-o-review svg{color:var(--rx-na)}
+  .rx-o-done{background:var(--rx-ok-bg);color:var(--rx-ok-t);border-color:#BFE0C8}  .rx-o-done svg{color:var(--rx-ok)}
+
+  .rx-tip{position:relative;display:flex;align-items:center;gap:8px;background:var(--rx-graphite);color:#fff;border-radius:10px;padding:2px 2px 2px 12px;margin:0 0 14px;font-size:13px;min-height:44px}
+  .rx-tip::before{content:'';position:absolute;top:-6px;left:22px;border:6px solid transparent;border-top:0;border-bottom-color:var(--rx-graphite)}
+  .rx-tip-t{flex:1;padding:6px 0}
+  .rx-tip-x{flex:0 0 auto;display:grid;place-items:center;width:44px;height:44px;background:none;border:0;border-radius:8px;color:rgba(255,255,255,.85)}
+  .rx-tip-x:hover{background:rgba(255,255,255,.12);color:#fff}
+  .rx-tip :focus-visible{outline-color:#fff}
+
+  .rx-tabswrap{display:flex;align-items:stretch;border-bottom:1px solid var(--rx-line);margin-bottom:16px}
+  .rx-tabs{position:relative;display:flex;flex:1;min-width:0;gap:2px;overflow-x:auto;scrollbar-width:none}
+  .rx-tabs::-webkit-scrollbar{display:none}
+  .rx-tabarrow{display:none;flex:0 0 auto;align-items:center;justify-content:center;width:36px;min-height:44px;background:#fff;border:0;color:var(--rx-text)}
+  .rx-tabarrow.is-left{border-right:1px solid var(--rx-line);border-radius:8px 0 0 0}
+  .rx-tabarrow.is-right{border-left:1px solid var(--rx-line);border-radius:0 8px 0 0}
+  .rx-tabswrap.has-overflow .rx-tabarrow{display:flex}
+  .rx-tabarrow:hover:not(:disabled){background:var(--rx-soft)}
+  .rx-tabarrow:disabled{color:#B5B3AB;cursor:default}
+  .rx-tab{flex:0 0 auto;display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:0 9px;background:none;border:0;color:var(--rx-muted);font-weight:500;font-size:13.5px;border-radius:0}
+  .rx-tab:hover{color:var(--rx-text)}
+  .rx-tab.is-active{color:var(--rx-text);font-weight:600;box-shadow:inset 0 -2px 0 var(--rx-gold)}
+  .rx-badge{min-width:20px;height:20px;padding:0 6px;border-radius:100px;background:var(--rx-graphite);color:#fff;font-size:11.5px;font-weight:600;display:inline-grid;place-items:center}
+
+  .rx-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px}
+  .rx-cardk{background:#fff;border:1px solid var(--rx-line);border-radius:10px;padding:12px 14px}
+  .rx-ck-l{color:var(--rx-muted);font-size:12.5px}
+  .rx-ck-n{font-size:26px;font-weight:700;line-height:1.2;font-variant-numeric:tabular-nums;margin:2px 0}
+  .rx-ck-s{color:var(--rx-muted);font-size:12px}
+  .rx-ck-att .rx-ck-n{color:var(--rx-att-t)}
+  .rx-ck-pend .rx-ck-n{color:var(--rx-pend-t)}
+  .rx-flash{animation:rxflash .9s ease}
+  @keyframes rxflash{0%{background:#F3EBD3}100%{background:#fff}}
+  .rx-rev{background:#fff;border:1px solid var(--rx-line);border-radius:10px;padding:12px 14px;margin-bottom:16px}
+  .rx-rev .rx-bar{margin:8px 0 0}
+  .rx-rev .rx-bar>span{background:var(--rx-ok)}
+  .rx-sec-h{font-size:15px;font-weight:600;margin:4px 0 10px}
+  .rx-open{display:flex;flex-direction:column;gap:8px}
+  .rx-orow{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--rx-line);border-radius:10px;padding:10px 12px}
+  .rx-omain{flex:1;min-width:0}
+  .rx-ot{font-weight:600;overflow-wrap:anywhere}
+  .rx-om{color:var(--rx-muted);font-size:12.5px}
+  @media (max-width:559px){ .rx-orow{flex-wrap:wrap} .rx-omain{flex-basis:100%} }
+  .rx-empty{background:#fff;border:1px dashed #CFCCC3;border-radius:10px;padding:18px;color:var(--rx-muted);text-align:center}
+
+  /* Tabelas */
+  .rx-tablewrap{background:#fff;border:1px solid var(--rx-line);border-radius:10px;overflow:auto}
+  .rx-scroll{max-height:420px}
+  .rx-table{width:100%;border-collapse:collapse;font-size:13px}
+  .rx-table th{position:sticky;top:0;background:#FAFAF8;text-align:left;font-weight:600;font-size:12px;color:var(--rx-muted);padding:10px 12px;border-bottom:1px solid var(--rx-line);white-space:nowrap;z-index:1}
+  .rx-table td{padding:6px 12px;border-bottom:1px solid var(--rx-line);vertical-align:middle}
+  .rx-table tbody tr:last-child td{border-bottom:0}
+  .rx-table tbody tr[data-action]{cursor:pointer}
+  .rx-table tbody tr[data-action]:hover{background:#FAFAF8}
+  .rx-rowbtn{background:none;border:0;padding:0;text-align:left;font-weight:600;min-height:44px;display:inline-flex;align-items:center;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:3px}
+  .rx-rowbtn:hover{text-decoration-color:currentColor}
+  @media (min-width:768px){ .rx-rowbtn{min-height:36px} }
+  .rx-num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .rx-nodata{color:var(--rx-pend-t);font-size:12.5px}
+  .rx-obsflag{display:inline-flex;vertical-align:middle;margin-left:6px;color:var(--rx-muted)}
+  .rx-origm{display:none;color:var(--rx-muted);font-size:12px}
+  .rx-tool{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+  .rx-toggle{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 14px;border-radius:100px;background:#fff;border:1px solid #CFCCC3;font-weight:500;font-size:13px}
+  .rx-toggle[aria-pressed="true"]{background:var(--rx-graphite);border-color:var(--rx-graphite);color:#fff}
+  .rx-toggle[aria-pressed="true"]:focus-visible{outline-color:var(--rx-graphite)}
+  .rx-count{color:var(--rx-muted);font-size:12.5px}
+  .rx-footnote{color:var(--rx-muted);font-size:12px;margin-top:8px}
+  @media (max-width:639px){
+    .rx-vtable thead{display:none}
+    .rx-vtable,.rx-vtable tbody,.rx-vtable tr,.rx-vtable td{display:block;width:100%}
+    .rx-vtable tr{padding:10px 12px;border-bottom:1px solid var(--rx-line)}
+    .rx-vtable tbody tr:last-child{border-bottom:0}
+    .rx-vtable td{border:0!important;padding:3px 0;display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .rx-vtable td::before{content:attr(data-label);color:var(--rx-muted);font-size:12px;flex:0 0 auto}
+    .rx-vtable td.rx-td-main{display:block}
+    .rx-vtable td.rx-td-main::before{display:none}
+    .rx-vtable td.rx-td-res{display:block}
+    .rx-vtable td.rx-td-res::before{display:block;margin-bottom:4px}
+  }
+  @media (max-width:559px){
+    .rx-ctable th:nth-child(3),.rx-ctable td:nth-child(3){display:none}
+    .rx-origm{display:block}
+  }
+
+  /* Indicadores */
+  .rx-indgrid{display:grid;grid-template-columns:1fr;gap:12px}
+  @media (min-width:900px){ .rx-indgrid{grid-template-columns:1fr 1fr} }
+  .rx-ind{background:#fff;border:1px solid var(--rx-line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px}
+  .rx-ind-top{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+  .rx-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;font-weight:600;background:var(--rx-soft);padding:3px 8px;border-radius:6px}
+  .rx-dl{margin:0;display:grid;gap:8px}
+  .rx-dl dt{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--rx-muted);font-weight:600}
+  .rx-dl dd{margin:0}
+  .rx-callout{background:var(--rx-bg);border:1px solid var(--rx-line);border-left:3px solid var(--rx-graphite);border-radius:8px;padding:10px 12px;font-size:13px}
+  .rx-callout strong{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+  .rx-obsline{font-size:12.5px;color:var(--rx-muted);background:var(--rx-soft);border-radius:8px;padding:8px 10px;overflow-wrap:anywhere}
+  .rx-ind-act{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:auto}
+
+  /* Pendências */
+  .rx-filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+  .rx-grp{margin-bottom:16px}
+  .rx-gh{font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--rx-muted);margin:0 0 8px;display:flex;align-items:center;gap:8px}
+  .rx-gc{background:var(--rx-soft);border-radius:100px;padding:0 8px;font-size:12px;color:var(--rx-text)}
+  .rx-tasks{display:flex;flex-direction:column;gap:8px}
+  .rx-task{background:#fff;border:1px solid var(--rx-line);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:10px}
+  .rx-tt{font-weight:600;overflow-wrap:anywhere}
+  .rx-tm{color:var(--rx-muted);font-size:12.5px}
+  .rx-td{font-size:13px;margin-top:4px}
+  .rx-tctl{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+  .rx-select{min-height:44px;padding:0 10px;border:1px solid #CFCCC3;border-radius:8px;background:#fff;font-size:13px;max-width:100%}
+  @media (min-width:768px){ .rx-select{min-height:36px} }
+  .rx-lab{display:block;font-size:12.5px;font-weight:600;margin:0 0 4px}
+  .rx-ta{display:block;width:100%;border:1px solid #CFCCC3;border-radius:8px;padding:10px 12px;font-size:14px;resize:vertical;min-height:84px;background:#fff}
+
+  /* Passo 4: relatório */
+  .rx-reporthead{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:14px}
+  .rx-ractions{display:flex;flex-wrap:wrap;gap:8px}
+  .rx-paper{background:#fff;border:1px solid var(--rx-line);border-radius:10px;padding:22px}
+  @media (max-width:559px){ .rx-paper{padding:14px} }
+  .rx-cta{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between;background:#fff;border:1px solid var(--rx-line);border-radius:10px;padding:16px 18px;margin-top:14px}
+  .rx-cta strong{display:block}
+  .rx-cta span{color:var(--rx-muted);font-size:13px}
+  @media (max-width:559px){ .rx-cta .rx-btn{width:100%} }
+
+  /* Documento (tela e impressão) */
+  .rx-doc{color:#1A1A1E;font-size:13px;line-height:1.5;font-family:inherit}
+  .rx-doc h2{margin:0;font-size:21px;font-weight:700;color:#1A1A1E;line-height:1.25}
+  .rx-doc .rx-dsub{color:#5E5E64;font-size:12px;margin:2px 0 6px}
+  .rx-doc h4{margin:20px 0 8px;padding-bottom:6px;border-bottom:1px solid #E7E5DF;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:#5E5E64;font-weight:600}
+  .rx-doc table{width:100%;border-collapse:collapse;font-size:12.5px}
+  .rx-doc th,.rx-doc td{text-align:left;padding:6px 8px;border-bottom:1px solid #E7E5DF;vertical-align:top;font-weight:400}
+  .rx-doc th{font-weight:600;color:#5E5E64;font-size:11.5px}
+  .rx-doc .rx-kv th{width:34%}
+  .rx-doc-scroll{overflow-x:auto}
+  .rx-doc ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+  .rx-doc li{padding-bottom:10px;border-bottom:1px solid #E7E5DF}
+  .rx-doc li:last-child{border-bottom:0}
+  .rx-doc li>div{margin-top:2px}
+  .rx-doc svg{flex-shrink:0}
+  .rx-doc .rx-warn{margin-top:20px;padding:10px 12px;border:1px solid #E7E5DF;border-radius:8px;background:#F6F6F4;color:#5E5E64;font-size:12px}
+  .rx-doc .rx-none{color:#5E5E64}
+
+  /* Painel lateral / bottom sheet */
+  .rx-overlay{position:absolute;inset:0;background:rgba(26,26,30,.38);opacity:0;pointer-events:none;transition:opacity .2s;z-index:30}
+  .rx-overlay.is-open{opacity:1;pointer-events:auto}
+  .rx-panel{position:absolute;top:0;right:0;bottom:0;width:min(400px,100%);background:#fff;border-left:1px solid var(--rx-line);box-shadow:-10px 0 28px rgba(26,26,30,.1);display:flex;flex-direction:column;z-index:31;transform:translateX(100%);visibility:hidden;transition:transform .22s ease,visibility 0s linear .22s}
+  .rx-panel.is-open{transform:none;visibility:visible;transition:transform .22s ease}
+  .rx-ph{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:16px 16px 12px;border-bottom:1px solid var(--rx-line)}
+  .rx-pk{font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--rx-muted);font-weight:600}
+  .rx-ph h3{font-size:16px;font-weight:600;overflow-wrap:anywhere}
+  .rx-pm{color:var(--rx-muted);font-size:12.5px;margin-top:2px}
+  .rx-x{flex:0 0 auto;display:grid;place-items:center;width:44px;height:44px;margin:-6px -6px 0 0;background:none;border:0;border-radius:8px}
+  .rx-x:hover{background:var(--rx-soft)}
+  .rx-pb{padding:16px;overflow-y:auto;flex:1;display:flex;flex-direction:column;gap:14px}
+  .rx-pf{padding:12px 16px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--rx-line)}
+  .rx-pf .rx-btn{width:100%}
+  .rx-hint{color:var(--rx-muted);font-size:12px}
+  .rx-pnote{font-size:12.5px;color:var(--rx-muted);background:var(--rx-soft);padding:8px 10px;border-radius:8px}
+  @media (max-width:767px){
+    .rx-overlay{position:fixed}
+    .rx-panel{position:fixed;inset:0;width:auto;border-left:0;box-shadow:none;transform:translateY(100%)}
+    .rx-panel.is-open{transform:none}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .rx *,.rx-panel,.rx-overlay{animation:none!important;transition:none!important}
+  }
+
+  /* Impressão: só a ficha técnica */
+  .rx-print-root{display:none;background:#fff}
+  @media print{
+    body.rx-printing > *:not(#rx-print-root){display:none!important}
+    body.rx-printing #rx-print-root{display:block}
+    body.rx-printing{background:#fff}
+    .rx-doc{font-size:11.5pt}
+    .rx-doc tr,.rx-doc li{page-break-inside:avoid}
+    .rx-doc h4{page-break-after:avoid}
+    @page{margin:14mm}
+  }
+
+  /* ---- Ampliação do demo: formulário, filtros, blocos, linha do tempo, CTPS, lote ---- */
+  .rx-bonus{display:inline-block;margin-left:4px;padding:1px 6px;border-radius:100px;background:#F4ECD8;color:#8A6A1C;font-size:9.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;vertical-align:middle}
+  .rx-form{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+  .rx-fld-w{grid-column:1/-1}
+  @media (max-width:559px){ .rx-form{grid-template-columns:1fr} }
+  .rx-in{display:block;width:100%;min-height:44px;border:1px solid #CFCCC3;border-radius:8px;padding:0 12px;font-size:14px;background:#fff;color:var(--rx-text)}
+  .rx-in[readonly]{background:var(--rx-soft);color:var(--rx-muted)}
+  @media (min-width:768px){ .rx-in{min-height:38px} }
+  .rx-search{max-width:260px}
+  @media (max-width:559px){ .rx-search{max-width:none} }
+  .rx-dirty{font-size:12px;font-weight:600;color:var(--rx-pend-t)}
+  .rx-btn[disabled]{opacity:.45;cursor:not-allowed}
+  .rx-toast{position:absolute;left:50%;bottom:16px;transform:translate(-50%,12px);background:var(--rx-graphite);color:#fff;font-size:13px;padding:10px 16px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:40;max-width:calc(100% - 32px);text-align:center}
+  .rx-toast.is-on{opacity:1;transform:translate(-50%,0)}
+  .rx-blocks{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:18px}
+  @media (min-width:640px){ .rx-blocks{grid-template-columns:1fr 1fr} }
+  .rx-block{background:#fff;border:1px solid var(--rx-line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:6px}
+  .rx-bk-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+  .rx-bk-t{font-weight:600}
+  .rx-bk-n{color:var(--rx-muted);font-size:12.5px;font-variant-numeric:tabular-nums}
+  .rx-bk-p{color:var(--rx-muted);font-size:13px;flex:1}
+  .rx-bk-l{align-self:flex-start;padding-left:0}
+  .rx-cinds{display:flex;flex-wrap:wrap;gap:4px}
+  .rx-year{background:#fff;border:1px solid var(--rx-line);border-radius:10px;margin-bottom:10px;overflow:hidden}
+  .rx-yh{display:flex;align-items:center;gap:10px;flex-wrap:wrap;width:100%;min-height:48px;padding:6px 14px;background:none;border:0;text-align:left}
+  .rx-yh:hover{background:#FAFAF8}
+  .rx-ytot{margin-left:auto;font-size:12.5px;color:var(--rx-muted)}
+  .rx-chev{display:inline-grid;transition:transform .15s;transform:rotate(-90deg)}
+  .rx-chev.is-open{transform:none}
+  .rx-year .rx-tablewrap{border:0;border-top:1px solid var(--rx-line);border-radius:0}
+  .rx-s-run{background:#F4ECD8;color:#8A6A1C}
+  .rx-mini-spin{width:12px;height:12px;border:2px solid #E3D3A5;border-top-color:var(--rx-gold);border-radius:50%;animation:rxspin .8s linear infinite}
+  .rx-sec-sub{color:var(--rx-muted);font-size:13px;margin:-6px 0 12px}
+  .rx-card2{background:#fff;border:1px solid var(--rx-line);border-radius:10px;padding:18px;text-align:center}
+  .rx-card2 p{color:var(--rx-muted);margin:6px auto 14px;max-width:460px}
+  /* heatmap */
+  .rx-heat{background:#fff;border:1px solid var(--rx-line);border-radius:10px;padding:14px;margin-bottom:16px;overflow-x:auto}
+  .rx-hrow{display:flex;align-items:center;gap:10px;margin-bottom:3px;min-width:300px}
+  .rx-hy{flex:0 0 38px;font-size:11.5px;color:var(--rx-muted);font-variant-numeric:tabular-nums}
+  .rx-hcells{flex:1;display:grid;grid-template-columns:repeat(12,1fr);gap:3px;max-width:520px}
+  .rx-hc{height:12px;border-radius:2px;background:var(--rx-soft)}
+  .rx-hc.c{background:#9C9C94}.rx-hc.g{background:var(--rx-att)}.rx-hc.i{background:var(--rx-pend)}
+  .rx-legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-size:12px;color:var(--rx-muted)}
+  .rx-legend i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+  .rx-tlyear{display:grid;grid-template-columns:56px 1fr;gap:6px 10px;margin-bottom:14px}
+  @media (max-width:559px){ .rx-tlyear{grid-template-columns:1fr} }
+  .rx-tly{font-size:17px;font-weight:600;font-variant-numeric:tabular-nums}
+  .rx-tll{position:relative;margin:0;padding:0 0 0 20px;border-left:1px solid var(--rx-line);display:flex;flex-direction:column;gap:8px}
+  .rx-tli{position:relative;background:#fff;border:1px solid var(--rx-line);border-radius:10px;padding:10px 12px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px 10px}
+  .rx-tli::before{content:'';position:absolute;left:-27px;top:16px;width:12px;height:12px;border-radius:50%;background:var(--rx-graphite);border:2px solid var(--rx-bg)}
+  .rx-tli.k-g::before{background:var(--rx-att)}.rx-tli.k-i::before{background:var(--rx-na)}.rx-tli.k-p::before{background:var(--rx-pend)}
+  .rx-tk{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--rx-muted)}
+  /* pendências do cliente */
+  .rx-rq{display:grid;grid-template-columns:1fr;gap:16px}
+  @media (min-width:900px){ .rx-rq{grid-template-columns:1fr 1fr;align-items:start} }
+  .rx-rqi{background:#fff;border:1px solid var(--rx-line);border-radius:10px;padding:12px;margin-bottom:10px;display:flex;flex-direction:column;gap:8px}
+  .rx-rqh{display:flex;align-items:center;gap:8px}
+  .rx-rqh input[type=checkbox]{width:18px;height:18px;accent-color:var(--rx-graphite);flex:0 0 auto}
+  .rx-rqh .rx-in{font-weight:600}
+  .rx-rqx{flex:0 0 auto;display:grid;place-items:center;width:40px;height:40px;background:none;border:0;border-radius:8px;color:var(--rx-muted)}
+  .rx-rqx:hover{background:var(--rx-att-bg);color:var(--rx-att-t)}
+  .rx-lab2{font-size:12px;font-weight:600;color:var(--rx-muted)}
+  .rx-ta.rx-s{min-height:64px;font-size:13px}
+  .rx-rqprev{background:#fff;border:1px solid var(--rx-line);border-radius:10px;padding:18px}
+  .rx-doc ol.rx-reqs{margin:12px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:14px;counter-reset:rq}
+  .rx-doc ol.rx-reqs>li{counter-increment:rq;padding-bottom:12px;border-bottom:1px solid #E7E5DF}
+  .rx-doc ol.rx-reqs>li::before{content:counter(rq) '. ';font-weight:700}
+  .rx-doc .rx-chk{display:flex;gap:8px;margin-top:4px;font-size:12.5px}
+  .rx-doc .rx-chk i{flex:0 0 12px;height:12px;border:1.5px solid #1A1A1E;border-radius:2px;margin-top:3px}
+  /* lote */
+  .rx-batch{max-width:760px;margin:0 auto}
+  .rx-brow{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--rx-line);border-radius:10px;padding:10px 12px;margin-bottom:8px;flex-wrap:wrap}
+  .rx-brow .rx-fi{flex:1 1 200px}
+  /* ===== RX DEMO (fim) ===== */
+</style>
+<!-- TODO: adicionar aqui o script de pixel/rastreamento (Cashflow) com o offer id real assim que o checkout da Zouti for criado -->
+</head>
+<body>
+
+<div class="top-banner">Oferta especial disponível apenas hoje <span id="today-date">13/08/2026</span></div>
+<script>
+  (function(){
+    var d = new Date();
+    var dd = String(d.getDate()).padStart(2,'0');
+    var mm = String(d.getMonth()+1).padStart(2,'0');
+    var yyyy = d.getFullYear();
+    var el = document.getElementById('today-date');
+    if (el) el.textContent = dd + '/' + mm + '/' + yyyy;
+  })();
+</script>
+
+<!-- BLOCO 1: HERO -->
+<header class="hero">
+  <div class="container">
+    <span class="eyebrow on-navy">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 10V7a6 6 0 1 1 12 0v3"/><rect x="4" y="10" width="16" height="11" rx="2"/></svg>
+      Compra 100% Segura e Protegida
+    </span>
+    <h1>Raio-X Automático do CNIS:</h1>
+    <p>Envie o CNIS do seu cliente e receba um Raio-X organizado com vínculos, contribuições, remunerações, indicadores e pontos de atenção reunidos em um só lugar — pronto para você revisar, complementar, salvar e imprimir.</p>
+
+    <img class="hero-mockup" src="assets/mockup-hero.webp" alt="Raio-X Automático do CNIS: sistema que organiza vínculos, contribuições, indicadores e pendências do CNIS" width="1080" height="588">
+
+    <ul class="checklist on-navy">
+      <li><span class="check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Visualize os principais dados do CNIS sem precisar organizar tudo manualmente.</li>
+      <li><span class="check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Identifique vínculos, contribuições, remunerações e indicadores em uma visão estruturada.</li>
+      <li><span class="check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Concentre os pontos que merecem conferência em uma única lista de trabalho.</li>
+      <li><span class="check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Acrescente suas próprias observações e marque o que já foi revisado.</li>
+      <li><span class="check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Salve ou imprima o Raio-X para manter a análise organizada junto ao caso do cliente.</li>
+    </ul>
+
+    <div class="btn-wrap">
+      <a href="#planos" class="btn btn-green">Eu quero acessar o sistema</a>
+      <span class="btn-note on-navy">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z" opacity="0"/><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>
+        Acesso imediato via e-mail após a compra.
+      </span>
+    </div>
+  </div>
+</header>
+
+<!-- BLOCO 2: DEMONSTRATIVO -->
+<section class="bg-white">
+  <div class="container">
+    <div class="section-head">
+      <h2>Veja o sistema funcionando por dentro:</h2>
+      <p>Um passo a passo real de como o Raio-X Automático do CNIS transforma o documento do seu cliente em uma análise organizada, do envio do arquivo até o PDF final.</p>
+    </div>
+
+
+    <!-- ===== RX DEMO: demonstrativo interativo (início) ===== -->
+    <div class="rx" id="rx-demo" role="region" aria-label="Demonstrativo interativo do Raio-X Automático do CNIS">
+      <div class="rx-frame" id="rx-frame">
+        <div class="rx-top">
+          <div class="rx-brand">
+            <span class="rx-logo" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8V6a2 2 0 0 1 2-2h2"/><path d="M16 4h2a2 2 0 0 1 2 2v2"/><path d="M20 16v2a2 2 0 0 1-2 2h-2"/><path d="M8 20H6a2 2 0 0 1-2-2v-2"/><line x1="7" y1="12" x2="17" y2="12"/></svg></span>
+            <span class="rx-brand-name">Raio-X Automático do CNIS</span>
+          </div>
+          <div class="rx-top-r">
+            <span class="rx-demo-badge">Dados de demonstração</span>
+            <button type="button" class="rx-ghost" data-action="restart" aria-label="Reiniciar demonstração"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 0 1 15.5-6.2L21 8"/><polyline points="21 3 21 8 16 8"/><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><polyline points="3 21 3 16 8 16"/></svg>Reiniciar</button>
+          </div>
+        </div>
+        <ol class="rx-prog" id="rx-prog" aria-label="Progresso da demonstração"></ol>
+        <div class="rx-body"><div class="rx-view" id="rx-view" tabindex="-1"></div></div>
+        <div class="rx-foot">Este é um demonstrativo com dados fictícios. O Raio-X apoia a conferência; a decisão jurídica é do advogado.</div>
+        <div class="rx-overlay" id="rx-overlay" data-action="close-panel"></div>
+        <aside class="rx-panel" id="rx-panel" role="dialog" aria-modal="true" aria-labelledby="rx-panel-title" aria-hidden="true"></aside>
+        <div class="rx-toast" id="rx-toast" role="status" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <script>
+    (function(){
+    'use strict';
+
+    /* ================================================================
+       CONFIGURAÇÃO
+       ================================================================ */
+    const RX_CONFIG = {
+      ctaUrl: '#planos',                         // <- link do checkout / seção de planos
+      ctaLabel: 'Quero usar no meu escritório',
+      disclaimer: 'Este é um demonstrativo com dados fictícios. O Raio-X apoia a conferência; a decisão jurídica é do advogado.'
+    };
+
+    /* ================================================================
+       DADOS MOCK (100% fictícios)
+       vinculos: base = remuneração inicial, cresc = reajuste anual
+       indicadores.comps / rem: competências marcadas pelo indicador
+       pendencias.gap: período sem remuneração dentro de um vínculo
+       status inicial: indicadores = 'att' (ponto de atenção), pendências = 'pend'
+       ================================================================ */
+    const RX_DATA = [
+      {
+        id:'joao', cliente:'João Carlos Ferreira', cpf:'•••.•••.•••-42',
+        arquivo:'CNIS_João_Carlos_Ferreira.pdf', info:'184 KB · 6 páginas', ref:'DEMO-0142', fimDados:'2019-12',
+        vinculos:[
+          {id:'v1', emp:'Empresa Alfa Comércio LTDA', curto:'Alfa Comércio', ini:'2008-03', fim:'2011-11', tipo:'Empregado', base:1100, cresc:.07},
+          {id:'v2', emp:'Beta Serviços Administrativos LTDA', curto:'Beta Serviços', ini:'2012-01', fim:'2016-07', tipo:'Empregado', base:1900, cresc:.06},
+          {id:'v3', emp:'Contribuinte Individual', curto:'Contrib. Individual', ini:'2016-08', fim:'2017-12', tipo:'Contribuinte individual', base:1000, cresc:0, link:'i2'},
+          {id:'v4', emp:'Gamma Indústria S.A.', curto:'Gamma Indústria', ini:'2018-01', fim:null, tipo:'Empregado', base:2600, cresc:.05}
+        ],
+        indicadores:[
+          {id:'i1', codigo:'PREC-MENOR-MIN', significado:'Remuneração registrada em valor inferior ao mínimo de referência da competência.', onde:'Gamma Indústria S.A.', periodo:'05/2019', conferir:'Conferir se há complementação de recolhimento ou outra informação que explique o valor registrado.', comps:['2019-05'], rem:812, status:'att'},
+          {id:'i2', codigo:'IREC-INDPEND', significado:'Indicador associado a recolhimentos de contribuinte individual. Merece conferência quanto à origem e à comprovação do recolhimento.', onde:'Contribuinte Individual', periodo:'08/2016 a 12/2017', conferir:'Conferir as guias de recolhimento e o enquadramento de cada competência do período.', status:'att'},
+          {id:'i3', codigo:'PEXT', significado:'Indicador de informação extemporânea. Merece conferência quanto à data do registro e aos documentos de apoio.', onde:'Beta Serviços Administrativos LTDA', periodo:'01/2012', conferir:'Conferir o documento que sustenta a data de início e se o registro foi feito depois da competência.', status:'att'}
+        ],
+        pendencias:[
+          {id:'p1', cat:'periodo', titulo:'Período sem remuneração identificada', periodo:'04/2012 a 08/2012', origem:'Beta Serviços Administrativos LTDA', desc:'Não há remuneração registrada nessas competências, dentro de um vínculo informado. Conferir documentos que expliquem o período.', gap:['2012-04','2012-08'], vinculo:'v2', status:'pend'},
+          {id:'p2', cat:'vinculo', titulo:'Confirmar a data de saída do vínculo', periodo:'11/2011', origem:'Empresa Alfa Comércio LTDA', desc:'Conferir a data de encerramento com a CTPS ou com o termo de rescisão.', status:'pend'},
+          {id:'p3', cat:'outros', titulo:'Reunir documentos do período como contribuinte individual', periodo:'08/2016 a 12/2017', origem:'Contribuinte Individual', desc:'Separar guias de recolhimento e comprovantes para conferência com o cliente.', status:'pend'}
+        ]
+      },
+      {
+        id:'maria', cliente:'Maria Aparecida Souza', cpf:'•••.•••.•••-17',
+        arquivo:'CNIS_Maria_Aparecida_Souza.pdf', info:'171 KB · 5 páginas', ref:'DEMO-0207', fimDados:'2019-12',
+        vinculos:[
+          {id:'v1', emp:'Delta Varejo LTDA', curto:'Delta Varejo', ini:'2006-02', fim:'2010-06', tipo:'Empregado', base:900, cresc:.08},
+          {id:'v2', emp:'Epsilon Educação LTDA', curto:'Epsilon Educação', ini:'2010-09', fim:'2015-03', tipo:'Empregado', base:1500, cresc:.06},
+          {id:'v3', emp:'Contribuinte Facultativo', curto:'Facultativo', ini:'2015-04', fim:'2019-12', tipo:'Contribuinte facultativo', base:800, cresc:0}
+        ],
+        indicadores:[
+          {id:'i1', codigo:'PEXT', significado:'Indicador de informação extemporânea. Merece conferência quanto à data do registro e aos documentos de apoio.', onde:'Delta Varejo LTDA', periodo:'02/2006', conferir:'Conferir o documento que sustenta a data de início do vínculo.', status:'att'},
+          {id:'i2', codigo:'PREC-MENOR-MIN', significado:'Remuneração registrada em valor inferior ao mínimo de referência da competência.', onde:'Epsilon Educação LTDA', periodo:'06/2011', conferir:'Conferir se há complementação de recolhimento ou outra informação que explique o valor registrado.', comps:['2011-06'], rem:450, status:'att'},
+          {id:'i3', codigo:'IREC-INDPEND', significado:'Indicador associado a recolhimentos de contribuinte. Merece conferência quanto à origem e à comprovação do recolhimento.', onde:'Contribuinte Facultativo', periodo:'03/2017', conferir:'Conferir a guia de recolhimento da competência e a categoria informada.', comps:['2017-03'], status:'att'}
+        ],
+        pendencias:[
+          {id:'p1', cat:'periodo', titulo:'Período sem remuneração identificada', periodo:'02/2013 a 04/2013', origem:'Epsilon Educação LTDA', desc:'Não há remuneração registrada nessas competências, dentro de um vínculo informado. Conferir documentos que expliquem o período.', gap:['2013-02','2013-04'], vinculo:'v2', status:'pend'},
+          {id:'p2', cat:'vinculo', titulo:'Conferir a data de início do vínculo', periodo:'02/2006', origem:'Delta Varejo LTDA', desc:'Conferir o registro de admissão com a CTPS do cliente.', status:'pend'},
+          {id:'p3', cat:'outros', titulo:'Solicitar comprovantes de recolhimento', periodo:'04/2015 a 12/2019', origem:'Contribuinte Facultativo', desc:'Reunir as guias pagas para conferência das competências do período.', status:'pend'}
+        ]
+      },
+      {
+        id:'roberto', cliente:'Roberto Lima Alves', cpf:'•••.•••.•••-05',
+        arquivo:'CNIS_Roberto_Lima_Alves.pdf', info:'196 KB · 7 páginas', ref:'DEMO-0318', fimDados:'2019-12',
+        vinculos:[
+          {id:'v1', emp:'Ômega Transportes LTDA', curto:'Ômega Transportes', ini:'2004-06', fim:'2009-12', tipo:'Empregado', base:800, cresc:.08},
+          {id:'v2', emp:'Sigma Construções S.A.', curto:'Sigma Construções', ini:'2010-03', fim:'2014-10', tipo:'Empregado', base:1700, cresc:.07},
+          {id:'v3', emp:'Contribuinte Individual', curto:'Contrib. Individual', ini:'2014-11', fim:'2016-12', tipo:'Contribuinte individual', base:1000, cresc:0, link:'i2'},
+          {id:'v4', emp:'Lambda Logística LTDA', curto:'Lambda Logística', ini:'2017-02', fim:null, tipo:'Empregado', base:2300, cresc:.05}
+        ],
+        indicadores:[
+          {id:'i1', codigo:'PREC-MENOR-MIN', significado:'Remuneração registrada em valor inferior ao mínimo de referência da competência.', onde:'Lambda Logística LTDA', periodo:'09/2018', conferir:'Conferir se há complementação de recolhimento ou outra informação que explique o valor registrado.', comps:['2018-09'], rem:700, status:'att'},
+          {id:'i2', codigo:'IREC-INDPEND', significado:'Indicador associado a recolhimentos de contribuinte individual. Merece conferência quanto à origem e à comprovação do recolhimento.', onde:'Contribuinte Individual', periodo:'11/2014 a 12/2016', conferir:'Conferir as guias de recolhimento e o enquadramento de cada competência do período.', status:'att'},
+          {id:'i3', codigo:'PEXT', significado:'Indicador de informação extemporânea. Merece conferência quanto à data do registro e aos documentos de apoio.', onde:'Ômega Transportes LTDA', periodo:'06/2004', conferir:'Conferir o documento que sustenta a data de início do vínculo.', status:'att'}
+        ],
+        pendencias:[
+          {id:'p1', cat:'periodo', titulo:'Período sem remuneração identificada', periodo:'06/2012 a 07/2012', origem:'Sigma Construções S.A.', desc:'Não há remuneração registrada nessas competências, dentro de um vínculo informado. Conferir documentos que expliquem o período.', gap:['2012-06','2012-07'], vinculo:'v2', status:'pend'},
+          {id:'p2', cat:'vinculo', titulo:'Confirmar a data de saída do vínculo', periodo:'12/2009', origem:'Ômega Transportes LTDA', desc:'Conferir a data de encerramento com a CTPS ou com o termo de rescisão.', status:'pend'},
+          {id:'p3', cat:'remuneracao', titulo:'Conferir a remuneração da competência sinalizada', periodo:'09/2018', origem:'Lambda Logística LTDA', desc:'Comparar o valor registrado com holerites ou outro documento de apoio.', status:'pend'}
+        ]
+      }
+    ];
+
+    /* Datas completas (dia/mês/ano) usadas na conferência CNIS x CTPS */
+    const FULL = {
+      joao:{v1:['2008-03-01','2011-11-18'],v2:['2012-01-10','2016-07-22'],v3:['2016-08-01','2017-12-31'],v4:['2018-01-08',null]},
+      maria:{v1:['2006-02-06','2010-06-30'],v2:['2010-09-01','2015-03-27'],v3:['2015-04-01','2019-12-31']},
+      roberto:{v1:['2004-06-07','2009-12-18'],v2:['2010-03-01','2014-10-31'],v3:['2014-11-01','2016-12-31'],v4:['2017-02-06',null]}
+    };
+    const DOCS = {
+      vinculo:['Carteira de Trabalho (CTPS): páginas do contrato do período','Termo de rescisão ou comprovante de saída, se houver'],
+      contribuicao:['Guias de recolhimento do período (GPS, DAS ou equivalentes)','Comprovantes de pagamento correspondentes'],
+      remuneracao:['Holerites ou recibos de pagamento do período','Extratos bancários que mostrem o recebimento, se não houver holerites'],
+      indicador:['Documentos que comprovem a remuneração ou o recolhimento da competência'],
+      periodo:['Holerites, recibos ou guias do período','Declaração ou contrato que explique a atividade no período, se houver'],
+      outros:['Documentos relacionados ao ponto, conforme orientação do escritório']
+    };
+    const REQ_INTRO = 'Para dar andamento à organização do seu CNIS, precisamos que você nos envie os documentos e informações abaixo. Eles servem para conferirmos os pontos identificados na análise.';
+
+    /* ================================================================
+       UTILITÁRIOS
+       ================================================================ */
+    const root = document.getElementById('rx-demo');
+    const $ = (s, r) => (r || root).querySelector(s);
+    const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    const escBr = s => esc(s).replace(/\n/g, '<br>');
+    const fmtYM = ym => ym.slice(5) + '/' + ym.slice(0, 4);
+    const brl = n => n.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
+    const reduce = () => window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isMobile = () => window.matchMedia('(max-width:767px)').matches;
+
+    function ymRange(a, b){
+      const out = []; let y = +a.slice(0,4), m = +a.slice(5);
+      const ey = +b.slice(0,4), em = +b.slice(5);
+      while (y < ey || (y === ey && m <= em)) {
+        out.push(y + '-' + String(m).padStart(2,'0'));
+        m++; if (m > 12) { m = 1; y++; }
+      }
+      return out;
+    }
+    const monthsBetween = (a, b) => (+b.slice(0,4) - +a.slice(0,4)) * 12 + (+b.slice(5) - +a.slice(5));
+
+    const P = {
+      check:'<polyline points="20 6 9 17 4 12"/>',
+      checkc:'<circle cx="12" cy="12" r="9"/><polyline points="8 12.5 11 15.5 16 9"/>',
+      alert:'<path d="M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+      clock:'<circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15.5 14"/>',
+      dash:'<circle cx="12" cy="12" r="9" stroke-dasharray="3 3"/>',
+      file:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><polyline points="14 3 14 8 19 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/>',
+      x:'<line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/>',
+      print:'<path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/>',
+      note:'<path d="M4 4h16v12H8l-4 4z"/>',
+      eye:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+      info:'<circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><line x1="12" y1="8" x2="12.01" y2="8"/>',
+      chev:'<polyline points="6 9 12 15 18 9"/>',
+      back:'<line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>',
+      chevl:'<polyline points="15 18 9 12 15 6"/>',
+      chevr:'<polyline points="9 18 15 12 9 6"/>'
+    };
+    const ico = (n, s) => '<svg viewBox="0 0 24 24" width="' + (s||16) + '" height="' + (s||16) + '" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">' + P[n] + '</svg>';
+
+    const ST = {
+      na:   {label:'Organizado', icon:'dash'},
+      ok:   {label:'Conferido',        icon:'checkc'},
+      att:  {label:'Ponto de atenção', icon:'alert'},
+      pend: {label:'Pendência',        icon:'clock'}
+    };
+    const chip = (st, label) => '<span class="rx-chip rx-s-' + st + '">' + ico(ST[st].icon, 14) + '<span>' + esc(label || ST[st].label) + '</span></span>';
+    const obsFlag = () => '<span class="rx-obsflag" title="Possui observação">' + ico('note', 14) + '<span class="rx-sr">Possui observação</span></span>';
+
+    const OVERALL = {
+      pend:   {label:'Com pendências', icon:'clock'},
+      review: {label:'Em revisão',     icon:'eye'},
+      done:   {label:'Concluída',      icon:'checkc'}
+    };
+    const CATS = [['vinculo','Vínculos'],['contribuicao','Contribuições'],['remuneracao','Remunerações'],['indicador','Indicadores'],['periodo','Períodos'],['outros','Outros pontos sinalizados']];
+    const catLabel = c => (CATS.find(x => x[0] === c) || [0,'Outros'])[1];
+    const TABS = [['resumo','Resumo'],['vinculos','Vínculos'],['contribuicoes','Contribuições'],['indicadores','Indicadores'],['pendencias','Pendências'],['linha','Linha do Tempo',1],['cliente','Pend. do Cliente',1],['ctps','CNIS x CTPS',1]];
+    const STAGES = ['Lendo o CNIS','Identificando vínculos','Organizando competências e remunerações','Localizando indicadores','Mapeando pontos de atenção','Montando o Raio-X'];
+
+    /* ================================================================
+       ESTADO E MODELO
+       ================================================================ */
+    const state = {
+      di:0, view:'file', tab:'resumo', stage:0,
+      model:null, marks:{}, touched:false, dirty:false,
+      filterPend:false, pFilter:'abertas', openComment:{},
+      vFilter:'todos', vq:'', cYear:'all', cStatus:'all', cView:'tabela', cYears:{}, iCode:'all', iStatus:'all', tlFilter:'todos',
+      extra:[], ctps:null, reqs:null, cli:{nome:'', ref:''}, batch:{st:[], running:false, done:false},
+      tips:{resumo:true, vinc:true, report:true},
+      panelId:null, openerFk:null, focusNext:false, prev:null
+    };
+    let timers = [];
+    const clearTimers = () => { timers.forEach(clearTimeout); timers = []; };
+    const ds = () => RX_DATA[state.di];
+    const eff = id => state.marks[id].status;
+    const rowStatus = r => r.link ? eff(r.link) : eff(r.id);
+
+    function buildModel(d){
+      const rows = [];
+      d.vinculos.forEach(v => {
+        ymRange(v.ini, v.fim || d.fimDados).forEach(ym => {
+          const yrs = Math.floor(monthsBetween(v.ini, ym) / 12);
+          let rem = Math.round(v.base * Math.pow(1 + v.cresc, yrs) / 10) * 10;
+          let link = v.link || null;
+          d.pendencias.forEach(p => { if (p.gap && p.vinculo === v.id && ym >= p.gap[0] && ym <= p.gap[1]) { rem = null; link = p.id; } });
+          d.indicadores.forEach(i => { if (i.comps && i.comps.indexOf(ym) > -1) { link = i.id; if (i.rem != null) rem = i.rem; } });
+          rows.push({id:'c-' + ym, ym, rem, origem:v.curto, link});
+        });
+      });
+      rows.sort((a, b) => a.ym < b.ym ? -1 : 1);
+      const items = {}, rowById = {};
+      d.vinculos.forEach(v => { items[v.id] = {id:v.id, cat:'vinculo', titulo:v.emp, periodo:fmtYM(v.ini) + ' a ' + (v.fim ? fmtYM(v.fim) : 'em aberto'), origem:v.tipo}; });
+      d.indicadores.forEach(i => { items[i.id] = Object.assign({}, i, {cat:'indicador', titulo:i.codigo, origem:i.onde}); });
+      d.pendencias.forEach(p => { items[p.id] = Object.assign({}, p); });
+      rows.forEach(r => {
+        rowById[r.id] = r;
+        items[r.id] = {id:r.id, cat:'contribuicao', titulo:'Competência ' + fmtYM(r.ym), periodo:fmtYM(r.ym), origem:r.origem + (r.rem != null ? ' · ' + brl(r.rem) : ' · sem remuneração identificada')};
+      });
+      return {rows, items, rowById};
+    }
+
+    function loadDataset(){
+      state.model = buildModel(ds());
+      state.marks = {};
+      Object.keys(state.model.items).forEach(id => { const it = state.model.items[id]; state.marks[id] = {status:it.status || ((it.cat === 'vinculo' || it.cat === 'contribuicao') ? 'ok' : 'na'), obs:'', prev:null}; });
+      state.tab = 'resumo'; state.filterPend = false; state.pFilter = 'abertas';
+      state.openComment = {}; state.touched = false; state.dirty = false; state.prev = null;
+      state.vFilter = 'todos'; state.vq = ''; state.cYear = 'all'; state.cStatus = 'all'; state.cView = 'tabela'; state.cYears = {}; state.iCode = 'all'; state.iStatus = 'all'; state.tlFilter = 'todos';
+      state.extra = []; state.ctps = null; state.reqs = null; state.cli = {nome:ds().cliente, ref:ds().ref};
+      state.tips = {resumo:true, vinc:true, report:true};
+    }
+
+    const rootIds = () => { const d = ds(); return d.vinculos.concat(d.indicadores, d.pendencias, state.extra).map(x => x.id); };
+    const workIds = () => rootIds().concat(state.model.rows.filter(r => !r.link && (eff(r.id) === 'att' || eff(r.id) === 'pend')).map(r => r.id));
+
+    function counts(){
+      const d = ds(), ids = workIds(), R = rootIds();
+      let att = 0, pend = 0;
+      ids.forEach(id => { const s = eff(id); if (s === 'att') att++; else if (s === 'pend') pend++; });
+      const reviewed = R.filter(id => eff(id) === 'ok').length;
+      let overall = 'review';
+      if (pend > 0) overall = 'pend'; else if (reviewed === R.length && att === 0) overall = 'done';
+      return {
+        vinc:d.vinculos.length, vincOk:d.vinculos.filter(v => eff(v.id) === 'ok').length,
+        comps:state.model.rows.length,
+        inds:d.indicadores.length, indOk:d.indicadores.filter(i => eff(i.id) === 'ok').length,
+        att, pend, open:att + pend, reviewed, total:R.length, overall
+      };
+    }
+
+    /* ================================================================
+       VIEWS
+       ================================================================ */
+    function tip(key, text){
+      if (!state.tips[key]) return '';
+      return '<div class="rx-tip" role="note"><span aria-hidden="true">' + ico('info', 16) + '</span><span class="rx-tip-t">' + text + '</span><button type="button" class="rx-tip-x" data-action="tip-x" data-tip="' + key + '" aria-label="Dispensar dica">' + ico('x', 14) + '</button></div>';
+    }
+    const reportTip = () => state.touched ? tip('report', 'Quando terminar, clique em Ver relatório para abrir e imprimir a ficha do cliente.') : '';
+
+    function viewFile(){
+      const d = ds();
+      return '<div class="rx-file">' +
+        '<h3 class="rx-h" id="rx-h" tabindex="-1">Novo Raio-X do CNIS</h3>' +
+        '<p class="rx-sub">Um CNIS fictício já está carregado. Veja como o Raio-X organiza o documento em poucos segundos.</p>' +
+        '<div class="rx-form"><div class="rx-fld rx-fld-w"><label class="rx-lab" for="rx-f-nome">Nome completo</label><input class="rx-in" id="rx-f-nome" data-role="cli-nome" value="' + esc(state.cli.nome) + '" autocomplete="off"></div>' +
+        '<div><label class="rx-lab" for="rx-f-cpf">CPF</label><input class="rx-in" id="rx-f-cpf" value="' + esc(d.cpf) + '" readonly></div>' +
+        '<div><label class="rx-lab" for="rx-f-ref">Referência interna</label><input class="rx-in" id="rx-f-ref" data-role="cli-ref" value="' + esc(state.cli.ref) + '" autocomplete="off"></div></div>' +
+        '<div class="rx-filecard"><span class="rx-pdf" aria-hidden="true">' + ico('file', 24) + '</span>' +
+        '<div class="rx-fi"><div class="rx-fname">' + esc(d.arquivo) + '</div><div class="rx-fmeta">' + esc(d.info) + '</div></div>' + chip('ok', 'Carregado') + '</div>' +
+        '<div class="rx-actions"><button type="button" class="rx-btn rx-primary" data-action="analyze" data-fk="analyze">Analisar este CNIS</button>' +
+        '<button type="button" class="rx-link" data-action="other" data-fk="other">Usar outro exemplo</button>' +
+        '<button type="button" class="rx-link" data-action="batch" data-fk="batch">Analisar vários CNIS de uma vez <span class="rx-bonus">Bônus</span></button></div>' +
+        '<p class="rx-note">Exemplo ' + (state.di + 1) + ' de ' + RX_DATA.length + ' · Dados de demonstração</p></div>';
+    }
+
+    function viewProcessing(){
+      const d = ds(), n = STAGES.length, pct = Math.round(state.stage / n * 100);
+      const lis = STAGES.map((s, i) => {
+        const done = i < state.stage, act = i === state.stage;
+        const icon = done ? '<span class="rx-si rx-okc">' + ico('checkc', 20) + '</span>' : act ? '<span class="rx-si"><span class="rx-spin"></span></span>' : '<span class="rx-si"><span class="rx-ring"></span></span>';
+        return '<li class="' + (done ? 'is-done' : act ? 'is-active' : '') + '">' + icon + '<span>' + s + '</span>' + (act ? '<span class="rx-sr"> (em andamento)</span>' : done ? '<span class="rx-sr"> (concluído)</span>' : '') + '</li>';
+      }).join('');
+      const cur = state.stage < n ? STAGES[state.stage] : 'Raio-X pronto';
+      return '<div class="rx-proc"><h3 class="rx-h" id="rx-h" tabindex="-1">Processando o CNIS</h3>' +
+        '<p class="rx-sub">' + esc(d.arquivo) + '</p>' +
+        '<div class="rx-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '" aria-label="Progresso do processamento"><span style="width:' + pct + '%"></span></div>' +
+        '<ul class="rx-stages">' + lis + '</ul><div class="rx-sr" aria-live="polite">' + cur + '</div></div>';
+    }
+
+    function tabsHTML(c){
+      return '<div class="rx-tabswrap"><button type="button" class="rx-tabarrow is-left" data-action="tabs-scroll" data-dir="-1" aria-label="Ver abas anteriores" disabled>' + ico('chevl', 18) + '</button>' +
+        '<div class="rx-tabs" role="tablist" aria-label="Seções do Raio-X">' + TABS.map(t => {
+        const k = t[0], sel = state.tab === k;
+        return '<button type="button" role="tab" id="rx-tab-' + k + '" class="rx-tab' + (sel ? ' is-active' : '') + '" aria-selected="' + sel + '" aria-controls="rx-tp" tabindex="' + (sel ? 0 : -1) + '" data-action="tab" data-tab="' + k + '" data-fk="tab-' + k + '">' + t[1] + (t[2] ? '<span class="rx-bonus">Bônus</span>' : '') +
+          (k === 'pendencias' && c.open ? '<span class="rx-badge"><span class="rx-sr">' + c.open + ' em aberto</span><span aria-hidden="true">' + c.open + '</span></span>' : '') + '</button>';
+      }).join('') + '</div>' +
+        '<button type="button" class="rx-tabarrow is-right" data-action="tabs-scroll" data-dir="1" aria-label="Ver mais abas">' + ico('chevr', 18) + '</button></div>';
+    }
+
+    /* Setas das abas: aparecem só quando há abas escondidas; mantêm a aba ativa visível */
+    function updateTabArrows(){
+      const wrap = $('.rx-tabswrap'); if (!wrap) return;
+      const tabs = wrap.querySelector('.rx-tabs'), l = wrap.querySelector('.is-left'), r = wrap.querySelector('.is-right');
+      const over = tabs.scrollWidth > tabs.clientWidth + 2;
+      wrap.classList.toggle('has-overflow', over);
+      if (!over) return;
+      l.disabled = tabs.scrollLeft <= 2;
+      r.disabled = tabs.scrollLeft + tabs.clientWidth >= tabs.scrollWidth - 2;
+    }
+    function setupTabs(prevLeft){
+      const tabs = $('.rx-tabs'); if (!tabs) return;
+      updateTabArrows();
+      tabs.scrollLeft = prevLeft || 0;
+      const act = tabs.querySelector('.is-active');
+      if (act) {
+        const l = act.offsetLeft, r = l + act.offsetWidth;
+        if (l < tabs.scrollLeft + 8) tabs.scrollLeft = Math.max(0, l - 24);
+        else if (r > tabs.scrollLeft + tabs.clientWidth - 8) tabs.scrollLeft = r - tabs.clientWidth + 24;
+      }
+      tabs.addEventListener('scroll', updateTabArrows, {passive:true});
+      updateTabArrows();
+    }
+    window.addEventListener('resize', updateTabArrows);
+
+    function viewRaiox(){
+      const d = ds(), c = counts(), o = OVERALL[c.overall];
+      const body = ({resumo:tabResumo, vinculos:tabVinculos, contribuicoes:tabContribuicoes, indicadores:tabIndicadores, pendencias:tabPendencias, linha:tabLinha, cliente:tabCliente, ctps:tabCtps})[state.tab](c);
+      return '<div class="rx-rxhead"><div><h3 class="rx-cname" id="rx-h" tabindex="-1">' + esc(state.cli.nome) + '</h3><div class="rx-cmeta">' + esc(d.arquivo) + ' · CPF ' + esc(d.cpf) + ' · Ref. ' + esc(state.cli.ref) + '</div></div>' +
+        '<div class="rx-rxactions"><span class="rx-dirty" id="rx-dirty" role="status">' + (state.dirty ? 'Alterações não salvas' : '') + '</span><span class="rx-overall rx-o-' + c.overall + '">' + ico(o.icon, 16) + '<span>Status geral: ' + o.label + '</span></span>' +
+        '<button type="button" class="rx-btn rx-secondary" data-action="save" data-fk="save"' + (state.dirty ? '' : ' disabled') + '>Salvar alterações</button>' +
+        '<button type="button" class="rx-btn rx-primary" data-action="report" data-fk="report">Ver relatório</button></div></div>' +
+        '<div id="rx-tipslot">' + reportTip() + '</div>' + tabsHTML(c) +
+        '<div role="tabpanel" id="rx-tp" tabindex="-1" aria-labelledby="rx-tab-' + state.tab + '">' + body + '</div>';
+    }
+
+    function tabResumo(c){
+      const d = ds();
+      const card = (key, label, n, sub, cls) => '<div class="rx-cardk ' + (cls || '') + '" data-count="' + key + '"><div class="rx-ck-l">' + label + '</div><div class="rx-ck-n">' + n + '</div><div class="rx-ck-s">' + sub + '</div></div>';
+      const open = workIds().filter(id => eff(id) === 'att' || eff(id) === 'pend').sort((a, b) => (eff(a) === 'pend' ? 0 : 1) - (eff(b) === 'pend' ? 0 : 1));
+      const list = open.length ? '<ul class="rx-open">' + open.map(id => {
+        const it = state.model.items[id];
+        return '<li class="rx-orow"><div class="rx-omain"><div class="rx-ot">' + esc(it.titulo) + '</div><div class="rx-om">' + catLabel(it.cat) + ' · ' + esc(it.periodo) + '</div></div>' + chip(eff(id)) +
+          '<button type="button" class="rx-btn rx-secondary rx-sm" data-action="open" data-id="' + id + '" data-fk="cf-' + id + '">Conferir<span class="rx-sr">: ' + esc(it.titulo) + '</span></button></li>';
+      }).join('') + '</ul>' : '<div class="rx-empty">Nenhum ponto em aberto. Revise as observações e abra o relatório quando quiser.</div>';
+      return tip('resumo', 'Marque itens como conferidos nas outras abas e veja este resumo atualizar na hora.') +
+        '<div class="rx-cards">' +
+        card('vinc', 'Vínculos identificados', c.vinc, c.vincOk + ' conferidos') +
+        card('comps', 'Competências organizadas', c.comps, 'até ' + fmtYM(d.fimDados)) +
+        card('inds', 'Indicadores encontrados', c.inds, c.indOk + ' conferidos') +
+        card('att', 'Pontos de atenção', c.att, 'em aberto', 'rx-ck-att') +
+        card('pend', 'Pendências registradas', c.pend, 'em aberto', 'rx-ck-pend') + '</div>' +
+        '<div class="rx-rev"><div><strong>Revisão:</strong> ' + c.reviewed + ' de ' + c.total + ' itens principais conferidos</div>' +
+        '<div class="rx-bar" role="progressbar" aria-valuemin="0" aria-valuemax="' + c.total + '" aria-valuenow="' + c.reviewed + '" aria-label="Itens conferidos"><span style="width:' + Math.round(c.reviewed / c.total * 100) + '%"></span></div></div>' +
+        blocksHTML(c) + '<h4 class="rx-sec-h">Pontos que merecem sua atenção</h4>' + list;
+    }
+
+    /* ================================================================
+       AMPLIAÇÃO: resumo, filtros, linha do tempo, pendências do cliente,
+       CNIS x CTPS e análise em lote
+       ================================================================ */
+    const fmtD = iso => iso ? iso.slice(8) + '/' + iso.slice(5, 7) + '/' + iso.slice(0, 4) : 'em aberto';
+    const addDays = (iso, n) => { const d = new Date(iso + 'T12:00:00'); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
+    const plain = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+    const coName = s => plain(s).replace(/\b(ltda|s\.?a\.?|me|epp)\b/g, '').replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
+    const sameCo = (a, b) => { const x = coName(a), y = coName(b); return !!x && !!y && (x === y || x.indexOf(y) > -1 || y.indexOf(x) > -1); };
+    const parseYM = s => { const m = /(\d{2})\/(\d{4})/.exec(s || ''); return m ? m[2] + '-' + m[1] : '2000-01'; };
+    const allPend = () => ds().pendencias.concat(state.extra);
+
+    function agg(ids, direct){
+      const s = direct ? ids : ids.map(eff);
+      if (s.indexOf('att') > -1) return 'att';
+      if (s.indexOf('pend') > -1) return 'pend';
+      if (s.length && s.every(x => x === 'ok')) return 'ok';
+      return 'na';
+    }
+
+    function toast(msg){
+      const el = $('#rx-toast'); if (!el) return;
+      el.textContent = msg; el.classList.add('is-on');
+      clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('is-on'), 2600);
+    }
+    function syncDirty(){
+      const el = $('#rx-dirty'); if (el) el.textContent = state.dirty ? 'Alterações não salvas' : '';
+      const b = $('[data-action="save"]'); if (b) b.disabled = !state.dirty;
+    }
+
+    /* ---------- Resumo: blocos ---------- */
+    function blocksHTML(c){
+      const d = ds(), rows = state.model.rows, gaps = rows.filter(r => r.rem == null).length;
+      const B = [
+        ['vinculos', 'Vínculos', c.vinc + ' identificados', c.vincOk + ' de ' + c.vinc + ' conferidos.', agg(d.vinculos.map(v => v.id))],
+        ['contribuicoes', 'Contribuições e remunerações', c.comps + ' competências', (c.comps - gaps) + ' com remuneração e ' + gaps + ' sem remuneração identificada.', agg(rows.map(rowStatus), true)],
+        ['indicadores', 'Indicadores', c.inds + ' encontrados', c.indOk + ' de ' + c.inds + ' conferidos.', agg(d.indicadores.map(i => i.id))],
+        ['pendencias', 'Pontos de atenção e pendências', c.open + ' em aberto', c.att + ' ponto(s) de atenção e ' + c.pend + ' pendência(s).', agg(allPend().map(p => p.id))]
+      ];
+      return '<h4 class="rx-sec-h">Resumo da análise</h4><div class="rx-blocks">' + B.map(b =>
+        '<article class="rx-block"><div class="rx-bk-top"><div><div class="rx-bk-t">' + b[1] + '</div><div class="rx-bk-n">' + b[2] + '</div></div>' + chip(b[4]) + '</div>' +
+        '<p class="rx-bk-p">' + b[3] + '</p><button type="button" class="rx-link rx-bk-l" data-action="tab" data-tab="' + b[0] + '" data-fk="bk-' + b[0] + '">Ver detalhes<span class="rx-sr">: ' + b[1] + '</span></button></article>').join('') + '</div>';
+    }
+
+    /* ---------- Vínculos ---------- */
+    function vList(){
+      const d = ds();
+      const list = d.vinculos.filter(v => (state.vFilter === 'todos' || eff(v.id) === state.vFilter) && plain(v.emp).indexOf(plain(state.vq)) > -1);
+      if (!list.length) return '<div class="rx-empty">Nenhum vínculo encontrado para o filtro selecionado.</div>';
+      const rows = list.map(v => {
+        const mk = state.marks[v.id], ok = mk.status === 'ok';
+        const inds = d.indicadores.filter(i => i.onde === v.emp).map(i => '<span class="rx-code">' + esc(i.codigo) + '</span>').join('') || '<span class="rx-hint">—</span>';
+        return '<tr data-action="open" data-id="' + v.id + '"><td class="rx-td-main" data-label="Empregador"><button type="button" class="rx-rowbtn" data-action="open" data-id="' + v.id + '" data-fk="o-' + v.id + '">' + esc(v.emp) + '</button></td>' +
+          '<td data-label="Início">' + fmtYM(v.ini) + '</td><td data-label="Fim">' + (v.fim ? fmtYM(v.fim) : 'Em aberto') + '</td><td data-label="Tipo">' + esc(v.tipo) + '</td>' +
+          '<td data-label="Indicadores"><span class="rx-cinds">' + inds + '</span></td>' +
+          '<td data-label="Situação">' + chip(mk.status) + (mk.obs.trim() ? obsFlag() : '') + '</td>' +
+          '<td data-label="Ação"><button type="button" class="rx-btn rx-secondary rx-sm" data-action="toggle-ok" data-id="' + v.id + '" data-fk="vok-' + v.id + '">' + (ok ? 'Desfazer' : 'Marcar conferido') + '</button></td></tr>';
+      }).join('');
+      return '<div class="rx-tablewrap"><table class="rx-table rx-vtable"><caption class="rx-sr">Vínculos identificados no CNIS</caption><thead><tr><th scope="col">Empregador</th><th scope="col">Início</th><th scope="col">Fim</th><th scope="col">Tipo</th><th scope="col">Indicadores</th><th scope="col">Situação</th><th scope="col"><span class="rx-sr">Ação</span></th></tr></thead><tbody>' + rows + '</tbody></table></div>';
+    }
+    function tabVinculos(){
+      const d = ds();
+      const cnt = k => k === 'todos' ? d.vinculos.length : d.vinculos.filter(v => eff(v.id) === k).length;
+      const F = [['todos', 'Todos'], ['ok', 'Conferidos'], ['att', 'Atenção'], ['pend', 'Pendentes']];
+      return tip('vinc', 'Clique em um vínculo para adicionar uma observação.') +
+        '<div class="rx-tool"><div class="rx-filters" style="margin:0" role="group" aria-label="Filtrar vínculos por situação">' + F.map(f => '<button type="button" class="rx-toggle" aria-pressed="' + (state.vFilter === f[0]) + '" data-action="vfilter" data-f="' + f[0] + '" data-fk="vf-' + f[0] + '">' + f[1] + ' (' + cnt(f[0]) + ')</button>').join('') + '</div>' +
+        '<input type="search" class="rx-in rx-search" data-role="vq" aria-label="Buscar vínculo por empregador" placeholder="Buscar empregador" value="' + esc(state.vq) + '"></div>' +
+        '<div id="rx-vlist">' + vList() + '</div>';
+    }
+
+    /* ---------- Contribuições ---------- */
+    function cRows(rs){
+      return rs.map(r => {
+        const st = rowStatus(r), own = state.marks[r.link || r.id];
+        const it = r.link ? state.model.items[r.link] : null;
+        const ind = it && it.cat === 'indicador' ? '<span class="rx-code">' + esc(it.titulo) + '</span>' : '<span class="rx-hint">—</span>';
+        return '<tr data-action="open" data-id="' + r.id + '"><td><button type="button" class="rx-rowbtn" data-action="open" data-id="' + r.id + '" data-fk="o-' + r.id + '">' + fmtYM(r.ym) + '</button><span class="rx-origm">' + esc(r.origem) + '</span></td>' +
+          '<td class="rx-num">' + (r.rem != null ? brl(r.rem) : '<span class="rx-nodata">Sem remuneração identificada</span>') + '</td>' +
+          '<td>' + esc(r.origem) + '</td><td>' + ind + '</td><td>' + chip(st) + (own.obs.trim() ? obsFlag() : '') + '</td></tr>';
+      }).join('');
+    }
+    function cTable(rs, scroll){
+      return '<div class="rx-tablewrap' + (scroll ? ' rx-scroll' : '') + '"' + (scroll ? ' role="region" tabindex="0" aria-label="Tabela de competências, com rolagem"' : '') + '><table class="rx-table rx-ctable"><caption class="rx-sr">Contribuições e remunerações por competência</caption><thead><tr><th scope="col">Competência</th><th scope="col" style="text-align:right">Remuneração</th><th scope="col">Origem</th><th scope="col">Indicador</th><th scope="col">Situação</th></tr></thead><tbody>' + cRows(rs) + '</tbody></table></div>';
+    }
+    function yearsHTML(list){
+      const g = {}; list.forEach(r => { const y = r.ym.slice(0, 4); (g[y] = g[y] || []).push(r); });
+      return Object.keys(g).sort().map(y => {
+        const rs = g[y], att = rs.filter(r => { const s = rowStatus(r); return s === 'att' || s === 'pend'; }).length;
+        const tot = rs.reduce((n, r) => n + (r.rem || 0), 0);
+        const open = state.cYears[y] !== undefined ? state.cYears[y] : att > 0;
+        return '<section class="rx-year"><button type="button" class="rx-yh" aria-expanded="' + open + '" data-action="toggle-year" data-y="' + y + '" data-fk="y-' + y + '"><span class="rx-chev' + (open ? ' is-open' : '') + '" aria-hidden="true">' + ico('chev', 16) + '</span><strong>' + y + '</strong><span class="rx-count">' + rs.length + ' competência(s)</span>' +
+          '<span class="rx-ytot">Total: ' + brl(tot) + (att ? ' · <span class="rx-nodata">' + att + ' com atenção</span>' : '') + '</span></button>' + (open ? cTable(rs, false) : '') + '</section>';
+      }).join('');
+    }
+    function tabContribuicoes(){
+      const all = state.model.rows, years = [];
+      all.forEach(r => { const y = r.ym.slice(0, 4); if (years.indexOf(y) < 0) years.push(y); });
+      const cnt = s => all.filter(r => rowStatus(r) === s).length;
+      const list = all.filter(r => { const s = rowStatus(r); return (state.cYear === 'all' || r.ym.slice(0, 4) === state.cYear) && (state.cStatus === 'all' || s === state.cStatus) && (!state.filterPend || s === 'att' || s === 'pend'); });
+      const card = (l, n, cls) => '<div class="rx-cardk ' + (cls || '') + '"><div class="rx-ck-l">' + l + '</div><div class="rx-ck-n">' + n + '</div></div>';
+      const yopts = '<option value="all">Ano: todos</option>' + years.map(y => '<option value="' + y + '"' + (state.cYear === y ? ' selected' : '') + '>' + y + '</option>').join('');
+      const sopts = '<option value="all">Situação: todas</option>' + Object.keys(ST).map(k => '<option value="' + k + '"' + (state.cStatus === k ? ' selected' : '') + '>' + ST[k].label + '</option>').join('');
+      const vbtn = (k, l) => '<button type="button" class="rx-toggle" aria-pressed="' + (state.cView === k) + '" data-action="cview" data-v="' + k + '" data-fk="cv-' + k + '">' + l + '</button>';
+      const body = !list.length ? '<div class="rx-empty">Nenhuma competência encontrada para os filtros selecionados.</div>' : state.cView === 'ano' ? yearsHTML(list) : cTable(list, true);
+      return '<div class="rx-cards">' + card('Competências', all.length) + card('Com remuneração', all.filter(r => r.rem != null).length) + card('Com atenção', cnt('att'), 'rx-ck-att') + card('Pendentes', cnt('pend'), 'rx-ck-pend') + '</div>' +
+        '<div class="rx-tool"><div class="rx-filters" style="margin:0"><select class="rx-select" data-role="cyear" aria-label="Filtrar por ano">' + yopts + '</select><select class="rx-select" data-role="cstatus" aria-label="Filtrar por situação">' + sopts + '</select>' +
+        '<button type="button" class="rx-toggle" aria-pressed="' + state.filterPend + '" data-action="filter-pend" data-fk="f-pend">Com pendência</button></div>' +
+        '<div class="rx-filters" style="margin:0" role="group" aria-label="Modo de exibição">' + vbtn('tabela', 'Tabela') + vbtn('ano', 'Por ano') + '</div></div>' +
+        '<div class="rx-count" style="margin-bottom:8px" aria-live="polite">Mostrando ' + list.length + ' de ' + all.length + ' competências</div>' + body +
+        '<p class="rx-footnote">Competências exibidas até ' + fmtYM(ds().fimDados) + '. Valores fictícios.</p>';
+    }
+
+    /* ---------- Indicadores ---------- */
+    function tabIndicadores(){
+      const d = ds();
+      const list = d.indicadores.filter(i => (state.iCode === 'all' || i.codigo === state.iCode) && (state.iStatus === 'all' || eff(i.id) === state.iStatus));
+      const codes = []; d.indicadores.forEach(i => { if (codes.indexOf(i.codigo) < 0) codes.push(i.codigo); });
+      const copts = '<option value="all">Indicador: todos</option>' + codes.map(c => '<option' + (state.iCode === c ? ' selected' : '') + '>' + c + '</option>').join('');
+      const sopts = '<option value="all">Situação: todas</option>' + Object.keys(ST).map(k => '<option value="' + k + '"' + (state.iStatus === k ? ' selected' : '') + '>' + ST[k].label + '</option>').join('');
+      const cards = list.map(i => {
+        const mk = state.marks[i.id], ok = mk.status === 'ok';
+        return '<article class="rx-ind"><div class="rx-ind-top"><span class="rx-code">' + esc(i.codigo) + '</span>' + chip(mk.status) + '</div>' +
+          '<dl class="rx-dl"><div><dt>Significado de referência</dt><dd>' + esc(i.significado) + '</dd></div><div><dt>Onde apareceu</dt><dd>' + esc(i.onde) + '</dd></div><div><dt>Período relacionado</dt><dd>' + esc(i.periodo) + '</dd></div></dl>' +
+          '<div class="rx-callout"><strong>Ponto para conferência</strong>' + esc(i.conferir) + '</div>' +
+          (mk.obs.trim() ? '<div class="rx-obsline"><strong>Observação:</strong> ' + escBr(mk.obs) + '</div>' : '') +
+          '<div class="rx-ind-act"><button type="button" class="rx-btn rx-secondary" data-action="toggle-ok" data-id="' + i.id + '" data-fk="ok-' + i.id + '" aria-pressed="' + ok + '">' + (ok ? 'Desfazer conferência' : 'Marcar como conferido') + '</button>' +
+          '<button type="button" class="rx-link" data-action="open" data-id="' + i.id + '" data-fk="ob-' + i.id + '">Adicionar observação</button></div></article>';
+      }).join('');
+      return '<h4 class="rx-sec-h">Indicadores encontrados</h4><p class="rx-sec-sub">Veja onde cada indicador apareceu e quais pontos merecem conferência profissional.</p>' +
+        '<div class="rx-tool"><div class="rx-filters" style="margin:0"><select class="rx-select" data-role="icode" aria-label="Filtrar por indicador">' + copts + '</select><select class="rx-select" data-role="istatus" aria-label="Filtrar por situação">' + sopts + '</select></div>' +
+        '<span class="rx-count" aria-live="polite">' + list.length + ' de ' + d.indicadores.length + ' indicadores</span></div>' +
+        (list.length ? '<div class="rx-indgrid">' + cards + '</div>' : '<div class="rx-empty">Nenhum indicador para os filtros selecionados.</div>') +
+        '<p class="rx-footnote">Os significados exibidos são referências genéricas de apoio e não concluem sobre o reconhecimento de nenhum período.</p>';
+    }
+
+    /* ---------- Linha do Tempo ---------- */
+    function tlItems(){
+      const d = ds(), out = [];
+      d.vinculos.forEach(v => out.push({k:'v', t:v.emp, s:v.tipo, ym:v.ini, end:v.fim || d.fimDados, st:eff(v.id), id:v.id}));
+      d.indicadores.forEach(i => { const ym = i.comps ? i.comps[0] : parseYM(i.periodo); out.push({k:'i', t:i.codigo, s:i.onde, ym:ym, end:ym, st:eff(i.id), id:i.id}); });
+      allPend().forEach(p => { const ym = p.gap ? p.gap[0] : parseYM(p.periodo); out.push({k:p.gap ? 'g' : 'p', t:p.titulo, s:p.origem, ym:ym, end:p.gap ? p.gap[1] : ym, st:eff(p.id), id:p.id}); });
+      const ord = {v:0, g:1, i:2, p:3};
+      return out.sort((a, b) => a.ym < b.ym ? -1 : a.ym > b.ym ? 1 : ord[a.k] - ord[b.k]);
+    }
+    function tabLinha(){
+      const rows = state.model.rows, byYm = {}; rows.forEach(r => { byYm[r.ym] = r; });
+      const y0 = +rows[0].ym.slice(0, 4), y1 = +rows[rows.length - 1].ym.slice(0, 4);
+      let heat = '';
+      for (let y = y0; y <= y1; y++) {
+        let cells = '';
+        for (let m = 1; m <= 12; m++) {
+          const r = byYm[y + '-' + String(m).padStart(2, '0')];
+          let cls = '';
+          if (r) { const it = r.link ? state.model.items[r.link] : null; cls = r.rem == null ? 'g' : (it && it.cat === 'indicador') ? 'i' : 'c'; }
+          cells += '<span class="rx-hc ' + cls + '" title="' + String(m).padStart(2, '0') + '/' + y + '"></span>';
+        }
+        heat += '<div class="rx-hrow"><span class="rx-hy">' + y + '</span><div class="rx-hcells">' + cells + '</div></div>';
+      }
+      const F = [['todos', 'Todos'], ['v', 'Vínculos'], ['i', 'Indicadores'], ['p', 'Pendências']];
+      const items = tlItems().filter(x => state.tlFilter === 'todos' || x.k === state.tlFilter || (state.tlFilter === 'p' && x.k === 'g'));
+      const K = {v:'Vínculo', g:'Lacuna', i:'Indicador', p:'Pendência'};
+      const g = {}; items.forEach(x => { const y = x.ym.slice(0, 4); (g[y] = g[y] || []).push(x); });
+      const list = Object.keys(g).sort().map(y => '<div class="rx-tlyear"><div class="rx-tly">' + y + '</div><ol class="rx-tll">' + g[y].map(x =>
+        '<li class="rx-tli k-' + x.k + '"><div><div class="rx-tk">' + K[x.k] + '</div><div class="rx-ot">' + esc(x.t) + '</div><div class="rx-om">' + fmtYM(x.ym) + (x.end !== x.ym ? ' a ' + (x.end === ds().fimDados && x.k === 'v' && !ds().vinculos.filter(v => v.id === x.id)[0].fim ? 'em aberto' : fmtYM(x.end)) : '') + ' · ' + esc(x.s) + '</div></div>' + chip(x.st) + '</li>').join('') + '</ol></div>').join('');
+      return '<h4 class="rx-sec-h">Cobertura contributiva</h4><p class="rx-sec-sub">Cada quadro é uma competência (janeiro a dezembro).</p>' +
+        '<div class="rx-heat" role="img" aria-label="Mapa de competências por ano">' + heat + '<div class="rx-legend"><span><i style="background:#9C9C94"></i>Com remuneração</span><span><i style="background:var(--rx-att)"></i>Sem remuneração identificada</span><span><i style="background:var(--rx-pend)"></i>Com indicador</span><span><i style="background:var(--rx-soft);border:1px solid var(--rx-line)"></i>Sem registro</span></div></div>' +
+        '<div class="rx-tool"><h4 class="rx-sec-h" style="margin:0">Linha do tempo</h4><div class="rx-filters" style="margin:0" role="group" aria-label="Filtrar linha do tempo">' + F.map(f => '<button type="button" class="rx-toggle" aria-pressed="' + (state.tlFilter === f[0]) + '" data-action="tlfilter" data-f="' + f[0] + '" data-fk="tl-' + f[0] + '">' + f[1] + '</button>').join('') + '</div></div>' +
+        (list || '<div class="rx-empty">Nenhum evento para o filtro selecionado.</div>');
+    }
+
+    /* ---------- Pendências do Cliente ---------- */
+    function genReqs(){
+      const items = [];
+      allPend().filter(p => eff(p.id) !== 'ok').forEach(p => {
+        const it = state.model.items[p.id];
+        items.push({id:'r-' + p.id, titulo:it.titulo, periodo:it.periodo, docs:(DOCS[it.cat] || DOCS.outros).slice(), next:'Enviar os documentos ao escritório para conferência.', incl:true});
+      });
+      state.reqs = {intro:REQ_INTRO, items:items};
+    }
+    function reqDoc(){
+      const r = state.reqs, inc = r.items.filter(i => i.incl);
+      const lis = inc.map(i => '<li><strong>' + esc(i.titulo) + '</strong>' + (i.periodo ? '<div style="color:#5E5E64">Período: ' + esc(i.periodo) + '</div>' : '') +
+        i.docs.filter(x => x.trim()).map(x => '<div class="rx-chk"><i></i><span>' + esc(x) + '</span></div>').join('') + '<div style="margin-top:6px"><em>Próximo passo:</em> ' + esc(i.next) + '</div></li>').join('');
+      return '<div class="rx-doc"><h2>Relação de pendências</h2><div class="rx-dsub">' + esc(state.cli.nome) + ' · ' + new Date().toLocaleDateString('pt-BR') + '</div>' +
+        '<p style="margin:12px 0 0;white-space:pre-wrap">' + esc(r.intro) + '</p>' + (inc.length ? '<ol class="rx-reqs">' + lis + '</ol>' : '<div class="rx-none" style="margin-top:12px">Nenhum item selecionado.</div>') +
+        '<div class="rx-warn">Esta relação é um apoio de organização para reunir documentos e informações. Ela não representa conclusão ou parecer sobre o caso. Em caso de dúvida, fale com o escritório.</div></div>';
+    }
+    function reqText(){
+      const r = state.reqs, inc = r.items.filter(i => i.incl), L = ['*Relação de pendências — ' + state.cli.nome + '*', '', r.intro, ''];
+      inc.forEach((i, n) => {
+        L.push((n + 1) + '. *' + i.titulo + '*'); if (i.periodo) L.push('   Período: ' + i.periodo);
+        i.docs.filter(x => x.trim()).forEach(x => L.push('   • ' + x)); L.push('   Próximo passo: ' + i.next, '');
+      });
+      L.push('Em caso de dúvida, fale com o escritório.');
+      return L.join('\n');
+    }
+    function copyText(txt){
+      const fb = () => { const ta = document.createElement('textarea'); ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); toast('Texto copiado.'); } catch (e) { toast('Não foi possível copiar.'); } ta.remove(); };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(() => toast('Texto copiado.'), fb); else fb();
+    }
+    function tabCliente(){
+      if (!state.reqs) return '<div class="rx-card2"><h4 class="rx-sec-h">Gerador de Pendências para o Cliente</h4><p>Transforme os pontos identificados na análise em uma relação clara de pendências, ajudando você a orientar o cliente sobre documentos, informações e próximos passos.</p>' +
+        '<button type="button" class="rx-btn rx-primary" data-action="rq-gen" data-fk="rq-gen">Gerar relação de pendências</button></div>';
+      const r = state.reqs;
+      const items = r.items.map(i => '<div class="rx-rqi"><div class="rx-rqh"><input type="checkbox" data-role="rq-inc" data-id="' + i.id + '"' + (i.incl ? ' checked' : '') + ' aria-label="Incluir na relação: ' + esc(i.titulo) + '">' +
+        '<input class="rx-in" data-role="rq-t" data-id="' + i.id + '" value="' + esc(i.titulo) + '" aria-label="Título"><button type="button" class="rx-rqx" data-action="rq-del" data-id="' + i.id + '" aria-label="Remover da relação: ' + esc(i.titulo) + '">' + ico('x', 16) + '</button></div>' +
+        '<div class="rx-om">Período: ' + esc(i.periodo) + '</div><div><label class="rx-lab2" for="rqd-' + i.id + '">Documentos e informações (um por linha)</label><textarea class="rx-ta rx-s" id="rqd-' + i.id + '" data-role="rq-d" data-id="' + i.id + '">' + esc(i.docs.join('\n')) + '</textarea></div>' +
+        '<div><label class="rx-lab2" for="rqn-' + i.id + '">Próximo passo</label><input class="rx-in" id="rqn-' + i.id + '" data-role="rq-n" data-id="' + i.id + '" value="' + esc(i.next) + '"></div></div>').join('');
+      return '<div class="rx-tool"><div><h4 class="rx-sec-h" style="margin:0">Pendências do Cliente</h4><p class="rx-sec-sub" style="margin:2px 0 0">Revise o texto antes de enviar. Só os itens marcados entram na relação.</p></div>' +
+        '<div class="rx-filters" style="margin:0"><button type="button" class="rx-btn rx-secondary rx-sm" data-action="rq-gen" data-fk="rq-gen">Gerar novamente</button><button type="button" class="rx-btn rx-secondary rx-sm" data-action="rq-copy" data-fk="rq-copy">Copiar texto</button><button type="button" class="rx-btn rx-primary rx-sm" data-action="rq-print" data-fk="rq-print">' + ico('print', 15) + 'Imprimir</button></div></div>' +
+        '<div class="rx-rq"><div><label class="rx-lab" for="rq-intro">Texto de abertura</label><textarea class="rx-ta rx-s" id="rq-intro" data-role="rq-intro" style="margin-bottom:10px">' + esc(r.intro) + '</textarea>' + (items || '<div class="rx-empty">Não há pendências abertas para incluir.</div>') + '</div>' +
+        '<div><div class="rx-lab2" style="margin-bottom:6px">PRÉ-VISUALIZAÇÃO</div><div class="rx-rqprev" id="rx-rqprev">' + reqDoc() + '</div></div></div>';
+    }
+
+    /* ---------- CNIS x CTPS ---------- */
+    function buildCtps(){
+      const d = ds(), emp = d.vinculos.filter(v => v.tipo === 'Empregado'), out = [];
+      emp.forEach((v, i) => {
+        if (i === 2) return;
+        const f = FULL[d.id][v.id]; let end = f[1]; if (i === 1 && end) end = addDays(end, 15);
+        out.push({id:'t' + i, emp:v.emp, adm:f[0], dem:end, cargo:'Auxiliar administrativo'});
+      });
+      out.push({id:'tx', emp:'Zeta Serviços Gerais LTDA', adm:'2017-03-01', dem:'2017-10-31', cargo:'Auxiliar de serviços gerais'});
+      return out;
+    }
+    function diffTxt(label, a, b){
+      if (a === b) return null;
+      if (!a || !b) return label + ': CNIS ' + fmtD(a) + ' · CTPS ' + fmtD(b);
+      return label + ' difere em ' + Math.abs(Math.round((new Date(a) - new Date(b)) / 86400000)) + ' dia(s): CNIS ' + fmtD(a) + ' · CTPS ' + fmtD(b);
+    }
+    function compareCtps(){
+      const d = ds(), list = state.ctps || [], used = {}, rows = [];
+      d.vinculos.forEach(v => {
+        const f = FULL[d.id][v.id], cnis = fmtD(f[0]) + ' a ' + fmtD(f[1]);
+        if (v.tipo !== 'Empregado') { rows.push({id:v.id, kind:'na', emp:v.emp, cnis:cnis, ctps:null, det:['Vínculo sem registro em CTPS (não comparado).'], per:fmtYM(v.ini) + ' a ' + (v.fim ? fmtYM(v.fim) : 'em aberto')}); return; }
+        const m = list.filter(e => !used[e.id] && sameCo(e.emp, v.emp))[0];
+        const per = fmtYM(v.ini) + ' a ' + (v.fim ? fmtYM(v.fim) : 'em aberto');
+        if (!m) { rows.push({id:v.id, kind:'cnis', emp:v.emp, cnis:cnis, ctps:null, det:['Vínculo no CNIS sem registro correspondente na CTPS informada.'], per:per}); return; }
+        used[m.id] = 1;
+        const det = [diffTxt('Admissão/início', f[0], m.adm), diffTxt('Saída/fim', f[1], m.dem)].filter(Boolean);
+        rows.push({id:v.id, kind:det.length ? 'diverge' : 'match', emp:v.emp, cnis:cnis, ctps:fmtD(m.adm) + ' a ' + fmtD(m.dem), det:det.length ? det : ['Datas coincidem.'], per:per});
+      });
+      list.filter(e => !used[e.id]).forEach(e => rows.push({id:e.id, kind:'ctps', emp:e.emp, cnis:null, ctps:fmtD(e.adm) + ' a ' + fmtD(e.dem), det:['Registro da CTPS sem vínculo correspondente no CNIS.'], per:fmtYM(e.adm.slice(0, 7)) + ' a ' + fmtYM(e.dem ? e.dem.slice(0, 7) : d.fimDados)}));
+      return rows;
+    }
+    const KIND = {match:['ok', 'Sem divergência'], diverge:['att', 'Divergência de datas'], cnis:['pend', 'Somente no CNIS'], ctps:['pend', 'Somente na CTPS'], na:['na', 'Não comparado']};
+    function tabCtps(){
+      const head = '<h4 class="rx-sec-h">Conferência CNIS x CTPS</h4><p class="rx-sec-sub">Compare as informações do CNIS com os dados da CTPS para facilitar a identificação de divergências, vínculos ou períodos que precisam de atenção.</p>';
+      if (!state.ctps) return head + '<div class="rx-card2"><p>Nesta versão os dados da CTPS são informados manualmente. Para ver a comparação, carregue uma CTPS de exemplo.</p><button type="button" class="rx-btn rx-primary" data-action="ctps-load" data-fk="ctps-load">Carregar CTPS de exemplo</button></div>';
+      const rows = compareCtps(), n = k => rows.filter(r => r.kind === k).length;
+      const card = (l, v, cls) => '<div class="rx-cardk ' + (cls || '') + '"><div class="rx-ck-l">' + l + '</div><div class="rx-ck-n">' + v + '</div></div>';
+      const reg = state.ctps.map(e => '<li class="rx-orow"><div class="rx-omain"><div class="rx-ot">' + esc(e.emp) + '</div><div class="rx-om">' + fmtD(e.adm) + ' a ' + fmtD(e.dem) + ' · ' + esc(e.cargo) + '</div></div><button type="button" class="rx-rqx" data-action="ctps-del" data-id="' + e.id + '" aria-label="Remover registro ' + esc(e.emp) + '">' + ico('x', 16) + '</button></li>').join('');
+      const trs = rows.map(r => {
+        const k = KIND[r.kind], done = !!state.model.items['x-' + r.id];
+        return '<tr><td data-label="Empregador"><strong>' + esc(r.emp) + '</strong></td><td data-label="CNIS">' + (r.cnis || '—') + '</td><td data-label="CTPS">' + (r.ctps || '—') + '</td>' +
+          '<td class="rx-td-res" data-label="Resultado">' + chip(k[0], k[1]) + '<div class="rx-om">' + r.det.map(esc).join('<br>') + '</div></td>' +
+          '<td data-label="Ação">' + ((r.kind === 'match' || r.kind === 'na') ? '' : '<button type="button" class="rx-btn rx-secondary rx-sm"' + (done ? ' disabled' : '') + ' data-action="ctps-pend" data-id="' + r.id + '" data-fk="cp-' + r.id + '">' + (done ? 'Pendência criada' : 'Criar pendência') + '</button>') + '</td></tr>';
+      }).join('');
+      return head + '<h4 class="rx-sec-h">Registros da CTPS</h4><ul class="rx-open" style="margin-bottom:16px">' + reg + '</ul>' +
+        '<h4 class="rx-sec-h">Resultado da comparação</h4><div class="rx-cards">' + card('Sem divergência', n('match')) + card('Divergência de datas', n('diverge'), 'rx-ck-att') + card('Somente no CNIS', n('cnis'), 'rx-ck-pend') + card('Somente na CTPS', n('ctps'), 'rx-ck-pend') + '</div>' +
+        '<div class="rx-tablewrap"><table class="rx-table rx-vtable"><caption class="rx-sr">Comparação entre CNIS e CTPS</caption><thead><tr><th scope="col">Empregador</th><th scope="col">CNIS</th><th scope="col">CTPS</th><th scope="col">Resultado</th><th scope="col"><span class="rx-sr">Ação</span></th></tr></thead><tbody>' + trs + '</tbody></table></div>' +
+        '<p class="rx-footnote">A comparação aponta diferenças entre os dados informados e não conclui sobre o reconhecimento de qualquer período. Exemplo de CTPS fictício.</p>';
+    }
+    function addExtraPend(row){
+      const id = 'x-' + row.id; if (state.model.items[id]) { toast('Já existe pendência para este item.'); return; }
+      const p = {id:id, cat:'vinculo', titulo:'Conferir vínculo (CNIS x CTPS): ' + row.emp, periodo:row.per, origem:'Conferência CNIS x CTPS', desc:row.det.join(' '), status:'pend'};
+      state.extra.push(p); state.model.items[id] = Object.assign({}, p); state.marks[id] = {status:'pend', obs:'', prev:null};
+      touch(); render(); toast('Pendência criada a partir da conferência.');
+    }
+
+    /* ---------- Análise em lote ---------- */
+    function viewBatch(){
+      const b = state.batch, n = RX_DATA.length, done = b.st.filter(x => x === 'd').length, pct = Math.round(done / n * 100);
+      const chipB = s => s === 'd' ? chip('ok', 'Concluído') : s === 'p' ? '<span class="rx-chip rx-s-run"><span class="rx-mini-spin"></span><span>Processando</span></span>' : chip('na', 'Aguardando');
+      const rows = RX_DATA.map((d, i) => '<div class="rx-brow"><span class="rx-pdf" style="flex-basis:36px;height:42px" aria-hidden="true">' + ico('file', 20) + '</span><div class="rx-fi"><div class="rx-fname">' + esc(d.arquivo) + '</div><div class="rx-fmeta">' + esc(d.cliente) + ' · ' + esc(d.info) + '</div></div>' + chipB(b.st[i] || 'w') +
+        (b.st[i] === 'd' ? '<button type="button" class="rx-btn rx-secondary rx-sm" data-action="batch-open" data-i="' + i + '" data-fk="bo-' + i + '">Abrir Raio-X</button>' : '') + '</div>').join('');
+      return '<div class="rx-batch"><h3 class="rx-h" id="rx-h" tabindex="-1">Análise em lote <span class="rx-bonus">Bônus</span></h3>' +
+        '<p class="rx-sub">Processe vários CNIS de forma organizada, ideal para quem precisa ganhar mais agilidade ao lidar com um volume maior de análises.</p>' +
+        '<div class="rx-bar" style="margin:16px 0" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '" aria-label="Progresso do lote"><span style="width:' + pct + '%"></span></div>' + rows +
+        '<div class="rx-actions" style="margin-top:14px"><button type="button" class="rx-btn rx-primary" data-action="batch-run" data-fk="batch-run"' + (b.running || b.done ? ' disabled' : '') + '>Analisar ' + n + ' CNIS</button>' +
+        '<button type="button" class="rx-link" data-action="batch-back" data-fk="batch-back">Voltar</button></div>' +
+        '<p class="rx-note">' + (b.done ? 'Lote concluído. Abra cada Raio-X para revisar individualmente.' : 'Simulação: nenhum arquivo é enviado a servidores.') + '</p></div>';
+    }
+    function runBatch(){
+      const b = state.batch, n = RX_DATA.length; if (b.running) return;
+      b.running = true; b.done = false; b.st = RX_DATA.map(() => 'w'); render();
+      RX_DATA.forEach((d, i) => {
+        timers.push(setTimeout(() => { b.st[i] = 'p'; if (state.view === 'batch') render(); }, i * 1000 + 150));
+        timers.push(setTimeout(() => { b.st[i] = 'd'; if (i === n - 1) { b.running = false; b.done = true; } if (state.view === 'batch') render(); }, (i + 1) * 1000));
+      });
+    }
+
+    function tabPendencias(){
+      const ids = workIds(), W = {pend:0, att:1, na:2, ok:3};
+      const nOpen = ids.filter(id => eff(id) === 'att' || eff(id) === 'pend').length;
+      const nOk = ids.filter(id => eff(id) === 'ok').length;
+      const F = [['abertas', 'Abertas', nOpen], ['conferidas', 'Conferidas', nOk], ['todas', 'Todas', ids.length]];
+      const filt = id => state.pFilter === 'todas' ? true : state.pFilter === 'conferidas' ? eff(id) === 'ok' : (eff(id) === 'att' || eff(id) === 'pend');
+      const shown = ids.filter(filt);
+      const filters = '<div class="rx-filters" role="group" aria-label="Filtrar lista de trabalho">' + F.map(f => '<button type="button" class="rx-toggle" aria-pressed="' + (state.pFilter === f[0]) + '" data-action="pfilter" data-f="' + f[0] + '" data-fk="pf-' + f[0] + '">' + f[1] + ' (' + f[2] + ')</button>').join('') + '</div>';
+      const groups = CATS.map(cat => {
+        const g = shown.filter(id => state.model.items[id].cat === cat[0]).sort((a, b) => W[eff(a)] - W[eff(b)]);
+        if (!g.length) return '';
+        return '<section class="rx-grp" aria-label="' + cat[1] + '"><h4 class="rx-gh">' + cat[1] + '<span class="rx-gc">' + g.length + '</span></h4><ul class="rx-tasks">' + g.map(id => taskHTML(id)).join('') + '</ul></section>';
+      }).join('');
+      return filters + (groups || '<div class="rx-empty">' + (state.pFilter === 'abertas' ? 'Nenhum ponto em aberto. Tudo o que foi sinalizado já está conferido.' : 'Nada para mostrar neste filtro.') + '</div>');
+    }
+
+    function taskHTML(id){
+      const it = state.model.items[id], mk = state.marks[id], ok = mk.status === 'ok', cm = !!state.openComment[id];
+      const text = it.desc || it.conferir || '';
+      const opts = Object.keys(ST).map(k => '<option value="' + k + '"' + (mk.status === k ? ' selected' : '') + '>' + ST[k].label + '</option>').join('');
+      return '<li class="rx-task"><div><div class="rx-tt">' + esc(it.titulo) + '</div><div class="rx-tm">' + esc(it.origem) + ' · ' + esc(it.periodo) + '</div>' + (text ? '<div class="rx-td">' + esc(text) + '</div>' : '') + '</div>' +
+        '<div class="rx-tctl">' + chip(mk.status) +
+        '<select class="rx-select" data-role="status" data-id="' + id + '" data-fk="s-' + id + '" aria-label="Situação: ' + esc(it.titulo) + '">' + opts + '</select>' +
+        '<button type="button" class="rx-btn rx-secondary rx-sm" data-action="toggle-ok" data-id="' + id + '" data-fk="ok-' + id + '">' + (ok ? 'Desfazer conferência' : 'Marcar como conferida') + '</button>' +
+        '<button type="button" class="rx-link" data-action="toggle-comment" data-id="' + id + '" data-fk="cm-b-' + id + '" aria-expanded="' + cm + '">' + (mk.obs.trim() ? 'Editar comentário' : 'Adicionar comentário') + '</button></div>' +
+        (cm ? '<div><label class="rx-lab" for="cm-' + id + '">Comentário</label><textarea class="rx-ta" id="cm-' + id + '" data-role="obs" data-id="' + id + '" data-fk="cm-' + id + '" placeholder="Ex.: confirmar com a CTPS do cliente">' + esc(mk.obs) + '</textarea></div>' : '') + '</li>';
+    }
+
+    /* Relatório: ficha técnica (tela e impressão) */
+    function reportDoc(){
+      const d = ds(), m = state.model, c = counts(), o = OVERALL[c.overall];
+      const today = new Date().toLocaleDateString('pt-BR');
+      const kv = (k, v) => '<tr><th scope="row">' + k + '</th><td>' + v + '</td></tr>';
+      const vrows = d.vinculos.map(v => { const mk = state.marks[v.id]; return '<tr><td>' + esc(v.emp) + '</td><td>' + fmtYM(v.ini) + ' a ' + (v.fim ? fmtYM(v.fim) : 'em aberto') + '</td><td>' + esc(v.tipo) + '</td><td>' + chip(mk.status) + '</td><td>' + (escBr(mk.obs) || '—') + '</td></tr>'; }).join('');
+      const irows = d.indicadores.map(i => { const mk = state.marks[i.id]; return '<li><div><strong>' + esc(i.codigo) + '</strong> · ' + esc(i.periodo) + ' ' + chip(mk.status) + '</div><div>' + esc(i.significado) + '</div><div><em>Ponto para conferência:</em> ' + esc(i.conferir) + '</div>' + (mk.obs.trim() ? '<div><em>Observação:</em> ' + escBr(mk.obs) + '</div>' : '') + '</li>'; }).join('');
+      const open = workIds().filter(id => eff(id) === 'att' || eff(id) === 'pend');
+      const orows = open.map(id => { const it = m.items[id]; return '<li>' + chip(eff(id)) + ' <strong>' + esc(it.titulo) + '</strong> — ' + esc(it.periodo) + ' · ' + esc(it.origem) + '</li>'; }).join('');
+      const obsIds = Object.keys(m.items).filter(id => state.marks[id].obs.trim());
+      const obsRows = obsIds.map(id => '<li><strong>' + esc(m.items[id].titulo) + '</strong> (' + esc(m.items[id].periodo) + ')<div>' + escBr(state.marks[id].obs) + '</div></li>').join('');
+      return '<div class="rx-doc"><h2>Raio-X do CNIS — Ficha técnica</h2><div class="rx-dsub">Dados de demonstração · Pré-análise de apoio à conferência</div>' +
+        '<h4>Cliente</h4><table class="rx-kv"><tbody>' + kv('Nome', esc(d.cliente)) + kv('CPF', esc(d.cpf)) + kv('Arquivo analisado', esc(d.arquivo)) + kv('Referência do caso', esc(d.ref)) + kv('Data da análise', today) + kv('Status geral', o.label) + '</tbody></table>' +
+        '<h4>Resumo</h4><table class="rx-kv"><tbody>' + kv('Vínculos identificados', c.vinc) + kv('Competências organizadas', c.comps) + kv('Indicadores encontrados', c.inds) + kv('Pontos de atenção em aberto', c.att) + kv('Pendências registradas', c.pend) + '</tbody></table>' +
+        '<h4>Vínculos</h4><div class="rx-doc-scroll"><table><thead><tr><th>Empregador</th><th>Período</th><th>Tipo</th><th>Situação</th><th>Observação</th></tr></thead><tbody>' + vrows + '</tbody></table></div>' +
+        '<h4>Indicadores</h4><ul>' + irows + '</ul>' +
+        '<h4>Pendências e pontos de atenção</h4>' + (orows ? '<ul>' + orows + '</ul>' : '<div class="rx-none">Nenhum ponto em aberto.</div>') +
+        '<h4>Observações profissionais</h4>' + (obsRows ? '<ul>' + obsRows + '</ul>' : '<div class="rx-none">Nenhuma observação registrada.</div>') +
+        '<div class="rx-warn">' + esc(RX_CONFIG.disclaimer) + '</div></div>';
+    }
+
+    function viewReport(){
+      return '<div class="rx-reporthead"><h3 class="rx-h" id="rx-h" tabindex="-1">Relatório do cliente</h3>' +
+        '<div class="rx-ractions"><button type="button" class="rx-btn rx-secondary" data-action="back" data-fk="back">' + ico('back', 16) + 'Voltar ao Raio-X</button>' +
+        '<button type="button" class="rx-btn rx-secondary" data-action="print" data-fk="print">' + ico('print', 16) + 'Imprimir</button></div></div>' +
+        '<div class="rx-paper">' + reportDoc() + '</div>' +
+        '<div class="rx-cta"><div><strong>Quer fazer isso com o CNIS dos seus clientes?</strong><span>Você acabou de ver uma simulação com dados fictícios.</span></div>' +
+        '<a class="rx-btn rx-primary" href="' + esc(RX_CONFIG.ctaUrl) + '">' + esc(RX_CONFIG.ctaLabel) + '</a></div>';
+    }
+
+    const VIEWS = {file:viewFile, processing:viewProcessing, raiox:viewRaiox, report:viewReport, batch:viewBatch};
+
+    /* ================================================================
+       RENDER
+       ================================================================ */
+    function renderProgress(){
+      const order = ['file','processing','raiox','report'], labels = ['CNIS','Processamento','Raio-X','Relatório'];
+      const cur = Math.max(0, order.indexOf(state.view));
+      $('#rx-prog').innerHTML = labels.map((l, i) => {
+        const cls = i < cur ? 'is-done' : i === cur ? 'is-current' : '';
+        return '<li class="' + cls + '"' + (i === cur ? ' aria-current="step"' : '') + '><span class="rx-pn">' + (i < cur ? ico('check', 12) : (i + 1)) + '</span><span class="rx-pl">' + l + '</span></li>';
+      }).join('');
+    }
+
+    function flashCounters(){
+      const c = counts(), p = state.prev;
+      if (p && state.view === 'raiox' && state.tab === 'resumo') {
+        ['vinc','comps','inds','att','pend'].forEach(k => { if (p[k] !== c[k]) { const el = $('[data-count="' + k + '"]'); if (el && !reduce()) el.classList.add('rx-flash'); } });
+      }
+      state.prev = c;
+    }
+
+    function toTop(){
+      const f = $('#rx-frame'), r = f.getBoundingClientRect();
+      if (r.top < 0 || r.top > window.innerHeight * .6) f.scrollIntoView({behavior:reduce() ? 'auto' : 'smooth', block:'start'});
+    }
+
+    function render(){
+      renderProgress();
+      const v = $('#rx-view'), ae = document.activeElement;
+      const keep = (ae && v.contains(ae)) ? ae.getAttribute('data-fk') : null;
+      const oldTabs = v.querySelector('.rx-tabs'), tabsLeft = oldTabs ? oldTabs.scrollLeft : 0;
+      v.innerHTML = VIEWS[state.view]();
+      setupTabs(tabsLeft);
+      if (state.focusNext) {
+        state.focusNext = false;
+        const h = $('#rx-h'); if (h) h.focus({preventScroll:true});
+        toTop();
+      } else if (keep) {
+        const el = v.querySelector('[data-fk="' + keep + '"]') || $('#rx-tp') || v;
+        el.focus({preventScroll:true});
+      }
+      flashCounters();
+    }
+
+    function go(view){ state.view = view; state.focusNext = true; render(); }
+
+    /* ================================================================
+       AÇÕES
+       ================================================================ */
+    function startProcessing(){
+      clearTimers(); state.view = 'processing'; state.stage = 0; state.focusNext = true; render();
+      const step = 560;
+      for (let i = 1; i <= STAGES.length; i++) {
+        timers.push(setTimeout(() => { state.stage = i; if (state.view === 'processing') render(); }, i * step));
+      }
+      timers.push(setTimeout(() => { if (state.view === 'processing') { state.prev = null; go('raiox'); } }, STAGES.length * step + 400));
+    }
+
+    function touch(){ state.touched = true; state.dirty = true; }
+    function setStatus(id, val){
+      const mk = state.marks[id]; if (mk.status === val) return;
+      if (val === 'ok') mk.prev = mk.status;
+      mk.status = val; touch(); render();
+    }
+    function toggleOk(id){
+      const mk = state.marks[id];
+      if (mk.status === 'ok') mk.status = (mk.prev && mk.prev !== 'ok') ? mk.prev : 'na';
+      else { mk.prev = mk.status; mk.status = 'ok'; }
+      touch(); render();
+    }
+    function setObs(id, v){
+      state.marks[id].obs = v;
+      if (!state.touched) { touch(); const s = $('#rx-tipslot'); if (s) s.innerHTML = reportTip(); }
+      state.dirty = true; syncDirty();
+    }
+
+    function restart(){
+      clearTimers(); closePanel(true);
+      state.batch = {st:[], running:false, done:false};
+      loadDataset(); state.view = 'file'; state.focusNext = true; render();
+    }
+
+    function doPrint(kind){
+      let pr = document.getElementById('rx-print-root');
+      if (!pr) { pr = document.createElement('div'); pr.id = 'rx-print-root'; pr.className = 'rx-print-root'; document.body.appendChild(pr); }
+      pr.innerHTML = kind === 'req' ? reqDoc() : reportDoc();
+      document.body.classList.add('rx-printing');
+      const done = () => { document.body.classList.remove('rx-printing'); window.removeEventListener('afterprint', done); };
+      window.addEventListener('afterprint', done);
+      window.print();
+    }
+
+    /* Painel lateral (desktop) / tela cheia (celular) */
+    function setInert(on){
+      ['.rx-top', '.rx-prog', '.rx-body', '.rx-foot'].forEach(s => { const el = $(s); if (el) el.inert = on; });
+    }
+    function openPanel(id){
+      const m = state.model, row = m.rowById[id], tid = (row && row.link) ? row.link : id, it = m.items[tid], mk = state.marks[tid];
+      const ae = document.activeElement;
+      state.openerFk = (ae && ae.getAttribute) ? ae.getAttribute('data-fk') : null;
+      state.panelId = tid;
+      const opts = Object.keys(ST).map(k => '<option value="' + k + '"' + (mk.status === k ? ' selected' : '') + '>' + ST[k].label + '</option>').join('');
+      const extra = it.significado ? '<div class="rx-callout"><strong>Significado de referência</strong>' + esc(it.significado) + '</div><div class="rx-callout"><strong>Ponto para conferência</strong>' + esc(it.conferir) + '</div>'
+                  : it.desc ? '<div class="rx-callout"><strong>Ponto para conferência</strong>' + esc(it.desc) + '</div>' : '';
+      const note = (row && row.link) ? '<div class="rx-pnote">Esta competência faz parte de um ponto sinalizado. As alterações valem para todo o período associado.</div>' : '';
+      const p = $('#rx-panel');
+      p.innerHTML = '<div class="rx-ph"><div><div class="rx-pk">' + catLabel(it.cat) + '</div><h3 id="rx-panel-title">' + esc(it.titulo) + '</h3><div class="rx-pm">' + esc(it.periodo) + ' · ' + esc(it.origem) + '</div></div>' +
+        '<button type="button" class="rx-x" data-action="close-panel" aria-label="Fechar painel">' + ico('x', 18) + '</button></div>' +
+        '<div class="rx-pb">' + note + extra +
+        '<div><label class="rx-lab" for="rx-p-status">Situação</label><select class="rx-select" style="width:100%" id="rx-p-status" data-role="status" data-id="' + tid + '">' + opts + '</select></div>' +
+        '<div><label class="rx-lab" for="rx-p-obs">Observação profissional</label><textarea class="rx-ta" id="rx-p-obs" rows="5" data-role="obs" data-id="' + tid + '" placeholder="Ex.: confirmar com a CTPS do cliente">' + esc(mk.obs) + '</textarea></div>' +
+        '<p class="rx-hint">As alterações são salvas na hora e atualizam o resumo.</p></div>' +
+        '<div class="rx-pf"><button type="button" class="rx-btn rx-primary" data-action="close-panel">Concluir</button></div>';
+      p.classList.add('is-open'); p.setAttribute('aria-hidden', 'false');
+      $('#rx-overlay').classList.add('is-open');
+      setInert(true);
+      if (isMobile()) document.documentElement.classList.add('rx-lock');
+      setTimeout(() => { const f = $('#rx-p-status'); if (f) f.focus({preventScroll:true}); }, 30);
+    }
+    function closePanel(silent){
+      if (!state.panelId) return;
+      state.panelId = null;
+      const p = $('#rx-panel');
+      p.classList.remove('is-open'); p.setAttribute('aria-hidden', 'true');
+      $('#rx-overlay').classList.remove('is-open');
+      setInert(false);
+      document.documentElement.classList.remove('rx-lock');
+      const fk = state.openerFk; state.openerFk = null;
+      if (silent) return;
+      const el = (fk && $('[data-fk="' + fk + '"]')) || $('#rx-tp') || $('#rx-h');
+      if (el) el.focus({preventScroll:true});
+    }
+    function trapTab(e){
+      const f = Array.prototype.slice.call($('#rx-panel').querySelectorAll('button,select,textarea,a[href]')).filter(el => !el.disabled && el.getClientRects().length);
+      if (!f.length) return;
+      const first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+
+    /* ================================================================
+       EVENTOS
+       ================================================================ */
+    root.addEventListener('click', e => {
+      const t = e.target.closest('[data-action]'); if (!t || !root.contains(t)) return;
+      const a = t.getAttribute('data-action'), id = t.getAttribute('data-id');
+      switch (a) {
+        case 'analyze': startProcessing(); break;
+        case 'other': state.di = (state.di + 1) % RX_DATA.length; loadDataset(); render(); break;
+        case 'restart': restart(); break;
+        case 'tab': state.tab = t.getAttribute('data-tab'); render(); break;
+        case 'tabs-scroll': { const tb = $('.rx-tabs'); if (tb) tb.scrollBy({left:(+t.getAttribute('data-dir')) * Math.max(120, tb.clientWidth * .7), behavior:reduce() ? 'auto' : 'smooth'}); break; }
+        case 'open': openPanel(id); break;
+        case 'close-panel': closePanel(); break;
+        case 'toggle-ok': toggleOk(id); break;
+        case 'filter-pend': state.filterPend = !state.filterPend; render(); break;
+        case 'pfilter': state.pFilter = t.getAttribute('data-f'); render(); break;
+        case 'toggle-comment': {
+          state.openComment[id] = !state.openComment[id]; render();
+          if (state.openComment[id]) { const ta = document.getElementById('cm-' + id); if (ta) ta.focus(); }
+          break;
+        }
+        case 'tip-x': state.tips[t.getAttribute('data-tip')] = false; render(); break;
+        case 'report': closePanel(true); go('report'); break;
+        case 'back': go('raiox'); break;
+        case 'print': doPrint(); break;
+        case 'save': state.dirty = false; render(); toast('Alterações salvas.'); break;
+        case 'vfilter': state.vFilter = t.getAttribute('data-f'); render(); break;
+        case 'cview': state.cView = t.getAttribute('data-v'); render(); break;
+        case 'toggle-year': { const y = t.getAttribute('data-y'); const wasOpen = state.cYears[y] !== undefined ? state.cYears[y] : t.getAttribute('aria-expanded') === 'true'; state.cYears[y] = !wasOpen; render(); break; }
+        case 'tlfilter': state.tlFilter = t.getAttribute('data-f'); render(); break;
+        case 'rq-gen': genReqs(); touch(); render(); toast('Relação de pendências gerada.'); break;
+        case 'rq-del': state.reqs.items = state.reqs.items.filter(i => i.id !== id); touch(); render(); break;
+        case 'rq-copy': copyText(reqText()); break;
+        case 'rq-print': doPrint('req'); break;
+        case 'ctps-load': state.ctps = buildCtps(); render(); toast('CTPS de exemplo carregada.'); break;
+        case 'ctps-del': state.ctps = state.ctps.filter(e => e.id !== id); render(); break;
+        case 'ctps-pend': addExtraPend(compareCtps().filter(r => r.id === id)[0]); break;
+        case 'batch': clearTimers(); state.view = 'batch'; state.focusNext = true; render(); break;
+        case 'batch-run': runBatch(); break;
+        case 'batch-back': clearTimers(); state.batch = {st:[], running:false, done:false}; state.view = 'file'; state.focusNext = true; render(); break;
+        case 'batch-open': state.di = +t.getAttribute('data-i'); clearTimers(); loadDataset(); state.view = 'raiox'; state.focusNext = true; render(); break;
+      }
+    });
+    root.addEventListener('change', e => {
+      const t = e.target;
+      if (!t.matches) return;
+      const role = t.getAttribute('data-role'), tid = t.getAttribute('data-id');
+      if (role === 'status') setStatus(tid, t.value);
+      else if (role === 'cyear') { state.cYear = t.value; render(); }
+      else if (role === 'cstatus') { state.cStatus = t.value; render(); }
+      else if (role === 'icode') { state.iCode = t.value; render(); }
+      else if (role === 'istatus') { state.iStatus = t.value; render(); }
+      else if (role === 'rq-inc') { const it = state.reqs.items.filter(i => i.id === tid)[0]; it.incl = t.checked; touch(); const pv = $('#rx-rqprev'); if (pv) pv.innerHTML = reqDoc(); syncDirty(); }
+    });
+    root.addEventListener('input', e => {
+      const t = e.target;
+      if (!t.matches) return;
+      const role = t.getAttribute('data-role'), tid = t.getAttribute('data-id');
+      if (role === 'obs') setObs(tid, t.value);
+      else if (role === 'cli-nome') state.cli.nome = t.value;
+      else if (role === 'cli-ref') state.cli.ref = t.value;
+      else if (role === 'vq') { state.vq = t.value; const l = $('#rx-vlist'); if (l) l.innerHTML = vList(); }
+      else if (role && role.indexOf('rq-') === 0) {
+        const r = state.reqs;
+        if (role === 'rq-intro') r.intro = t.value;
+        else { const it = r.items.filter(i => i.id === tid)[0]; if (role === 'rq-t') it.titulo = t.value; else if (role === 'rq-d') it.docs = t.value.split('\n'); else if (role === 'rq-n') it.next = t.value; }
+        touch(); const pv = $('#rx-rqprev'); if (pv) pv.innerHTML = reqDoc(); syncDirty();
+      }
+    });
+    root.addEventListener('keydown', e => {
+      if (state.panelId) {
+        if (e.key === 'Escape') { e.preventDefault(); closePanel(); }
+        else if (e.key === 'Tab') trapTab(e);
+        return;
+      }
+      const tab = e.target.closest && e.target.closest('[role="tab"]');
+      if (tab && ['ArrowLeft','ArrowRight','Home','End'].indexOf(e.key) > -1) {
+        e.preventDefault();
+        const keys = TABS.map(t => t[0]); let i = keys.indexOf(state.tab);
+        if (e.key === 'ArrowRight') i = (i + 1) % keys.length;
+        else if (e.key === 'ArrowLeft') i = (i - 1 + keys.length) % keys.length;
+        else if (e.key === 'Home') i = 0; else i = keys.length - 1;
+        state.tab = keys[i]; render();
+        const el = $('[data-fk="tab-' + keys[i] + '"]'); if (el) el.focus();
+      }
+    });
+
+    loadDataset();
+    render();
+    })();
+    </script>
+    <!-- ===== RX DEMO (fim) ===== -->
+
+    <div class="feature-row">
+      <div class="feature-text">
+        <span class="feature-tag">Etapa 1</span>
+        <h3>Envie o CNIS e inicie um novo Raio-X em poucos cliques</h3>
+        <p>Aqui começa a análise. Você seleciona o arquivo do CNIS, identifica o cliente, adiciona a referência do caso e dá início ao processamento sem depender de planilhas, anotações soltas ou organização manual desde o primeiro passo.</p>
+      </div>
+      <div class="feature-mockup">
+        <img class="feature-img" src="assets/etapa-1.webp" alt="Tela para iniciar um novo Raio-X: cliente, CPF, referência e envio do CNIS" width="1080" height="592" loading="lazy">
+      </div>
+    </div>
+
+    <div class="feature-row reverse">
+      <div class="feature-text">
+        <span class="feature-tag">Etapa 2</span>
+        <h3>Visualize todos os vínculos do CNIS de forma organizada</h3>
+        <p>O sistema extrai os vínculos encontrados no documento e organiza tudo em uma visualização clara, facilitando a conferência de períodos, empregadores, tipo de vínculo e pontos que merecem atenção.</p>
+      </div>
+      <div class="feature-mockup">
+        <img class="feature-img" src="assets/etapa-2.webp" alt="Tela de vínculos do CNIS organizados em tabela" width="1080" height="592" loading="lazy">
+      </div>
+    </div>
+
+    <div class="feature-row">
+      <div class="feature-text">
+        <span class="feature-tag">Etapa 3</span>
+        <h3>Organize contribuições e remunerações em uma visão prática para conferência</h3>
+        <p>Em vez de analisar competências soltas e informações dispersas, o sistema separa contribuições e remunerações em uma estrutura visual mais fácil de revisar, ajudando a localizar lacunas, inconsistências e períodos que merecem olhar profissional.</p>
+      </div>
+      <div class="feature-mockup">
+        <img class="feature-img" src="assets/etapa-3.webp" alt="Tela de contribuições e remunerações por competência" width="1080" height="592" loading="lazy">
+      </div>
+    </div>
+
+    <div class="feature-row reverse">
+      <div class="feature-text">
+        <span class="feature-tag">Etapa 4</span>
+        <h3>Identifique indicadores sem precisar ficar alternando entre CNIS, consulta e anotações</h3>
+        <p>Um dos pontos mais valiosos do sistema é reunir os indicadores encontrados no CNIS em uma área organizada, mostrando o que apareceu, onde apareceu e o que precisa ser conferido em cada caso.</p>
+      </div>
+      <div class="feature-mockup">
+        <img class="feature-img" src="assets/etapa-4.webp" alt="Tela de indicadores encontrados com pontos para conferência" width="1080" height="592" loading="lazy">
+      </div>
+    </div>
+
+    <div class="feature-row">
+      <div class="feature-text">
+        <span class="feature-tag">Etapa 5</span>
+        <h3>Reúna todas as pendências e pontos de atenção em uma única lista de trabalho</h3>
+        <p>Tudo o que merece revisão vai para uma área centralizada. Isso ajuda o advogado a sair da simples leitura do CNIS e transformar a análise em uma lista prática de conferência e ação.</p>
+      </div>
+      <div class="feature-mockup">
+        <img class="feature-img" src="assets/etapa-5.webp" alt="Tela de pendências e pontos de atenção em lista de trabalho" width="1071" height="573" loading="lazy">
+      </div>
+    </div>
+
+    <div class="feature-row reverse">
+      <div class="feature-text">
+        <span class="feature-tag">Etapa 6</span>
+        <h3>Receba um resumo Raio-X com os principais pontos do caso</h3>
+        <p>Ao final do processamento, o sistema gera uma visão resumida e estruturada do CNIS do cliente, reunindo os elementos mais importantes da análise em um documento claro, visual e pronto para revisão.</p>
+      </div>
+      <div class="feature-mockup">
+        <img class="feature-img" src="assets/etapa-6.webp" alt="Tela de resumo do Raio-X do cliente" width="1080" height="585" loading="lazy">
+      </div>
+    </div>
+
+    <div class="feature-row">
+      <div class="feature-text">
+        <span class="feature-tag">Etapa 7</span>
+        <h3>Revise, salve, edite e imprima o Raio-X do cliente</h3>
+        <p>Depois da análise, você pode complementar observações, marcar itens como conferidos, salvar o caso e gerar uma versão organizada para impressão ou arquivamento junto à pasta do cliente.</p>
+      </div>
+      <div class="feature-mockup">
+        <img class="feature-img" src="assets/etapa-7.webp" alt="Ficha técnica do Raio-X pronta para imprimir ou salvar em PDF" width="1080" height="583" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCO 3: BENEFÍCIOS DO PRODUTO -->
+<section class="bg-gray">
+  <div class="container">
+    <div class="section-head">
+      <h2>Tudo o que o Raio-X Automático do CNIS organiza para você:</h2>
+    </div>
+    <div class="grid-3">
+      <div class="card benefit-card">
+        <span class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></span>
+        <p>Visão organizada dos principais dados do CNIS</p>
+      </div>
+      <div class="card benefit-card">
+        <span class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M9 4v16"/></svg></span>
+        <p>Identificação estruturada de vínculos</p>
+      </div>
+      <div class="card benefit-card">
+        <span class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 3v18h18"/><rect x="7" y="12" width="3" height="6"/><rect x="12.5" y="8" width="3" height="10"/><rect x="18" y="5" width="3" height="13"/></svg></span>
+        <p>Organização de contribuições e remunerações</p>
+      </div>
+      <div class="card benefit-card">
+        <span class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg></span>
+        <p>Visualização dos indicadores encontrados</p>
+      </div>
+      <div class="card benefit-card">
+        <span class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>
+        <p>Centralização dos pontos de atenção</p>
+      </div>
+      <div class="card benefit-card">
+        <span class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 11H5a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h4"/><path d="M9 11V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v7"/><path d="M9 11h6"/><path d="M15 11h4a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-4"/></svg></span>
+        <p>Organização das pendências em uma única lista de trabalho</p>
+      </div>
+      <div class="card benefit-card">
+        <span class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>
+        <p>Espaço para observações profissionais</p>
+      </div>
+      <div class="card benefit-card">
+        <span class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg></span>
+        <p>Marcação de itens como conferidos</p>
+      </div>
+      <div class="card benefit-card">
+        <span class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+        <p>Resumo visual do caso</p>
+      </div>
+      <div class="card benefit-card">
+        <span class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></span>
+        <p>Salvamento do Raio-X para consulta posterior</p>
+      </div>
+      <div class="card benefit-card">
+        <span class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 15V3"/><path d="m7 10 5 5 5-5"/><path d="M20 21H4"/></svg></span>
+        <p>Geração de PDF</p>
+      </div>
+      <div class="card benefit-card">
+        <span class="benefit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></span>
+        <p>Impressão do Raio-X do cliente</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCO 4: COMPARATIVO ANTES/DEPOIS -->
+<section class="bg-white">
+  <div class="container">
+    <div class="section-head">
+      <h2>Antes e depois do Raio-X Automático do CNIS:</h2>
+    </div>
+    <div class="grid-2">
+      <div class="compare-card antes">
+        <span class="compare-title">Antes</span>
+        <ul class="compare-list">
+          <li><span class="compare-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></span>Análise linha por linha</li>
+          <li><span class="compare-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></span>Informações espalhadas</li>
+          <li><span class="compare-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></span>Pesquisa manual de indicadores</li>
+          <li><span class="compare-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></span>Anotações separadas</li>
+          <li><span class="compare-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></span>Resumo feito manualmente</li>
+          <li><span class="compare-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></span>Mais tempo organizando</li>
+        </ul>
+      </div>
+      <div class="compare-card depois">
+        <span class="compare-title">Depois</span>
+        <ul class="compare-list">
+          <li><span class="compare-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Visão organizada do CNIS</li>
+          <li><span class="compare-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Tudo centralizado</li>
+          <li><span class="compare-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Indicadores já organizados</li>
+          <li><span class="compare-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Pontos de atenção reunidos</li>
+          <li><span class="compare-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Raio-X pronto para revisar</li>
+          <li><span class="compare-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Mais foco na análise profissional</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCO 5: URGÊNCIA -->
+<section class="urgency">
+  <div class="container">
+    <span class="eyebrow">Aproveite o preço promocional por tempo limitado</span>
+    <h2>Você não precisa continuar analisando cada CNIS do jeito mais trabalhoso e <u>perder horas do seu tempo</u>.</h2>
+    <div class="btn-wrap">
+      <a href="#planos" class="btn btn-outline-navy">Eu quero acessar o sistema</a>
+      <span class="btn-note" style="color:rgba(255,255,255,.85)">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:#fff"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+        90 dias de garantia &bull; Acesso Imediato
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCO 6: IDEAL PARA VOCÊ -->
+<section class="bg-gray">
+  <div class="container">
+    <div class="section-head">
+      <h2>Ideal para você que deseja:</h2>
+    </div>
+    <div class="grid-3">
+      <div class="card fit-card highlight">
+        <span class="fit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+        <p>Analisar CNIS com mais agilidade</p>
+      </div>
+      <div class="card fit-card">
+        <span class="fit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+        <p>Ter uma visão mais clara do caso</p>
+      </div>
+      <div class="card fit-card">
+        <span class="fit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+        <p>Reduzir o trabalho manual</p>
+      </div>
+      <div class="card fit-card">
+        <span class="fit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+        <p>Encontrar mais rápido o que merece atenção</p>
+      </div>
+      <div class="card fit-card">
+        <span class="fit-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+        <p>Manter cada análise organizada</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCO 7: PROVA SOCIAL -->
+<section class="bg-white">
+  <div class="container">
+    <div class="section-head">
+      <h2>Quem já usa, organiza melhor:</h2>
+    </div>
+    <div class="grid-2">
+      <div class="card testi-card">
+        <div class="stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 17 5.5 21 7.5 13.5 2 9 9 9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 17 5.5 21 7.5 13.5 2 9 9 9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 17 5.5 21 7.5 13.5 2 9 9 9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 17 5.5 21 7.5 13.5 2 9 9 9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 17 5.5 21 7.5 13.5 2 9 9 9"/></svg>
+        </div>
+        <blockquote>“Eu envio o CNIS e o sistema já organiza toda a análise sozinho. Quando termina, eu entro para revisar os pontos principais e gerar o relatório. Economiza muito trabalho manual.”</blockquote>
+        <div class="testi-author">
+          <img class="testi-avatar" src="assets/depoimento-juliana.webp" alt="Foto de Juliana" width="200" height="200" loading="lazy">
+          <div><strong>Juliana, 37 anos</strong><span>Maringá/PR</span></div>
+        </div>
+      </div>
+      </div>
+      <div class="card testi-card">
+        <div class="stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 17 5.5 21 7.5 13.5 2 9 9 9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 17 5.5 21 7.5 13.5 2 9 9 9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 17 5.5 21 7.5 13.5 2 9 9 9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 17 5.5 21 7.5 13.5 2 9 9 9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 17 5.5 21 7.5 13.5 2 9 9 9"/></svg>
+        </div>
+        <blockquote>“Antes eu perdia muito tempo analisando o CNIS linha por linha e montando anotações. Agora eu envio o arquivo e já recebo vínculos, indicadores e pendências organizados para revisão.”</blockquote>
+        <div class="testi-author">
+          <img class="testi-avatar" src="assets/depoimento-rafael.webp" alt="Foto de Rafael" width="200" height="200" loading="lazy">
+          <div><strong>Rafael, 42 anos</strong><span>Uberlândia/MG</span></div>
+        </div>
+      </div>
+      </div>
+      <div class="card testi-card">
+        <div class="stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 17 5.5 21 7.5 13.5 2 9 9 9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 17 5.5 21 7.5 13.5 2 9 9 9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 17 5.5 21 7.5 13.5 2 9 9 9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 17 5.5 21 7.5 13.5 2 9 9 9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 17 5.5 21 7.5 13.5 2 9 9 9"/></svg>
+        </div>
+        <blockquote>“O que mais gostei foi receber o CNIS pronto para conferência. O sistema organiza tudo, destaca o que merece atenção e eu só preciso revisar antes de salvar ou imprimir.”</blockquote>
+        <div class="testi-author">
+          <img class="testi-avatar" src="assets/depoimento-camila.webp" alt="Foto de Camila" width="200" height="200" loading="lazy">
+          <div><strong>Camila, 34 anos</strong><span>Joinville/SC</span></div>
+        </div>
+      </div>
+      </div>
+      <div class="card testi-card">
+        <div class="stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 17 5.5 21 7.5 13.5 2 9 9 9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 17 5.5 21 7.5 13.5 2 9 9 9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 17 5.5 21 7.5 13.5 2 9 9 9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 17 5.5 21 7.5 13.5 2 9 9 9"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15 9 22 9 16.5 13.5 18.5 21 12 17 5.5 21 7.5 13.5 2 9 9 9"/></svg>
+        </div>
+        <blockquote>“Antes eu fazia toda essa primeira análise manualmente. Hoje eu envio o CNIS, reviso o Raio-X que o sistema montou e sigo com o caso. Ficou muito mais rápido.”</blockquote>
+        <div class="testi-author">
+          <img class="testi-avatar" src="assets/depoimento-eduardo.webp" alt="Foto de Eduardo" width="200" height="200" loading="lazy">
+          <div><strong>Eduardo, 39 anos</strong><span>Londrina/PR</span></div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCO 8: TUDO O QUE VOCÊ VAI RECEBER -->
+<section class="bg-gray">
+  <div class="container">
+    <div class="section-head">
+      <h2>Tudo o que você vai receber:</h2>
+    </div>
+    <div class="receive-card" style="max-width:680px;margin-inline:auto;">
+      <span class="badge-pill">+ Acesso Imediato</span>
+      <h3>Raio-X Automático do CNIS</h3>
+      <p>Um sistema prático para você enviar o CNIS do cliente e receber a análise organizada, pronta para revisar, complementar e arquivar.</p>
+      <img class="section-mockup" src="assets/mockup-hero.webp" alt="Raio-X Automático do CNIS: sistema que organiza vínculos, contribuições, indicadores e pendências do CNIS" width="1080" height="588">
+      <ul class="checklist on-navy">
+        <li><span class="check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Enviar e identificar o CNIS do cliente</li>
+        <li><span class="check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Organizar vínculos automaticamente</li>
+        <li><span class="check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Organizar contribuições e remunerações</li>
+        <li><span class="check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Identificar e estruturar indicadores</li>
+        <li><span class="check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Centralizar pendências e pontos de atenção</li>
+        <li><span class="check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Gerar o Resumo Raio-X do cliente</li>
+        <li><span class="check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Editar, salvar, gerar PDF e imprimir a análise</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCO 9: BÔNUS -->
+<section class="bg-white">
+  <div class="container">
+    <div class="section-head">
+      <h2>E no Plano Completo você ainda recebe 4 bônus para turbinar sua análise:</h2>
+      <span class="eyebrow green">4 bônus exclusivos</span>
+    </div>
+    <div class="grid-4">
+      <div class="card bonus-card">
+        <span class="bonus-tag">Bônus #1</span>
+        <img class="bonus-img" src="assets/bonus-1.webp" alt="Bônus 1: Linha do Tempo Contributiva Automática" width="1080" height="611" loading="lazy">
+        <h4>Linha do Tempo Contributiva Automática</h4>
+        <p>Visualize os períodos contributivos do cliente em uma linha do tempo organizada, facilitando a leitura da trajetória previdenciária e a identificação de intervalos que merecem conferência.</p>
+        <div class="bonus-price">
+          <span class="free">Incluso no Plano Completo</span>
+        </div>
+      </div>
+      <div class="card bonus-card">
+        <span class="bonus-tag">Bônus #2</span>
+        <img class="bonus-img" src="assets/bonus-2.webp" alt="Bônus 2: Gerador de Pendências para o Cliente" width="1080" height="643" loading="lazy">
+        <h4>Gerador de Pendências para o Cliente</h4>
+        <p>Transforme os pontos identificados na análise em uma relação clara de pendências, ajudando você a orientar o cliente sobre documentos, informações e próximos passos.</p>
+        <div class="bonus-price">
+          <span class="free">Incluso no Plano Completo</span>
+        </div>
+      </div>
+      <div class="card bonus-card">
+        <span class="bonus-tag">Bônus #3</span>
+        <img class="bonus-img" src="assets/bonus-3.webp" alt="Bônus 3: Conferência CNIS x CTPS" width="1080" height="643" loading="lazy">
+        <h4>Conferência CNIS x CTPS</h4>
+        <p>Compare as informações do CNIS com os dados da CTPS para facilitar a identificação de divergências, vínculos ou períodos que precisam de atenção.</p>
+        <div class="bonus-price">
+          <span class="free">Incluso no Plano Completo</span>
+        </div>
+      </div>
+      <div class="card bonus-card">
+        <span class="bonus-tag">Bônus #4</span>
+        <img class="bonus-img" src="assets/bonus-4.webp" alt="Bônus 4: Análise Raio-X em Lote de CNIS" width="1080" height="643" loading="lazy">
+        <h4>Análise Raio-X em Lote de CNIS</h4>
+        <p>Processe vários CNIS de forma organizada, ideal para quem precisa ganhar mais agilidade ao lidar com um volume maior de análises.</p>
+        <div class="bonus-price">
+          <span class="free">Incluso no Plano Completo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCO 10: PLANOS -->
+<section class="bg-gray" id="planos">
+  <div class="container">
+    <div class="section-head">
+      <h2>Escolha o plano ideal para a sua rotina:</h2>
+    </div>
+
+    <div class="pricing-wrap">
+      <div class="plan-card plan-basic">
+        <h3>Plano Básico</h3>
+        <p class="receives">Você recebe:</p>
+        <ul class="checklist">
+          <li><span class="check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Raio-X Automático do CNIS</li>
+          <li><span class="check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>3 Análises Raio-X Mensais</li>
+        </ul>
+        <div class="price-block">
+          <p class="price-before">de <s>R$37,90</s> por</p>
+          <p class="price-now">R$17,90</p>
+          <p class="price-install">ou 12x de R$1,84 no cartão</p>
+          <p class="price-save">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Você economiza R$20,10
+          </p>
+          <a href="#" class="btn btn-outline-navy">Baixar material agora</a>
+          <div class="attention-note">
+            <span>Atenção: Temos uma oferta <u>ainda mais vantajosa</u> para você! Veja abaixo.</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="plan-card plan-full">
+        <div class="plan-badges">
+          <span class="badge-last">&#128293; Última chance &mdash; oferta termina hoje</span>
+        </div>
+        <h3>PLANO COMPLETO</h3>
+        <img class="section-mockup" src="assets/mockup-hero.webp" alt="Raio-X Automático do CNIS: sistema que organiza vínculos, contribuições, indicadores e pendências do CNIS" width="1080" height="588">
+        <span class="plan-more">2X MAIS FUNCIONALIDADES</span>
+        <ul class="checklist">
+          <li><span class="check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Raio-X Automático do CNIS</li>
+          <li><span class="check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>&#127873; Bônus #1 Linha do Tempo Contributiva Automática</li>
+          <li><span class="check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>&#127873; Bônus #2 Gerador de Pendências para o Cliente</li>
+          <li><span class="check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>&#127873; Bônus #3 Conferência CNIS x CTPS</li>
+          <li><span class="check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>&#127873; Bônus #4 Análise Raio-X em Lote de CNIS</li>
+          <li><span class="check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Análises Raio-X Ilimitadas</li>
+          <li><span class="check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Acesso a Novas Funcionalidades Antecipadas</li>
+          <li><span class="check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Acesso Vitalício</li>
+          <li><span class="check-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>Suporte Priorizado</li>
+        </ul>
+        <div class="price-block">
+          <p class="price-before">de <s>R$67,90</s> por</p>
+          <p class="price-now">R$27,90</p>
+          <p class="price-install">ou 12x de R$2,86 no cartão</p>
+          <p class="price-save">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Você economiza R$39,10
+          </p>
+          <a href="#" class="btn btn-green">Baixar material agora</a>
+          <span class="btn-note on-navy" style="justify-content:center;margin-top:14px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            90 Dias de Garantia
+          </span>
+          <img class="payment-seals" src="assets/payment-seals.webp" alt="Formas de pagamento: Zouti, Pix, Visa, Mastercard">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCO 11: GARANTIA -->
+<section class="bg-white">
+  <div class="container">
+    <div class="guarantee-wrap">
+      <span class="seal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2 4 6v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V6z"/><polyline points="9 12 11.5 14.5 15.5 9.5"/></svg>
+      </span>
+      <div>
+        <h3>Você tem 90 dias de garantia</h3>
+        <p>Você pode acessar o Raio-X Automático do CNIS, explorar o sistema, enviar seus primeiros CNIS e conferir na prática como ele organiza vínculos, contribuições, indicadores e pontos de atenção. Se dentro de 90 dias você entender que o sistema não faz sentido para a sua rotina, basta solicitar o reembolso dentro desse período e receber 100% do valor investido de volta.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCO 12: COMO É O ACESSO -->
+<section class="bg-gray">
+  <div class="container">
+    <div class="section-head">
+      <h2>Veja como é fácil começar:</h2>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <span class="step-ico">
+          <span class="step-num">1</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
+        </span>
+        <h4>Faça sua compra</h4>
+        <p>Clique no botão, escolha o plano ideal para você e finalize o pagamento com segurança.</p>
+      </div>
+      <div class="step">
+        <span class="step-ico">
+          <span class="step-num">2</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg>
+        </span>
+        <h4>Receba seu acesso</h4>
+        <p>Após a confirmação do pagamento, você receberá as instruções para acessar o Raio-X Automático do CNIS.</p>
+      </div>
+      <div class="step">
+        <span class="step-ico">
+          <span class="step-num">3</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+        </span>
+        <h4>Envie o CNIS do cliente</h4>
+        <p>Selecione o arquivo, identifique o cliente e inicie uma nova análise dentro do sistema.</p>
+      </div>
+      <div class="step">
+        <span class="step-ico">
+          <span class="step-num">4</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>
+        </span>
+        <h4>Receba o Raio-X organizado</h4>
+        <p>O sistema estrutura vínculos, contribuições, remunerações, indicadores e pontos de atenção para facilitar sua revisão profissional.</p>
+      </div>
+      <div class="step">
+        <span class="step-ico">
+          <span class="step-num">5</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        </span>
+        <h4>Revise, salve e imprima</h4>
+        <p>Confira os dados, adicione suas observações, marque os itens revisados e salve ou gere o Raio-X em PDF.</p>
+      </div>
+    </div>
+    <div class="steps-cta">
+      <a href="#planos" class="btn btn-green" style="max-width:520px;">Eu quero acessar o sistema</a>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCO 13: FAQ -->
+<section class="bg-white">
+  <div class="container">
+    <div class="section-head">
+      <h2>Perguntas Frequentes:</h2>
+    </div>
+    <div style="max-width:800px;margin:0 auto;">
+
+      <details class="faq-item">
+        <summary>O sistema pode fazer a análise do CNIS por mim?<span class="faq-toggle">+</span></summary>
+        <div class="faq-body">Sim. O Raio-X Automático do CNIS foi desenvolvido e treinado com a experiência de um advogado previdenciarista para realizar a análise do documento automaticamente. Se quiser, você pode revisar o resultado antes de utilizá-lo — mas essa revisão fica a seu critério.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Posso confiar nas informações apresentadas pelo sistema?<span class="faq-toggle">+</span></summary>
+        <div class="faq-body">Sim. O sistema foi desenvolvido e treinado com conhecimento aplicado de um advogado previdenciarista, seguindo a lógica utilizada na análise profissional de CNIS. Ele identifica e organiza vínculos, contribuições, remunerações, indicadores e pontos de atenção para entregar uma análise estruturada do caso.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Preciso entender de tecnologia para usar?<span class="faq-toggle">+</span></summary>
+        <div class="faq-body">Não. Você simplesmente envia o CNIS do cliente e o sistema faz o processamento. A proposta é justamente tornar a análise simples e prática, mesmo para quem não tem familiaridade com tecnologia.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Eu já tenho meu próprio método de análise. Ainda vale a pena?<span class="faq-toggle">+</span></summary>
+        <div class="faq-body">Sim. Você pode continuar utilizando seu método sempre que quiser. A diferença é que o sistema pode assumir boa parte do trabalho operacional da análise, entregando o CNIS já estruturado para você utilizar diretamente ou revisar conforme sua preferência.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>E se eu comprar e perceber que não é para mim?<span class="faq-toggle">+</span></summary>
+        <div class="faq-body">Você conta com 90 dias de garantia para acessar e testar o sistema. Se dentro desse período entender que ele não faz sentido para sua rotina, poderá solicitar o reembolso conforme as condições da garantia.</div>
+      </details>
+
+      <details class="faq-item">
+        <summary>Se eu tiver alguma dúvida, terei suporte?<span class="faq-toggle">+</span></summary>
+        <div class="faq-body">Sim. Você terá suporte via e-mail para receber auxílio relacionado ao acesso e à utilização do Raio-X Automático do CNIS.</div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- BLOCO 14: AUTORIDADE -->
+<section class="bg-gray">
+  <div class="container">
+    <div class="section-head">
+      <h2>Quem está por trás do Raio-X Automático do CNIS:</h2>
+    </div>
+    <div class="author-wrap">
+      <span class="author-avatar">RM</span>
+      <div>
+        <h3>Renan Martins</h3>
+        <p>Advogado há mais de 12 anos, formado pela PUC-SP, Renan Martins construiu sua carreira atuando diretamente na advocacia e desenvolvendo soluções práticas para facilitar a rotina de outros profissionais.</p>
+        <p>Ao longo dos anos, passou a criar materiais, ferramentas e sistemas próprios pensados para ajudar advogados a ganhar mais organização, agilidade e segurança no dia a dia profissional.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOCO 15: RODAPÉ -->
+<footer class="site-footer">
+  <div class="container">
+    <p>Todos os direitos sobre a obra "Raio-X Automático do CNIS" são reservados. A reprodução, distribuição ou utilização não autorizada deste conteúdo, no todo ou em parte, por quaisquer meios, constitui violação dos direitos autorais, nos termos da Lei nº 9.610/98 e do Art. 184 do Código Penal, sujeitando os infratores às sanções civis e criminais previstas na legislação aplicável.<br>&copy; 2026 &mdash; Renan Martins &mdash; Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+</body>
+</html>
