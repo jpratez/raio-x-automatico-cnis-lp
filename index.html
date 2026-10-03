@@ -320,10 +320,8 @@
   .author-wrap{display:flex;flex-direction:column;align-items:center;gap:22px;text-align:center;max-width:700px;margin:0 auto;}
   @media (min-width:640px){ .author-wrap{flex-direction:row;text-align:left;} }
   .author-avatar{
-    flex-shrink:0;width:104px;height:104px;border-radius:50%;
-    background:linear-gradient(155deg,var(--blue) 0%, var(--navy) 100%);
-    display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-md);
-    color:#fff;font-weight:800;font-size:32px;
+    flex-shrink:0;width:132px;height:132px;border-radius:50%;object-fit:cover;
+    box-shadow:var(--shadow-md);border:3px solid #fff;
   }
   .author-wrap h3{margin-bottom:10px;}
   .author-wrap p{font-size:15px;}
@@ -794,7 +792,7 @@
        ================================================================ */
     const RX_CONFIG = {
       ctaUrl: '#planos',                         // <- link do checkout / seção de planos
-      ctaLabel: 'Quero usar no meu escritório',
+      ctaLabel: 'Eu quero acessar o sistema',
       disclaimer: 'Este é um demonstrativo com dados fictícios. O Raio-X apoia a conferência; a decisão jurídica é do advogado.'
     };
 
@@ -2085,7 +2083,7 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             Você economiza R$20,10
           </p>
-          <a href="#" class="btn btn-outline-navy">Baixar material agora</a>
+          <a href="#" class="btn btn-outline-navy">Eu quero acessar o sistema</a>
           <div class="attention-note">
             <span>Atenção: Temos uma oferta <u>ainda mais vantajosa</u> para você! Veja abaixo.</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
@@ -2119,7 +2117,7 @@
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             Você economiza R$39,10
           </p>
-          <a href="#" class="btn btn-green">Baixar material agora</a>
+          <a href="#" class="btn btn-green">Eu quero acessar o sistema</a>
           <span class="btn-note on-navy" style="justify-content:center;margin-top:14px;">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
             90 Dias de Garantia
@@ -2249,7 +2247,7 @@
       <h2>Quem está por trás do Raio-X Automático do CNIS:</h2>
     </div>
     <div class="author-wrap">
-      <span class="author-avatar">RM</span>
+      <img class="author-avatar" src="assets/fundador-renan.webp" alt="Renan Martins, advogado e criador do Raio-X Automático do CNIS" width="320" height="320" loading="lazy">
       <div>
         <h3>Renan Martins</h3>
         <p>Advogado há mais de 12 anos, formado pela PUC-SP, Renan Martins construiu sua carreira atuando diretamente na advocacia e desenvolvendo soluções práticas para facilitar a rotina de outros profissionais.</p>
