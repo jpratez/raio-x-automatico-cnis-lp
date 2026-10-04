@@ -704,6 +704,50 @@
   .rx-batch{max-width:760px;margin:0 auto}
   .rx-brow{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--rx-line);border-radius:10px;padding:10px 12px;margin-bottom:8px;flex-wrap:wrap}
   .rx-brow .rx-fi{flex:1 1 200px}
+
+  /* ---------- Simulador previdenciário (bônus) ---------- */
+  .rx-sim-note{display:flex;gap:10px;align-items:flex-start;background:var(--rx-pend-bg);border:1px solid #F6CDB6;color:var(--rx-pend-t);border-radius:10px;padding:10px 12px;font-size:13px;margin-bottom:14px}
+  .rx-sim-note svg{color:var(--rx-pend);margin-top:2px}
+  .rx-simform{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:10px}
+  @media (max-width:639px){ .rx-simform{grid-template-columns:1fr} }
+  .rx-sel-w{width:100%;min-height:44px}
+  .rx-sim-actions{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 14px}
+  .rx-sim-h{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 12px;margin-top:6px}
+  .rx-vsel-list{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+  .rx-vsel{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--rx-line);border-radius:10px;padding:2px 12px}
+  .rx-vsel .rx-chk2{flex:1;min-width:0}
+  .rx-chk2{display:flex;align-items:flex-start;gap:10px;min-height:44px;padding:10px 0;cursor:pointer}
+  .rx-chk2 input[type="checkbox"]{flex:0 0 20px;width:20px;height:20px;margin:1px 0 0;accent-color:var(--rx-graphite);cursor:pointer}
+  .rx-vs-main{display:flex;flex-direction:column;min-width:0;overflow-wrap:anywhere}
+  @media (max-width:559px){ .rx-vsel{flex-wrap:wrap;padding-bottom:10px} .rx-vsel .rx-chk2{flex-basis:100%;padding-bottom:4px} }
+  .rx-opts{background:#fff;border:1px solid var(--rx-line);border-radius:10px;padding:2px 12px}
+  .rx-opts .rx-chk2+.rx-chk2{border-top:1px solid var(--rx-line)}
+  .rx-sim-top{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;margin-bottom:14px}
+  .rx-ck-sm{font-size:17px;line-height:1.35}
+  .rx-wrap{white-space:normal}
+  .rx-rules{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+  .rx-rule{background:#fff;border:1px solid var(--rx-line);border-radius:10px;overflow:hidden}
+  .rx-rule-h{display:flex;align-items:center;gap:10px;width:100%;min-height:56px;padding:10px 12px;background:none;border:0;text-align:left}
+  .rx-rule-h:hover{background:#FAFAF8}
+  .rx-rule-t{display:flex;flex-direction:column;flex:1;min-width:0}
+  .rx-rule-t strong{overflow-wrap:anywhere}
+  .rx-chv{display:grid;place-items:center;transition:transform .2s}
+  .rx-rule-h[aria-expanded="true"] .rx-chv{transform:rotate(180deg)}
+  @media (max-width:559px){ .rx-rule-h{flex-wrap:wrap} .rx-rule-t{flex-basis:calc(100% - 30px)} .rx-rule-h .rx-chip{order:3} }
+  .rx-rule-b{padding:0 12px 14px;border-top:1px solid var(--rx-line)}
+  .rx-rule-p{margin:12px 0}
+  .rx-two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+  @media (max-width:559px){ .rx-two{grid-template-columns:1fr} }
+  .rx-two h5{margin:0 0 4px;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--rx-muted);font-weight:600}
+  .rx-two ul{display:flex;flex-direction:column;gap:2px;padding-left:16px;list-style:disc}
+  .rx-prev{margin-top:12px;background:var(--rx-bg);border:1px solid var(--rx-line);border-left:3px solid var(--rx-gold);border-radius:8px;padding:10px 12px;font-size:13px}
+  .rx-prem{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;padding-left:18px;list-style:disc;font-size:13px}
+  .rx-prem li{padding-left:2px}
+  .rx-simnotes{margin:4px 0 12px}
+  .rx-doc .rx-two li,.rx-doc .rx-sim-doc-b li{padding:0;border:0}
+  .rx-doc .rx-sim-doc-b{margin-top:8px}
+  .rx-doc .rx-sim-doc-b .rx-tablewrap{border:0;border-radius:0}
+  .rx-doc .rx-sim-doc-rules>li{padding-bottom:14px}
   /* ===== RX DEMO (fim) ===== */
 </style>
 <!-- TODO: adicionar aqui o script de pixel/rastreamento (Cashflow) com o offer id real assim que o checkout da Zouti for criado -->
@@ -939,7 +983,7 @@
     };
     const CATS = [['vinculo','Vínculos'],['contribuicao','Contribuições'],['remuneracao','Remunerações'],['indicador','Indicadores'],['periodo','Períodos'],['outros','Outros pontos sinalizados']];
     const catLabel = c => (CATS.find(x => x[0] === c) || [0,'Outros'])[1];
-    const TABS = [['resumo','Resumo'],['vinculos','Vínculos'],['contribuicoes','Contribuições'],['indicadores','Indicadores'],['pendencias','Pendências'],['linha','Linha do Tempo',1],['cliente','Pend. do Cliente',1],['ctps','CNIS x CTPS',1]];
+    const TABS = [['resumo','Resumo'],['vinculos','Vínculos'],['contribuicoes','Contribuições'],['indicadores','Indicadores'],['pendencias','Pendências'],['linha','Linha do Tempo',1],['cliente','Pend. do Cliente',1],['ctps','CNIS x CTPS',1],['simulador','Simulador',1]];
     const STAGES = ['Lendo o CNIS','Identificando vínculos','Organizando competências e remunerações','Localizando indicadores','Mapeando pontos de atenção','Montando o Raio-X'];
 
     /* ================================================================
@@ -969,7 +1013,7 @@
           let link = v.link || null;
           d.pendencias.forEach(p => { if (p.gap && p.vinculo === v.id && ym >= p.gap[0] && ym <= p.gap[1]) { rem = null; link = p.id; } });
           d.indicadores.forEach(i => { if (i.comps && i.comps.indexOf(ym) > -1) { link = i.id; if (i.rem != null) rem = i.rem; } });
-          rows.push({id:'c-' + ym, ym, rem, origem:v.curto, link});
+          rows.push({id:'c-' + ym, ym, rem, origem:v.curto, link, vid:v.id});
         });
       });
       rows.sort((a, b) => a.ym < b.ym ? -1 : 1);
@@ -992,7 +1036,9 @@
       state.openComment = {}; state.touched = false; state.dirty = false; state.prev = null;
       state.vFilter = 'todos'; state.vq = ''; state.cYear = 'all'; state.cStatus = 'all'; state.cView = 'tabela'; state.cYears = {}; state.iCode = 'all'; state.iStatus = 'all'; state.tlFilter = 'todos';
       state.extra = []; state.ctps = null; state.reqs = null; state.cli = {nome:ds().cliente, ref:ds().ref};
+      clearTimeout(state.tipT); state.tipT = null;
       state.tips = {resumo:true, vinc:true, report:true};
+      state.sim = newSim();
     }
 
     const rootIds = () => { const d = ds(); return d.vinculos.concat(d.indicadores, d.pendencias, state.extra).map(x => x.id); };
@@ -1018,7 +1064,7 @@
        ================================================================ */
     function tip(key, text){
       if (!state.tips[key]) return '';
-      return '<div class="rx-tip" role="note"><span aria-hidden="true">' + ico('info', 16) + '</span><span class="rx-tip-t">' + text + '</span><button type="button" class="rx-tip-x" data-action="tip-x" data-tip="' + key + '" aria-label="Dispensar dica">' + ico('x', 14) + '</button></div>';
+      return '<div class="rx-tip" role="note" data-tipbox="' + key + '"><span aria-hidden="true">' + ico('info', 16) + '</span><span class="rx-tip-t">' + text + '</span><button type="button" class="rx-tip-x" data-action="tip-x" data-tip="' + key + '" aria-label="Dispensar dica">' + ico('x', 14) + '</button></div>';
     }
     const reportTip = () => state.touched ? tip('report', 'Quando terminar, clique em Ver relatório para abrir e imprimir a ficha do cliente.') : '';
 
@@ -1089,7 +1135,7 @@
 
     function viewRaiox(){
       const d = ds(), c = counts(), o = OVERALL[c.overall];
-      const body = ({resumo:tabResumo, vinculos:tabVinculos, contribuicoes:tabContribuicoes, indicadores:tabIndicadores, pendencias:tabPendencias, linha:tabLinha, cliente:tabCliente, ctps:tabCtps})[state.tab](c);
+      const body = ({resumo:tabResumo, vinculos:tabVinculos, contribuicoes:tabContribuicoes, indicadores:tabIndicadores, pendencias:tabPendencias, linha:tabLinha, cliente:tabCliente, ctps:tabCtps, simulador:tabSimulador})[state.tab](c);
       return '<div class="rx-rxhead"><div><h3 class="rx-cname" id="rx-h" tabindex="-1">' + esc(state.cli.nome) + '</h3><div class="rx-cmeta">' + esc(d.arquivo) + ' · CPF ' + esc(d.cpf) + ' · Ref. ' + esc(state.cli.ref) + '</div></div>' +
         '<div class="rx-rxactions"><span class="rx-dirty" id="rx-dirty" role="status">' + (state.dirty ? 'Alterações não salvas' : '') + '</span><span class="rx-overall rx-o-' + c.overall + '">' + ico(o.icon, 16) + '<span>Status geral: ' + o.label + '</span></span>' +
         '<button type="button" class="rx-btn rx-secondary" data-action="save" data-fk="save"' + (state.dirty ? '' : ' disabled') + '>Salvar alterações</button>' +
@@ -1389,6 +1435,343 @@
       touch(); render(); toast('Pendência criada a partir da conferência.');
     }
 
+    /* ================================================================
+       SIMULADOR PREVIDENCIÁRIO (bônus): entrada, motor de cálculo e
+       motor de regras. Sem backend; dados 100% fictícios.
+       ================================================================ */
+
+    /* Parâmetros de referência (EC 103/2019). Validar antes do uso profissional. */
+    const RULES = {
+      versao:'v0.1',
+      rotulo:'Parâmetros de referência (EC 103/2019) · v0.1 — validar antes do uso',
+      corte:'2019-11-13',
+      carencia:180,
+      minTempo:{F:30, M:35},
+      permanente:{idade:{F:62, M:65}, tempoAntes:15, tempoApos:{F:15, M:20}},
+      pontos:{base:{F:86, M:96}, max:{F:100, M:105}},
+      idadeProg:{base:{F:56, M:61}, passo:.5, max:{F:62, M:65}},
+      pedagio50:{limiteFaltaAnos:2},
+      pedagio100:{idade:{F:57, M:60}},
+      idadeTrans:{base:{F:60, M:65}, passo:.5, max:{F:62, M:65}, tempo:15},
+      horizonteMeses:240,
+      janelaPrevisaoMeses:120
+    };
+    const RULE_DEFS = [
+      {id:'idade', nome:'Idade (regra permanente)', base:'Regra permanente'},
+      {id:'pontos', nome:'Pontos (regra de transição)', base:'Regra de transição'},
+      {id:'idadeprog', nome:'Idade mínima progressiva (regra de transição)', base:'Regra de transição'},
+      {id:'ped50', nome:'Pedágio de 50% (regra de transição)', base:'Regra de transição'},
+      {id:'ped100', nome:'Pedágio de 100% com idade (regra de transição)', base:'Regra de transição'},
+      {id:'idadetrans', nome:'Idade (regra de transição)', base:'Regra de transição'}
+    ];
+    const SIM_NAO_FILIADO = 'Não se aplica ao caso: primeira contribuição posterior a 13/11/2019.';
+    const SIM_STATUS = {
+      met:     {st:'ok',   label:'Requisitos preenchidos',  frase:'Com base nos períodos considerados nesta simulação, os requisitos calculáveis desta regra foram preenchidos.'},
+      missing: {st:'pend', label:'Faltam requisitos',       frase:'Ainda faltam requisitos calculáveis desta regra.'},
+      not_met: {st:'att',  label:'Não preenche atualmente', frase:'Não preenche os requisitos calculáveis atualmente.'},
+      na:      {st:'na',   label:'Não se aplica',           frase:''}
+    };
+    const SIM_DISCLAIMER = 'Simulação calculada com base nos períodos selecionados pelo advogado e em parâmetros de referência das regras cadastradas. Não é parecer jurídico e não garante o reconhecimento de períodos nem o direito a benefício. As regras vigentes, a prova dos períodos e a qualidade dos dados devem ser validadas pelo advogado responsável.';
+
+    /* ---------- datas e formatação (dias em UTC) ---------- */
+    const toDays = iso => Math.floor(Date.parse(iso + 'T00:00:00Z') / 86400000);
+    const fromDays = n => new Date(n * 86400000).toISOString().slice(0, 10);
+    const lastDayYM = ym => new Date(Date.UTC(+ym.slice(0, 4), +ym.slice(5, 7), 0)).toISOString().slice(0, 10);
+    const todayISO = () => { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
+    const isISO = s => /^\d{4}-\d{2}-\d{2}$/.test(s || '') && !isNaN(Date.parse(s + 'T00:00:00Z'));
+    function addMonthsISO(iso, k){
+      const d = new Date(iso + 'T00:00:00Z'), day = d.getUTCDate();
+      d.setUTCDate(1); d.setUTCMonth(d.getUTCMonth() + k);
+      const dim = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 0)).getUTCDate();
+      d.setUTCDate(Math.min(day, dim));
+      return d.toISOString().slice(0, 10);
+    }
+    function calDiff(a, b){
+      let y = +b.slice(0, 4) - +a.slice(0, 4), m = +b.slice(5, 7) - +a.slice(5, 7), d = +b.slice(8, 10) - +a.slice(8, 10);
+      if (d < 0) { m--; d += new Date(Date.UTC(+b.slice(0, 4), +b.slice(5, 7) - 1, 0)).getUTCDate(); }
+      if (m < 0) { y--; m += 12; }
+      return {y, m, d};
+    }
+    const pl = (n, s, p) => n + ' ' + (n === 1 ? s : p);
+    function joinParts(p){ return !p.length ? '0 dias' : p.length === 1 ? p[0] : p.slice(0, -1).join(', ') + ' e ' + p[p.length - 1]; }
+    function fmtDur(days){
+      days = Math.max(0, Math.round(days));
+      const y = Math.floor(days / 365), r = days - y * 365, m = Math.floor(r / 30), d = r - m * 30, p = [];
+      if (y) p.push(pl(y, 'ano', 'anos')); if (m) p.push(pl(m, 'mês', 'meses')); if (d) p.push(pl(d, 'dia', 'dias'));
+      return joinParts(p);
+    }
+    function fmtAge(a){
+      const p = []; if (a.y) p.push(pl(a.y, 'ano', 'anos')); if (a.m) p.push(pl(a.m, 'mês', 'meses')); if (a.d) p.push(pl(a.d, 'dia', 'dias'));
+      return joinParts(p);
+    }
+    function fmtYrs(a){
+      const w = Math.floor(a + 1e-9), m = Math.round((a - w) * 12);
+      return m ? pl(w, 'ano', 'anos') + ' e ' + pl(m, 'mês', 'meses') : pl(w, 'ano', 'anos');
+    }
+    const fmtPts = x => x.toFixed(1).replace('.', ',');
+
+    /* ---------- intervalos ---------- */
+    function subtractIntervals(iv, cuts){
+      let out = [iv];
+      cuts.forEach(c => {
+        const nx = [];
+        out.forEach(a => {
+          if (c[1] < a[0] || c[0] > a[1]) { nx.push(a); return; }
+          if (c[0] > a[0]) nx.push([a[0], c[0] - 1]);
+          if (c[1] < a[1]) nx.push([c[1] + 1, a[1]]);
+        });
+        out = nx;
+      });
+      return out;
+    }
+    function mergeIntervals(list){
+      const out = [];
+      list.slice().sort((a, b) => a[0] - b[0]).forEach(iv => {
+        const l = out[out.length - 1];
+        if (l && iv[0] <= l[1] + 1) l[1] = Math.max(l[1], iv[1]); else out.push([iv[0], iv[1]]);
+      });
+      return out;
+    }
+    const sumDays = iv => iv.reduce((s, a) => s + (a[1] - a[0] + 1), 0);
+    const daysUntil = (iv, lim) => iv.reduce((s, a) => a[0] > lim ? s : s + (Math.min(a[1], lim) - a[0] + 1), 0);
+
+    /* ---------- estado da simulação ---------- */
+    function newSim(){
+      const marked = {};
+      ds().vinculos.forEach(v => { marked[v.id] = eff(v.id) === 'ok'; });
+      return {nasc:'', sexo:'', ref:todayISO(), marked, desc:true, cont:true, ran:false, notes:'', open:{}};
+    }
+    function simMissing(){
+      const S = state.sim, m = [];
+      if (!isISO(S.ref)) m.push('a data de referência');
+      if (!isISO(S.nasc) || (isISO(S.ref) && toDays(S.nasc) >= toDays(S.ref))) m.push('a data de nascimento (anterior à data de referência)');
+      if (S.sexo !== 'F' && S.sexo !== 'M') m.push('o sexo');
+      if (!ds().vinculos.some(v => S.marked[v.id])) m.push('pelo menos um vínculo marcado');
+      return m.length ? 'Falta informar: ' + m.join(', ') + '.' : '';
+    }
+    const simValid = () => !simMissing();
+    function syncSim(){
+      const b = $('[data-action="sim-run"]'); if (!b) return;
+      const miss = simMissing(); b.disabled = !!miss;
+      const h = $('#rx-simhint'); if (h) h.textContent = miss;
+      const n = $('#rx-simcount'); if (n) n.textContent = ds().vinculos.filter(v => state.sim.marked[v.id]).length + ' de ' + ds().vinculos.length + ' vínculos marcados';
+    }
+
+    /* ---------- cálculo: tempo, carência, idade, pontos ---------- */
+    function simCompute(){
+      const S = state.sim, d = ds(), full = FULL[d.id], ref = S.ref, refD = toDays(ref);
+      const used = [], skipped = []; let ivs = [];
+      d.vinculos.forEach(v => {
+        const f = full[v.id], endD = Math.min(toDays(f[1] || ref), refD), startD = toDays(f[0]);
+        const info = {v:v, ini:f[0], fim:f[1], endUsed:fromDays(endD)};
+        if (!S.marked[v.id]) { skipped.push(Object.assign(info, {why:'não selecionado'})); return; }
+        if (startD > endD) { skipped.push(Object.assign(info, {why:'início posterior à data de referência'})); return; }
+        const cuts = S.desc ? d.pendencias.filter(p => p.gap && p.vinculo === v.id).map(p => [toDays(p.gap[0] + '-01'), toDays(lastDayYM(p.gap[1]))]) : [];
+        const parts = subtractIntervals([startD, endD], cuts);
+        used.push(Object.assign(info, {parts})); ivs = ivs.concat(parts);
+      });
+      const un = mergeIntervals(ivs), tempoDias = sumDays(un), corte = toDays(RULES.corte);
+      const tempo1119 = daysUntil(un, corte);
+      const filiadoAntes = un.length > 0 && un[0][0] <= corte;
+      const refYM = ref.slice(0, 7), meses = {};
+      state.model.rows.forEach(r => { if (S.marked[r.vid] && r.rem != null && r.ym <= refYM) meses[r.ym] = 1; });
+      let presumidas = 0;
+      d.vinculos.forEach(v => {
+        if (S.marked[v.id] && !v.fim && refYM > d.fimDados) ymRange(d.fimDados, refYM).slice(1).forEach(ym => { if (!meses[ym]) { meses[ym] = 1; presumidas++; } });
+      });
+      const idadeDias = refD - toDays(S.nasc), idade = calDiff(S.nasc, ref);
+      return {ref, used, skipped, un, tempoDias, tempo1119, filiadoAntes, carencia:Object.keys(meses).length, presumidas,
+        idadeDias, idade, idadeTxt:fmtAge(idade), pontos:(idadeDias + tempoDias) / 365.25, sexo:S.sexo};
+    }
+
+    /* ---------- regras ---------- */
+    function ruleParams(id, ctx){
+      const R = RULES, g = ctx.sexo, k = Math.max(2019, +ctx.ref.slice(0, 4)) - 2019, minT = R.minTempo[g] * 365, car = R.carencia;
+      if (id !== 'idade' && !ctx.filiadoAntes) return {na:SIM_NAO_FILIADO};
+      switch (id) {
+        case 'idade': return {idade:R.permanente.idade[g], tempo:(ctx.filiadoAntes ? R.permanente.tempoAntes : R.permanente.tempoApos[g]) * 365, car};
+        case 'pontos': return {pontos:Math.min(R.pontos.base[g] + k, R.pontos.max[g]), tempo:minT, car};
+        case 'idadeprog': return {idade:Math.min(R.idadeProg.base[g] + R.idadeProg.passo * k, R.idadeProg.max[g]), tempo:minT, car};
+        case 'ped50': {
+          const falta = minT - ctx.tempo1119;
+          if (falta <= 0) return {na:'Não se aplica (tempo já completo em 13/11/2019).'};
+          if (falta > R.pedagio50.limiteFaltaAnos * 365) return {na:'Não se aplica (faltavam mais de ' + R.pedagio50.limiteFaltaAnos + ' anos para o tempo mínimo em 13/11/2019).'};
+          return {tempo:Math.ceil(minT + falta * .5), car};
+        }
+        case 'ped100': return {idade:R.pedagio100.idade[g], tempo:minT + Math.max(0, minT - ctx.tempo1119), car};
+        default: return {idade:Math.min(R.idadeTrans.base[g] + R.idadeTrans.passo * k, R.idadeTrans.max[g]), tempo:R.idadeTrans.tempo * 365, car};
+      }
+    }
+    function evalReqs(p, ctx){
+      const out = [];
+      if (p.idade != null) {
+        const need = p.idade * 365.25, ok = ctx.idadeDias >= need;
+        out.push({k:'idade', label:'Idade', exig:fmtYrs(p.idade), comp:ctx.idadeTxt || '', ok, falta:ok ? '' : fmtDur(Math.ceil(need - ctx.idadeDias))});
+      }
+      if (p.tempo != null) {
+        const need = Math.ceil(p.tempo), ok = ctx.tempoDias >= need;
+        out.push({k:'tempo', label:'Tempo de contribuição', exig:fmtDur(need), comp:fmtDur(ctx.tempoDias), ok, falta:ok ? '' : fmtDur(need - ctx.tempoDias)});
+      }
+      { const ok = ctx.carencia >= p.car;
+        out.push({k:'carencia', label:'Carência', exig:p.car + ' meses', comp:ctx.carencia + ' meses', ok, falta:ok ? '' : pl(p.car - ctx.carencia, 'mês', 'meses')}); }
+      if (p.pontos != null) {
+        const pts = (ctx.idadeDias + ctx.tempoDias) / 365.25, ok = pts >= p.pontos;
+        out.push({k:'pontos', label:'Pontos', exig:fmtPts(p.pontos), comp:fmtPts(pts), ok, falta:ok ? '' : (Math.ceil((p.pontos - pts) * 10 - 1e-9) / 10).toFixed(1).replace('.', ',')});
+      }
+      return out;
+    }
+    function predictRule(def, ctx){
+      for (let k = 1; k <= RULES.horizonteMeses; k++) {
+        const refK = addMonthsISO(ctx.ref, k), delta = toDays(refK) - toDays(ctx.ref);
+        const c = Object.assign({}, ctx, {ref:refK, idadeDias:ctx.idadeDias + delta, tempoDias:ctx.tempoDias + delta, carencia:ctx.carencia + k});
+        const p = ruleParams(def.id, c); if (p.na) return null;
+        if (evalReqs(p, c).every(r => r.ok)) return {k, date:refK};
+      }
+      return null;
+    }
+    function evalRule(def, ctx, S){
+      const p = ruleParams(def.id, ctx);
+      if (p.na) return {def, status:'na', reason:p.na, reqs:[], prev:null};
+      const reqs = evalReqs(p, ctx), bad = reqs.filter(r => !r.ok), r = {def, status:'met', reason:'', reqs, prev:null};
+      if (!bad.length) return r;
+      if (S.cont) { r.prev = predictRule(def, ctx); r.status = (r.prev && r.prev.k <= RULES.janelaPrevisaoMeses) ? 'missing' : 'not_met'; }
+      else r.status = bad.length <= 1 ? 'missing' : 'not_met';
+      return r;
+    }
+    function simRun(){
+      const c = simCompute();
+      return {c, rules:RULE_DEFS.map(def => evalRule(def, c, state.sim))};
+    }
+
+    /* ---------- tela ---------- */
+    function simFormHTML(){
+      const S = state.sim, d = ds(), nao = d.vinculos.filter(v => eff(v.id) !== 'ok').length, miss = simMissing();
+      const aviso = nao ? '<div class="rx-sim-note" role="note">' + ico('alert', 16) + '<span>' + nao + ' vínculo(s) ainda não conferidos começam desmarcados. Períodos pendentes ou sem validação não entram automaticamente no cálculo.</span></div>' : '';
+      const lis = d.vinculos.map(v => {
+        const f = FULL[d.id][v.id];
+        return '<li class="rx-vsel"><label class="rx-chk2" for="rx-sv-' + v.id + '"><input type="checkbox" id="rx-sv-' + v.id + '" data-role="sim-v" data-id="' + v.id + '"' + (S.marked[v.id] ? ' checked' : '') + '>' +
+          '<span class="rx-vs-main"><strong>' + esc(v.emp) + '</strong><span class="rx-om">' + fmtD(f[0]) + ' a ' + fmtD(f[1]) + ' · ' + esc(v.tipo) + '</span></span></label>' + chip(eff(v.id)) + '</li>';
+      }).join('');
+      return aviso +
+        '<div class="rx-simform"><div><label class="rx-lab" for="rx-s-nasc">Data de nascimento</label><input class="rx-in" type="date" id="rx-s-nasc" data-role="sim-nasc" data-fk="s-nasc" value="' + esc(S.nasc) + '"></div>' +
+        '<div><label class="rx-lab" for="rx-s-sexo">Sexo</label><select class="rx-select rx-sel-w" id="rx-s-sexo" data-role="sim-sexo" data-fk="s-sexo"><option value=""' + (S.sexo ? '' : ' selected') + '>Selecione</option><option value="F"' + (S.sexo === 'F' ? ' selected' : '') + '>Feminino</option><option value="M"' + (S.sexo === 'M' ? ' selected' : '') + '>Masculino</option></select></div>' +
+        '<div><label class="rx-lab" for="rx-s-ref">Data de referência</label><input class="rx-in" type="date" id="rx-s-ref" data-role="sim-ref" data-fk="s-ref" value="' + esc(S.ref) + '"></div></div>' +
+        '<div class="rx-sim-actions"><button type="button" class="rx-btn rx-secondary rx-sm" data-action="sim-example" data-fk="sim-example">Preencher dados de exemplo</button></div>' +
+        '<div class="rx-sim-h"><h4 class="rx-sec-h" style="margin:0">Vínculos a considerar</h4><span class="rx-count" id="rx-simcount" aria-live="polite">' + d.vinculos.filter(v => S.marked[v.id]).length + ' de ' + d.vinculos.length + ' vínculos marcados</span></div>' +
+        '<div class="rx-sim-actions"><button type="button" class="rx-btn rx-secondary rx-sm" data-action="sim-onlyok" data-fk="sim-onlyok">Somente conferidos</button><button type="button" class="rx-btn rx-secondary rx-sm" data-action="sim-all" data-fk="sim-all">Considerar todos</button></div>' +
+        '<ul class="rx-vsel-list">' + lis + '</ul>' +
+        '<div class="rx-opts"><label class="rx-chk2" for="rx-s-desc"><input type="checkbox" id="rx-s-desc" data-role="sim-desc"' + (S.desc ? ' checked' : '') + '><span>Descontar do tempo as competências sem remuneração identificada</span></label>' +
+        '<label class="rx-chk2" for="rx-s-cont"><input type="checkbox" id="rx-s-cont" data-role="sim-cont"' + (S.cont ? ' checked' : '') + '><span>Estimar previsão assumindo continuidade contributiva</span></label></div>' +
+        '<div class="rx-actions" style="margin-top:12px"><button type="button" class="rx-btn rx-primary" data-action="sim-run" data-fk="sim-run"' + (miss ? ' disabled' : '') + '>Simular situação previdenciária</button></div>' +
+        '<p class="rx-footnote" id="rx-simhint" role="status">' + esc(miss) + '</p>' +
+        '<p class="rx-footnote">Dados de demonstração. ' + esc(RULES.rotulo) + '.</p>';
+    }
+
+    const reqChip = r => r.ok ? '<span class="rx-chip rx-s-ok">' + ico('checkc', 14) + '<span>Cumprido</span></span>' : '<span class="rx-chip rx-s-att rx-wrap">' + ico('x', 14) + '<span>Falta ' + esc(r.falta) + '</span></span>';
+    function prevLine(r){
+      if (r.status === 'met') return 'Requisitos já preenchidos na data de referência.';
+      if (r.status === 'na') return '';
+      if (!state.sim.cont) return 'Previsão não calculada: a opção de continuidade contributiva está desligada.';
+      if (!r.prev) return 'Previsão não alcançada no horizonte de ' + (RULES.horizonteMeses / 12) + ' anos considerado na simulação.';
+      return '<strong>Previsão estimada de preenchimento: ' + fmtYM(r.prev.date.slice(0, 7)) + '</strong>, considerando continuidade contributiva conforme as premissas da simulação.';
+    }
+    function ruleBodyHTML(r){
+      const S = SIM_STATUS[r.status];
+      if (r.status === 'na') return '<p class="rx-rule-p">' + esc(r.reason) + '</p>';
+      const rows = r.reqs.map(q => '<tr><td class="rx-td-main" data-label="Requisito"><strong>' + q.label + '</strong></td><td data-label="Exigido">' + esc(q.exig) + '</td><td data-label="Computado">' + esc(q.comp) + '</td><td data-label="Situação">' + reqChip(q) + '</td></tr>').join('');
+      const ja = r.reqs.filter(q => q.ok), falta = r.reqs.filter(q => !q.ok);
+      const li = (arr, f) => arr.length ? '<ul>' + arr.map(f).join('') + '</ul>' : '<p class="rx-om">Nenhum.</p>';
+      return '<p class="rx-rule-p">' + S.frase + '</p>' +
+        '<div class="rx-tablewrap"><table class="rx-table rx-vtable"><caption class="rx-sr">Requisitos da regra</caption><thead><tr><th scope="col">Requisito</th><th scope="col">Exigido</th><th scope="col">Computado</th><th scope="col">Situação</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
+        '<div class="rx-two"><div><h5>Já cumpriu</h5>' + li(ja, q => '<li>' + q.label + '</li>') + '</div><div><h5>Ainda falta</h5>' + li(falta, q => '<li>' + q.label + ': ' + esc(q.falta) + '</li>') + '</div></div>' +
+        '<div class="rx-prev">' + prevLine(r) + '</div>';
+    }
+    function premList(res){
+      const S = state.sim, c = res.c;
+      const per = u => esc(u.v.emp) + ' (' + fmtD(u.ini) + ' a ' + (u.fim ? fmtD(u.fim) : fmtD(u.endUsed) + ', fim = data de referência') + ')';
+      const sk = u => esc(u.v.emp) + ' (' + fmtD(u.ini) + ' a ' + (u.fim ? fmtD(u.fim) : 'em aberto') + ') — ' + u.why;
+      const abertos = c.used.some(u => !u.fim);
+      return [
+        '<strong>Data de referência:</strong> ' + fmtD(S.ref) + '.',
+        '<strong>Períodos considerados:</strong> ' + (c.used.length ? c.used.map(per).join('; ') : 'nenhum') + '.',
+        '<strong>Períodos desconsiderados:</strong> ' + (c.skipped.length ? c.skipped.map(sk).join('; ') : 'nenhum') + '.',
+        '<strong>Concomitância:</strong> períodos simultâneos são contados uma única vez (união dos intervalos).',
+        '<strong>Conversão do tempo:</strong> 365 dias por ano e 30 dias por mês.',
+        '<strong>Competências sem remuneração identificada:</strong> ' + (S.desc ? 'descontadas do tempo de contribuição.' : 'mantidas no tempo de contribuição (não descontadas).'),
+        '<strong>Carência:</strong> competências distintas com remuneração identificada nos vínculos considerados, até o mês da referência' + (abertos && c.presumidas ? '; em vínculos em aberto, ' + c.presumidas + ' competência(s) posteriores a ' + fmtYM(ds().fimDados) + ' foram presumidas com remuneração.' : '.'),
+        '<strong>Previsão:</strong> ' + (S.cont ? 'calculada assumindo continuidade contributiva (tempo, idade e carência avançam mês a mês, por até ' + (RULES.horizonteMeses / 12) + ' anos).' : 'não calculada (continuidade contributiva desligada).'),
+        '<strong>Versão dos parâmetros:</strong> ' + esc(RULES.rotulo) + '.'
+      ];
+    }
+    function simCards(c, cls){
+      const card = (l, v, s, big) => '<div class="rx-cardk"><div class="rx-ck-l">' + l + '</div><div class="rx-ck-n' + (big ? ' rx-ck-sm' : '') + '">' + v + '</div><div class="rx-ck-s">' + s + '</div></div>';
+      return '<div class="rx-cards">' +
+        card('Tempo computado', fmtDur(c.tempoDias), 'Até 13/11/2019: ' + fmtDur(c.tempo1119), true) +
+        card('Carência computada', c.carencia, pl(c.carencia, 'mês', 'meses').replace(/^\d+ /, '') + ' com remuneração') +
+        card('Idade na data', fmtAge(c.idade), 'em ' + fmtD(c.ref), true) +
+        card('Pontuação atual', fmtPts(c.pontos), 'idade + tempo, em anos') + '</div>';
+    }
+    function simResultHTML(){
+      const S = state.sim, res = simRun(), c = res.c;
+      const items = res.rules.map(r => {
+        const m = SIM_STATUS[r.status], open = !!S.open[r.def.id];
+        return '<li class="rx-rule"><button type="button" class="rx-rule-h" data-action="sim-toggle" data-id="' + r.def.id + '" data-fk="sr-' + r.def.id + '" aria-expanded="' + open + '" aria-controls="rr-' + r.def.id + '">' +
+          '<span class="rx-rule-t"><strong>' + esc(r.def.nome) + '</strong><span class="rx-om">' + esc(r.def.base) + '</span></span>' + chip(m.st, m.label) + '<span class="rx-chv" aria-hidden="true">' + ico('chev', 18) + '</span></button>' +
+          '<div class="rx-rule-b" id="rr-' + r.def.id + '"' + (open ? '' : ' hidden') + '>' + ruleBodyHTML(r) + '</div></li>';
+      }).join('');
+      return '<div class="rx-sim-top"><h3 class="rx-h" id="rx-sim-h" tabindex="-1">Resultado da simulação</h3><div class="rx-ractions"><button type="button" class="rx-btn rx-secondary" data-action="sim-edit" data-fk="sim-edit">Editar dados</button>' +
+        '<button type="button" class="rx-btn rx-primary" data-action="sim-report" data-fk="sim-report">' + ico('print', 16) + 'Gerar relatório da simulação</button></div></div>' +
+        '<h4 class="rx-sec-h">Situação previdenciária</h4>' + simCards(c) +
+        '<h4 class="rx-sec-h">Regras analisadas</h4><ul class="rx-rules">' + items + '</ul>' +
+        '<h4 class="rx-sec-h">Premissas utilizadas</h4><ul class="rx-prem">' + premList(res).map(x => '<li>' + x + '</li>').join('') + '</ul>' +
+        '<div class="rx-simnotes"><label class="rx-lab" for="rx-s-notes">Observações profissionais</label><textarea class="rx-ta" id="rx-s-notes" rows="4" data-role="sim-notes" placeholder="Ex.: confirmar tempo especial e vínculos concomitantes com o cliente">' + esc(S.notes) + '</textarea></div>' +
+        '<p class="rx-footnote">' + esc(SIM_DISCLAIMER) + '</p>';
+    }
+    function tabSimulador(){
+      const S = state.sim;
+      return '<h4 class="rx-sec-h">Simulador Previdenciário Automático <span class="rx-bonus">Bônus</span></h4>' +
+        '<p class="rx-sec-sub">Tempo de contribuição, carência e regras aplicáveis, calculados a partir dos períodos que você selecionar. Este é um demonstrativo com dados fictícios.</p>' +
+        (S.ran && simValid() ? simResultHTML() : simFormHTML());
+    }
+    function simDoc(){
+      const S = state.sim, res = simRun(), c = res.c, d = ds(), today = new Date().toLocaleDateString('pt-BR');
+      const kv = (k, v) => '<tr><th scope="row">' + k + '</th><td>' + v + '</td></tr>';
+      const rules = res.rules.map(r => {
+        const m = SIM_STATUS[r.status];
+        return '<li><strong>' + esc(r.def.nome) + '</strong> ' + chip(m.st, m.label) + '<div class="rx-sim-doc-b">' + ruleBodyHTML(r) + '</div></li>';
+      }).join('');
+      return '<div class="rx-doc"><h2>Relatório da Simulação Previdenciária</h2><div class="rx-dsub">Dados de demonstração · ' + esc(RULES.rotulo) + '</div>' +
+        '<h4>Cliente</h4><table class="rx-kv"><tbody>' + kv('Nome', esc(state.cli.nome)) + kv('Data de nascimento', fmtD(S.nasc)) + kv('Sexo', S.sexo === 'F' ? 'Feminino' : 'Masculino') + kv('Data de referência', fmtD(S.ref)) + kv('Data da simulação', today) + '</tbody></table>' +
+        '<h4>Situação previdenciária</h4><table class="rx-kv"><tbody>' + kv('Tempo computado', fmtDur(c.tempoDias)) + kv('Tempo até 13/11/2019', fmtDur(c.tempo1119)) + kv('Carência computada', c.carencia + ' meses') + kv('Idade na data', fmtAge(c.idade)) + kv('Pontuação atual', fmtPts(c.pontos)) + '</tbody></table>' +
+        '<h4>Regras analisadas</h4><ul class="rx-sim-doc-rules">' + rules + '</ul>' +
+        '<h4>Premissas utilizadas</h4><ul>' + premList(res).map(x => '<li>' + x + '</li>').join('') + '</ul>' +
+        '<h4>Observações profissionais</h4>' + (S.notes.trim() ? '<p style="margin:0">' + escBr(S.notes) + '</p>' : '<div class="rx-none">Nenhuma observação registrada.</div>') +
+        '<div class="rx-warn">' + esc(SIM_DISCLAIMER) + '</div></div>';
+    }
+    function simInput(role, t){
+      const S = state.sim;
+      if (role === 'sim-nasc') S.nasc = t.value;
+      else if (role === 'sim-ref') S.ref = t.value;
+      else if (role === 'sim-notes') { S.notes = t.value; return; }
+      syncSim();
+    }
+    function simChange(role, t){
+      const S = state.sim, id = t.getAttribute('data-id');
+      if (role === 'sim-sexo') S.sexo = t.value;
+      else if (role === 'sim-v') S.marked[id] = t.checked;
+      else if (role === 'sim-desc') S.desc = t.checked;
+      else if (role === 'sim-cont') S.cont = t.checked;
+      else if (role === 'sim-nasc') S.nasc = t.value;
+      else if (role === 'sim-ref') S.ref = t.value;
+      syncSim();
+    }
+    function simRunClick(){
+      if (!simValid()) return;
+      state.sim.ran = true; render();
+      const h = $('#rx-sim-h'); if (h) h.focus({preventScroll:true});
+      toTop(); toast('Simulação concluída.');
+    }
+
     /* ---------- Análise em lote ---------- */
     function viewBatch(){
       const b = state.batch, n = RX_DATA.length, done = b.st.filter(x => x === 'd').length, pct = Math.round(done / n * 100);
@@ -1512,6 +1895,12 @@
         el.focus({preventScroll:true});
       }
       flashCounters();
+      if (state.view === 'raiox' && state.tab === 'resumo' && state.tips.resumo && !state.tipT) {
+        state.tipT = setTimeout(() => {
+          state.tipT = null; state.tips.resumo = false;
+          const el = root.querySelector('[data-tipbox="resumo"]'); if (el) el.remove();
+        }, 3000);
+      }
     }
 
     function go(view){ state.view = view; state.focusNext = true; render(); }
@@ -1555,7 +1944,7 @@
     function doPrint(kind){
       let pr = document.getElementById('rx-print-root');
       if (!pr) { pr = document.createElement('div'); pr.id = 'rx-print-root'; pr.className = 'rx-print-root'; document.body.appendChild(pr); }
-      pr.innerHTML = kind === 'req' ? reqDoc() : reportDoc();
+      pr.innerHTML = kind === 'req' ? reqDoc() : kind === 'sim' ? simDoc() : reportDoc();
       document.body.classList.add('rx-printing');
       const done = () => { document.body.classList.remove('rx-printing'); window.removeEventListener('afterprint', done); };
       window.addEventListener('afterprint', done);
@@ -1648,6 +2037,13 @@
         case 'ctps-load': state.ctps = buildCtps(); render(); toast('CTPS de exemplo carregada.'); break;
         case 'ctps-del': state.ctps = state.ctps.filter(e => e.id !== id); render(); break;
         case 'ctps-pend': addExtraPend(compareCtps().filter(r => r.id === id)[0]); break;
+        case 'sim-example': Object.assign(state.sim, {nasc:'1968-05-10', sexo:'M'}); render(); break;
+        case 'sim-onlyok': ds().vinculos.forEach(v => { state.sim.marked[v.id] = eff(v.id) === 'ok'; }); render(); break;
+        case 'sim-all': ds().vinculos.forEach(v => { state.sim.marked[v.id] = true; }); render(); break;
+        case 'sim-run': simRunClick(); break;
+        case 'sim-edit': state.sim.ran = false; render(); break;
+        case 'sim-report': doPrint('sim'); break;
+        case 'sim-toggle': state.sim.open[id] = !state.sim.open[id]; render(); break;
         case 'batch': clearTimers(); state.view = 'batch'; state.focusNext = true; render(); break;
         case 'batch-run': runBatch(); break;
         case 'batch-back': clearTimers(); state.batch = {st:[], running:false, done:false}; state.view = 'file'; state.focusNext = true; render(); break;
@@ -1663,6 +2059,7 @@
       else if (role === 'cstatus') { state.cStatus = t.value; render(); }
       else if (role === 'icode') { state.iCode = t.value; render(); }
       else if (role === 'istatus') { state.iStatus = t.value; render(); }
+      else if (role && role.indexOf('sim-') === 0) simChange(role, t);
       else if (role === 'rq-inc') { const it = state.reqs.items.filter(i => i.id === tid)[0]; it.incl = t.checked; touch(); const pv = $('#rx-rqprev'); if (pv) pv.innerHTML = reqDoc(); syncDirty(); }
     });
     root.addEventListener('input', e => {
@@ -1670,6 +2067,7 @@
       if (!t.matches) return;
       const role = t.getAttribute('data-role'), tid = t.getAttribute('data-id');
       if (role === 'obs') setObs(tid, t.value);
+      else if (role && role.indexOf('sim-') === 0) simInput(role, t);
       else if (role === 'cli-nome') state.cli.nome = t.value;
       else if (role === 'cli-ref') state.cli.ref = t.value;
       else if (role === 'vq') { state.vq = t.value; const l = $('#rx-vlist'); if (l) l.innerHTML = vList(); }
@@ -2077,11 +2475,11 @@
         </ul>
         <div class="price-block">
           <p class="price-before">de <s>R$37,90</s> por</p>
-          <p class="price-now">R$17,90</p>
-          <p class="price-install">ou 12x de R$1,84 no cartão</p>
+          <p class="price-now">R$27,90</p>
+          <p class="price-install">ou 12x de R$2,86 no cartão</p>
           <p class="price-save">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Você economiza R$20,10
+            Você economiza R$10,00
           </p>
           <a href="#" class="btn btn-outline-navy">Eu quero acessar o sistema</a>
           <div class="attention-note">
@@ -2111,11 +2509,11 @@
         </ul>
         <div class="price-block">
           <p class="price-before">de <s>R$67,90</s> por</p>
-          <p class="price-now">R$27,90</p>
-          <p class="price-install">ou 12x de R$2,86 no cartão</p>
+          <p class="price-now">R$37,90</p>
+          <p class="price-install">ou 12x de R$3,89 no cartão</p>
           <p class="price-save">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Você economiza R$39,10
+            Você economiza R$30,00
           </p>
           <a href="#" class="btn btn-green">Eu quero acessar o sistema</a>
           <span class="btn-note on-navy" style="justify-content:center;margin-top:14px;">
